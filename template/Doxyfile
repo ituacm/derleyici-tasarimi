@@ -1,0 +1,14 @@
+PROJECT_NAME           = "Compiler Construction"
+OUTPUT_DIRECTORY       = "docs-autogen/"
+MARKDOWN_SUPPORT       = YES
+SOURCE_BROWSER         = YES
+INPUT                  = include/ docs/
+TAB_SIZE               = 8
+RECURSIVE              = YES
+GENERATE_HTML          = YES
+GENERATE_LATEX         = NO
+EXTRACT_STATIC         = YES
+QUIET                  = YES
+DOTFILE_DIRS           = docs/
+DOT_IMAGE_FORMAT       = svg
+HAVE_DOT               = YES

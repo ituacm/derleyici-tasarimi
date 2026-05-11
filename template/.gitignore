@@ -1,0 +1,4 @@
+docs-autogen/
+.cache/
+bin/
+compile_commands.json

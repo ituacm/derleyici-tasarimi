@@ -12,8 +12,8 @@ int main()
 
 	struct map m;
 
-	for (int _fuzz = 0; _fuzz < 96; _fuzz++) {
-		int elem_size = rand() % 16;
+	for (int _fuzz = 0; _fuzz < 128; _fuzz++) {
+		int elem_size = rand() % 32;
 
 		map_init(&m, elem_size);
 

@@ -16,14 +16,18 @@
 /** @brief The map implementation. */
 struct map {
 	/** @cond */
-	size_t _[sizeof(size_t) * 3 + sizeof(void *)];
+	struct map_entry *entries;
+	size_t cap;
+	size_t used;
+	size_t value_size;
 	/** @endcond */
 };
 
 /** @brief Map key/value pair iterator. */
 struct map_it {
 	/** @cond */
-	size_t _[sizeof(size_t) + sizeof(void *)];
+	struct map *m;
+	size_t i;
 	/** @endcond */
 };
 
@@ -67,7 +71,12 @@ void map_insert(struct map *map, const void *key, const void *value);
 /** @brief Inserts an element into the entry with the provided key. */
 void map_insert2(struct map *map, const void *key, size_t keylen, const void *value);
 
-/** @brief Same as get, but also deletes the element. */
+/**
+ * @brief Same as get, but also deletes the element.
+ *
+ * The returned value MUST be copied to outlive the next map operation, as it
+ * is marked as "free" for the map. The map may overwrite the value.
+ */
 void *map_delete(struct map *map, const void *key);
 
 /** @brief Same as get, but also deletes the element. */

@@ -25,7 +25,10 @@
 /** @brief The stack implementation. */
 struct stack {
 	/** @cond */
-	char _[sizeof(size_t) * 3 + sizeof(void *)];
+	char *data;
+	size_t cap;
+	size_t len;
+	size_t item_size;
 	/** @endcond */
 };
 

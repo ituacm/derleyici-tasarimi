@@ -11,23 +11,9 @@
 #define INITIAL_CAP 64
 #define TOMBSTONE SIZE_MAX
 
-#define deref_m (*(struct map_internal *) m)
-#define deref_it (*(struct it_internal *) it)
 #define entry_at(entries, i) ((struct map_entry *) &((char *) entries) \
-			[i * (sizeof(struct map_entry) + deref_m.value_size)])
+			[i * (sizeof(struct map_entry) + m->value_size)])
 
-
-struct map_internal {
-	size_t cap;
-	size_t used;
-	size_t value_size;
-	struct map_entry *entries;
-};
-
-struct it_internal {
-	struct map *m;
-	size_t i;
-};
 
 
 /* https://en.wikipedia.org/wiki/Fowler%E2%80%93Noll%E2%80%93Vo_hash_function */
@@ -58,23 +44,27 @@ static uint64_t fnv_hash(const char *key, size_t keylen)
 
 void map_init(struct map *m, size_t value_size)
 {
-	deref_m.cap = INITIAL_CAP;
-	deref_m.used = 0;
-	deref_m.value_size = value_size;
-	deref_m.entries = calloc(deref_m.value_size + sizeof(struct map_entry),
-			      INITIAL_CAP);
+	m->cap = INITIAL_CAP;
+	m->used = 0;
+	/* align value size to size_t bit boundary */
+	m->value_size =
+		((value_size + sizeof(size_t) - 1) / sizeof(size_t)) *
+			sizeof(size_t);
+
+	m->entries = calloc(INITIAL_CAP,
+				 m->value_size + sizeof(struct map_entry));
 }
 
 void map_destroy(struct map *m)
 {
-	for (size_t i = 0; i < deref_m.cap; i++) {
-		struct map_entry *e = entry_at(deref_m.entries, i);
+	for (size_t i = 0; i < m->cap; i++) {
+		struct map_entry *e = entry_at(m->entries, i);
 
 		if (e->keylen != TOMBSTONE && e->keylen != 0)
 			free(e->key);
 	}
 
-	free(deref_m.entries);
+	free(m->entries);
 }
 
 static struct map_entry *map_get2_entry(struct map *m,
@@ -82,11 +72,11 @@ static struct map_entry *map_get2_entry(struct map *m,
 					size_t keylen)
 {
 	uint64_t hash = fnv_hash(key, keylen);
-	size_t start_i = hash % deref_m.cap;
+	size_t start_i = hash % m->cap;
 	size_t i = start_i;
 
 	do {
-		struct map_entry *e = entry_at(deref_m.entries, i);
+		struct map_entry *e = entry_at(m->entries, i);
 
 		if (e->keylen == 0)
 			return NULL;
@@ -95,20 +85,20 @@ static struct map_entry *map_get2_entry(struct map *m,
 		else
 			i++;
 
-		i %= deref_m.cap;
+		i %= m->cap;
 	} while (i != start_i);
 
-	// Hashmap never fills up to 100%. There alwas a empty slot.
-	assert(0);  // GCOVR_EXCL_LINE: unreachable
+	/* hashmap filled up with tombstones */
+	return NULL;
 }
 
 static void rehash(struct map *m, size_t cap)
 {
-	struct map_entry *old_entries = deref_m.entries;
+	struct map_entry *old_entries = m->entries;
 
-	deref_m.used = 0;
-	deref_m.entries = calloc(deref_m.value_size + sizeof(struct map_entry),
-			      deref_m.cap);
+	m->used = 0;
+	m->entries = calloc(m->cap,
+				 m->value_size + sizeof(struct map_entry));
 
 	for (size_t i = 0; i < cap; i++) {
 		struct map_entry *e = entry_at(old_entries, i);
@@ -125,10 +115,10 @@ static void map_insert2_nocopy(struct map *m,
 			       size_t keylen,
 			       const void *value)
 {
-	if (deref_m.cap * 3 < deref_m.used * 4) {
-		size_t old_cap = deref_m.cap;
+	if (m->cap * 3 < m->used * 4) {
+		size_t old_cap = m->cap;
 
-		deref_m.cap *= 2;
+		m->cap *= 2;
 
 		rehash(m, old_cap);
 	}
@@ -136,27 +126,27 @@ static void map_insert2_nocopy(struct map *m,
 	assert(!map_get2(m, key, keylen) && "map contains the element");
 
 	uint64_t hash = fnv_hash(key, keylen);
-	size_t start_i = hash % deref_m.cap;
+	size_t start_i = hash % m->cap;
 	size_t i = start_i;
 
 	do {
-		struct map_entry *e = entry_at(deref_m.entries, i);
+		struct map_entry *e = entry_at(m->entries, i);
 
 		if (e->keylen == 0 || e->keylen == TOMBSTONE) {
 			e->keylen = keylen;
 			e->key = key;
 
-			if (deref_m.value_size)
-				memcpy(e->value, value, deref_m.value_size);
+			if (m->value_size)
+				memcpy(e->value, value, m->value_size);
 
-			deref_m.used++;
+			m->used++;
 
 			return;
 		} else {
 			i++;
 		}
 
-		i %= deref_m.cap;
+		i %= m->cap;
 	} while (i != start_i);
 
 	assert(0);  // GCOVR_EXCL_LINE: unreachable
@@ -186,7 +176,7 @@ void *map_delete2(struct map *m, const void *key, size_t keylen)
 	if (e) {
 		e->keylen = TOMBSTONE;
 		free(e->key);
-		deref_m.used--;
+		m->used--;
 
 		return e->value;
 	} else {
@@ -210,18 +200,18 @@ void map_insert2(struct map *m, const void *key, size_t keylen, const void *valu
 
 void map_iter(struct map *map, struct map_it *it)
 {
-	deref_it.m = map;
-	deref_it.i = 0;
+	it->m = map;
+	it->i = 0;
 }
 
 struct map_entry *map_iter_next(struct map_it *it)
 {
-	struct map *m = deref_it.m;
+	struct map *m = it->m;
 
-	while (deref_it.i != deref_m.cap) {
-		struct map_entry *e = entry_at(deref_m.entries, deref_it.i);
+	while (it->i != m->cap) {
+		struct map_entry *e = entry_at(m->entries, it->i);
 
-		deref_it.i++;
+		it->i++;
 
 		if (e->keylen != TOMBSTONE && e->keylen != 0)
 			return e;

@@ -1,5 +1,6 @@
 #include "../include/lexer.h"
 
+#include <assert.h>
 #include <ctype.h>
 #include <stdbool.h>
 
@@ -126,6 +127,6 @@ struct lexeme lexer_next(struct lexer *lexer)
 	if (ispunct(c))
 		return collect_punctuation(lexer);
 
-	return lexeme(lexer, LEXEME_UNKNOWN);
+	assert(0 && "bilinemeyen lexeme.");  // GCOVR_EXCL_LINE: not tested
 }
 //! [lexer_next]

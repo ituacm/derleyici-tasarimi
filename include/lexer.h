@@ -29,8 +29,6 @@ struct lexeme {
 	enum lexeme_kind {
 		/** Daha fazla lexeme yok. */
 		LEXEME_EOF,
-		/** Bilinmeyen lexeme. */
-		LEXEME_UNKNOWN,
 		/** Tam sayı. */
 		LEXEME_INT,
 		/** Ondalık sayı. */

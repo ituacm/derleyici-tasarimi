@@ -73,21 +73,21 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><p>Klasik örnektir, defalarca derslerde denk gelmişsinizdir:</p>
-<p>Matematiksel ifadeleri <em>expression tree</em> olarak göstermek, o gösterim <em>evaluate</em> etmek: <code>1 + 3 / ((2 + 1) * 4³)</code></p>
+<p>Matematiksel ifadeleri <em>expression tree</em> olarak göstermek, o gösterimi <em>evaluate</em> etmek: <code>1 + 3 / ((2 + 1) * 4³)</code></p>
 <div class="dotgraph">
 <iframe scrolling="no" frameborder="0" src="dot_ast-expression-tree.svg" width="371" height="443"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
-<p>Bu <em>expression tree</em> yapısını <em>in-order traverse</em> ederek sonucu bulabiliriz. Her seferinde karşımıza bu kadar basit gramer yapıları çıkacak değil. Yazılım dillerinde matematiksel ifadelerden başka yapılar da mevcut, örneğin aşağıdaki kod parçasını ağaca oturtmak istersek,</p>
+<p>Bu <em>expression tree</em> yapısını <a href="https://en.wikipedia.org/wiki/Tree_traversal#In-order,_LNR"><em>in-order traverse</em></a> ederek sonucu bulabiliriz. Her seferinde karşımıza bu kadar basit gramer yapıları çıkacak değil. Yazılım dillerinde matematiksel ifadelerden başka yapılar da mevcut, örneğin aşağıdaki kod parçasını ağaca oturtmak istersek,</p>
 <div class="fragment"><div class="line"><span class="keywordflow">if</span> (6 == 6) {</div>
 <div class="line">    var1 = 7 + func();</div>
 <div class="line">}</div>
 </div><!-- fragment --> <div class="dotgraph">
 <iframe scrolling="no" frameborder="0" src="dot_ast-assignment.svg" width="436" height="347"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
-<p>Aslında epey kolay! Metin formundaki kodu <em>bir şekilde</em> ağaç yapısına dönüştürdüğümüzde değer hesaplamak için <em>tree traversal</em> yeterli oluyor! Peki, bu ağacı nasıl oluşturacağız? Asıl soruna geliyoruz: <em>lexing</em> ve sonrasında parsing*.</p>
+<p>Aslında epey kolay! Metin formundaki kodu <em>bir şekilde</em> ağaç yapısına dönüştürdüğümüzde değer hesaplamak için <em>tree traversal</em> yeterli oluyor! Peki, bu ağacı nasıl oluşturacağız? Asıl soruna geliyoruz: <em>lexing</em> ve sonrasında <em>parsing</em>.</p>
 <div class="dotgraph">
 <iframe scrolling="no" frameborder="0" src="dot_inline_dotgraph_1.svg" width="486" height="62"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 <h1><a class="anchor" id="front_end_lexical_analysis"></a>
 Lexical Analysis</h1>
-<p>String* üzerinde çalışmak genel olarak zor. Ağaca oturtma sürecinde bir sayının değeri, değişkenin ya da fonksiyonun ismi bizi ilgilendirmiyor. Tokenizer* ile metin işleme sürecinde syntax elemanlarının anlamını çıkarırız. Mesela, <code>if (x == 12) b = 21;</code>i ele alalım.</p>
+<p><em>String</em> üzerinde çalışmak genel olarak zor. Ağaca oturtma sürecinde bir sayının değeri, değişkenin ya da fonksiyonun ismi bizi ilgilendirmiyor. <em>Tokenizer</em> ile metin işleme sürecinde lexeme denen syntax parçalarının anlamını çıkarırız. Mesela, <code>if (x == 12) b = 21;</code>i ele alalım.</p>
 <table class="markdownTable">
 <tr class="markdownTableHead">
 <th class="markdownTableHeadNone">lexeme   </th><th class="markdownTableHeadNone">token   </th><th class="markdownTableHeadNone">seminfo    </th></tr>
@@ -112,7 +112,7 @@ Lexical Analysis</h1>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone">;   </td><td class="markdownTableBodyNone">SEMI   </td><td class="markdownTableBodyNone"></td></tr>
 </table>
-<p>Genelde, bütün metni tutmak yerine gereksiz detayları atlayarak ham token bilgisini tutmayı tercih ederiz. <code>token</code> isminde bir <code>enum</code> tanımlayıp onu seminfo <code>union</code> tanımlayarak gramer yapılarını daha özlü bir şekilde temsil etmek mümkündür:</p>
+<p>Genelde, bütün metni tutmak yerine gereksiz detayları atlayarak ham token bilgisini tutmayı tercih ederiz. <code>token</code> isminde bir <code>enum</code> ve seminfo isminde bir <code>union</code> tanımlayarak gramer yapılarını daha özlü bir şekilde temsil etmek mümkündür:</p>
 <div class="fragment"><div class="line"><span class="keyword">enum</span> token {</div>
 <div class="line">    TK_IF,</div>
 <div class="line">    TK_LPAREN,</div>
@@ -122,14 +122,14 @@ Lexical Analysis</h1>
 <div class="line"><span class="keyword">union </span>seminfo {</div>
 <div class="line">    <span class="keywordtype">char</span> *id;</div>
 <div class="line">    <span class="keywordtype">size_t</span> num;</div>
-<div class="line">}</div>
-</div><!-- fragment --><p><code>if</code> keywordü, sayılar ve isimlere odaklanacak olursak, aşağıdaki <em>state machine</em> görseli metinden token üretme kurallarını uyguluyor:</p>
+<div class="line">};</div>
+</div><!-- fragment --><p>Sadece <code>if</code> keywordüne, sayılara ve isimlere odaklanacak olursak, aşağıdaki görseldeki <em>state machineler</em> metinden token üretme kurallarını uygulamaya yeterli olacaktır:</p>
 <div class="dotgraph">
 <iframe scrolling="no" frameborder="0" src="dot_dfa-lexer.svg" width="374" height="263"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
-<p>Her bir token için 3 ayrı <em>state machine</em> başlatmak uygulanabilir değil. Tek bir <em>state macine</em> olacak şekilde yeniden düzenleme yapmamız gerekiyor. Bunu, yeni <em>starting state</em> ekleyip onu eski starting statelere <em>epsilon transition</em> ile bağlayarak yapabiliriz:</p>
+<p>Her bir token için 3 ayrı <em>state machine</em> başlatmak uygulanabilir değil. Tek bir <em>state machine</em> olacak şekilde yeniden düzenleme yapmamız gerekiyor. Bunu, yeni <em>starting state</em> ekleyip onu eski starting statelere <a href="https://en.wikipedia.org/wiki/Epsilon_transition"><em>epsilon transition</em></a> ile bağlayarak yapabiliriz:</p>
 <div class="dotgraph">
 <iframe scrolling="no" frameborder="0" src="dot_nfa-lexer.svg" width="500" height="287"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
-<p>Ancak şu anda lexerimiz <em>nondeterministic finite state machine</em> (NFA) oldu. Bunun implementasyonunu yapmamız mümkün değil, tekrardan <em>deterministic finite state macine</em> (DFA) oluşturmamız gerekiyor. DFA-NFA dönüşümleri bu dersin konusu değil, sadece örnek olsun diye veriyorum:</p>
+<p>Ancak şu anda lexerimiz <a href="https://en.wikipedia.org/wiki/Nondeterministic_finite_automaton"><em>nondeterministic finite state machine</em></a> (NFA) oldu. Bunun implementasyonunu yapmamız mümkün değil, tekrardan <a href="https://en.wikipedia.org/wiki/Deterministic_finite_automaton"><em>deterministic finite state macine</em></a> (DFA) oluşturmamız gerekiyor. DFA-NFA dönüşümleri bu dersin konusu değil, sadece örnek olsun diye veriyorum:</p>
 <div class="dotgraph">
 <iframe scrolling="no" frameborder="0" src="dot_dfa-combined-lexer.svg" width="646" height="314"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 <p>Tabii bugün elle bu kadar optimize edilmiş bir state macine kodlamayacağız. Sayı, identifier ve tek ya da iki karakterlik sembol/operatörleri metinden tokenize edecek bir lexer kodlamaya başlayalım: <a class="el" href="lexer_page.html">Lexer</a></p>

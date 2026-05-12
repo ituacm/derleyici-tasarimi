@@ -1,0 +1,40 @@
+/**
+@page lexer_page Lexer
+
+İki seviyeli lexer kodlayacağız:
+- Sayı, identifier, operatör gibi tipleri direkt toplayacak; lexeme üretecek
+  katman.
+- Bu lexemelerdeki keyword ve operatörleri çıkaracak, token üretecek üst
+  katman.
+
+@snippet include/lexer.h Lexeme
+
+Yukarıdaki lexemeleri, @ref lexer ile üreteceğiz:
+
+@snippet include/lexer.h Lexer fonksiyonları
+
+@ref lexer_init() gayet basit bir fonksiyon. Kaynak metni @ref lexer içinde
+pointera alıp `current`i metnin başına hizalıyor:
+
+@snippet snippets/lexer.c lexer_init
+
+Esas DFA yapısı @ref lexer_next() içinde kendini gösteriyor:
+
+@snippet snippets/lexer.c lexer_next
+
+@ref lexer_next() fonksiyonunda kodun okunabilirliğini artırmak için birkaç
+basit fonksiyon tanımladım: @subpage lexer_yardimci_fonksiyonlar_page
+
+Lexeme toplayan fonksiyonları tek tek inceleyelim. Identifier ve sembol
+tomplama fonksiyonları birebir aynı şekilde çalışıyor. Aralarındaki tek fark,
+biri `ispunct` kullanırken diğeri `isalnum` kullanıyor.
+
+@snippet snippets/lexer.c Identifier&sembol toplama
+
+Esas karışıklık sayı toplamada. Hem ondalık hem işaretli hem de tam sayı
+tek bir fonksiyonla toplanıyor:
+
+@snippet snippets/lexer.c Sayı toplama
+
+Lexeri hallettiğimize göre, artık @ref tokenizer_page yazmaya başlayabiliriz.
+*/

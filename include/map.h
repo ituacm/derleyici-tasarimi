@@ -43,12 +43,12 @@ struct map_entry {
 /**
  * @brief Yeni bir map oluşturur.
  *
- * map için gerekli hafızayı ayırır. `value_size` parametresi, kullanıcının
+ * map için gerekli belleği ayırır. `value_size` parametresi, kullanıcının
  * ekleyeceği `value`ların maksimum boyutunu belirtir.
  */
 void map_init(struct map *map, size_t value_size);
 
-/** @brief map tarafından ayrılmış hafızayı temizler. */
+/** @brief map tarafından ayrılmış belleği temizler. */
 void map_destroy(struct map *map);
 
 /**

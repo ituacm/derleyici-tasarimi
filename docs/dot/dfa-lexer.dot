@@ -1,4 +1,4 @@
-digraph ast_expression_tree {
+digraph dfa_lexer {
     rankdir = LR;
 
     node [shape = "circle"];

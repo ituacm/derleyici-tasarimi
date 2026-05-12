@@ -36,12 +36,12 @@ struct stack {
 /**
  * @brief Yeni bir stack oluşturur.
  *
- * stack için gerekli hafızayı ayırır. `item_size` parametresi, kullanıcının
+ * stack için gerekli bellek ayırır. `item_size` parametresi, kullanıcının
  * ekleyeceği elemanların boyutunu belirtir.
  */
 void stack_init(struct stack *stack, size_t item_size);
 
-/** @brief stack tarafından ayrılmış hafızayı temizler. */
+/** @brief stack tarafından ayrılmış balleği temizler. */
 void stack_destroy(struct stack *stack);
 
 /** @brief En üstteki elemanı (`top`) stack'ten silip döner. */

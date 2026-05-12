@@ -1,4 +1,4 @@
-digraph ast_expression_tree {
+digraph dfa_combined_lexer {
     rankdir = LR;
 
     node [shape = "circle"];
@@ -18,7 +18,7 @@ digraph ast_expression_tree {
     B -> C [label = "(a-z|A-Z|_|0-9)"]
 
     S -> D [label = "(+|-)"];
-    S -> D [label = "ε"];
+    S -> E [label = "(0-9)"];
     D -> E [label = "(0-9)"];
-    E -> D [label = "ε"];
+    E -> E [label = "(0-9)"];
 }

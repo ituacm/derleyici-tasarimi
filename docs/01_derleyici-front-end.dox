@@ -1,5 +1,5 @@
 /**
-@page derleyici_front_end Derleyici Front Endi
+@page derleyici_front_end_page Derleyici Front Endi
 
 Klasik örnektir, defalarca derslerde denk gelmişsinizdir:
 
@@ -45,7 +45,7 @@ digraph navigation {
 
 *String* üzerinde çalışmak genel olarak zor. Ağaca oturtma sürecinde bir
 sayının değeri, değişkenin ya da fonksiyonun ismi bizi ilgilendirmiyor.
-*Tokenizer*, metin işleme sürecinde *syntax* elemanlarının anlamını çıkarırız.
+*Tokenizer* ile metin işleme sürecinde syntax elemanlarının anlamını çıkarırız.
 Mesela, `if (x == 12) b = 21;`i ele alalım.
 
 | lexeme | token | seminfo |
@@ -84,7 +84,7 @@ union seminfo {
 
 @dotfile dot/dfa-lexer.dot
 
-Her bir token için 3 ayrı *state macine* başlatmak uygulanabilir değil. Tek
+Her bir token için 3 ayrı *state machine* başlatmak uygulanabilir değil. Tek
 bir *state macine* olacak şekilde yeniden düzenleme yapmamız gerekiyor. Bunu,
 yeni *starting state* ekleyip onu eski starting statelere *epsilon transition*
 ile bağlayarak yapabiliriz:
@@ -93,9 +93,14 @@ ile bağlayarak yapabiliriz:
 
 Ancak şu anda lexerimiz *nondeterministic finite state machine* (NFA) oldu.
 Bunun implementasyonunu yapmamız mümkün değil, tekrardan
-* *deterministic finitie state macine* (DFA) oluşturmamız gerekiyor. DFA-NFA
+* *deterministic finite state macine* (DFA) oluşturmamız gerekiyor. DFA-NFA
 dönüşümleri bu dersin konusu değil, sadece örnek olsun diye veriyorum:
 
 @dotfile dot/dfa-combined-lexer.dot
 
+Tabii bugün elle bu kadar optimize edilmiş bir state macine kodlamayacağız.
+Sayı, identifier ve tek ya da iki karakterlik sembol/operatörleri metinden
+tokenize edecek bir lexer kodlamaya başlayalım: @subpage lexer_page
+
+Sonrasında @subpage tokenizer_page ile devam edeceğiz.
 */

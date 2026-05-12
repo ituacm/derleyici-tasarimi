@@ -1,0 +1,5 @@
+/**
+@page lexer_yardimci_fonksiyonlar_page Lexer için Yardımcı Fonsiyonlar
+
+@snippet snippets/lexer.c Yardımcı fonksiyonlar
+*/

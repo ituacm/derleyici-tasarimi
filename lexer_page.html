@@ -168,7 +168,7 @@ $(function() {
 <div class="line"> </div>
 <div class="line">        <span class="keywordflow">return</span> <a class="code hl_struct" href="structlexeme.html">lexeme</a>(<a class="code hl_struct" href="structlexer.html">lexer</a>, <a class="code hl_enumvalue" href="structlexeme.html#a76d0f0eb5eb899305ec7d40898c5c351af044d467b8dc5d12378de61299094d2b">LEXEME_PUNCT</a>);</div>
 <div class="line">}</div>
-</div><!-- fragment --><p>Buradaki esas karışıklık sayı tokenlerini toplamada. Hem ondalık hem işaretli hem de tam sayı tokenleri tek bir fonksiyonla toplanıyor:</p>
+</div><!-- fragment --><p>Buradaki esas karışıklık sayı tokenlerini toplamada. Hem ondalık hem de tam sayı tokenleri tek bir fonksiyonla toplanıyor:</p>
 <div class="fragment"><div class="line"><span class="keyword">static</span> <span class="keyword">struct </span><a class="code hl_struct" href="structlexeme.html">lexeme</a> collect_number(struct <a class="code hl_struct" href="structlexer.html">lexer</a> *<a class="code hl_struct" href="structlexer.html">lexer</a>)</div>
 <div class="line">{</div>
 <div class="line">        <span class="keyword">enum</span> <a class="code hl_enumeration" href="structlexeme.html#a76d0f0eb5eb899305ec7d40898c5c351">lexeme_kind</a> <a class="code hl_variable" href="structlexeme.html#a277858432fd14fe69933cdeb5092552c">kind</a> = <a class="code hl_enumvalue" href="structlexeme.html#a76d0f0eb5eb899305ec7d40898c5c351ab53c25af417c1d07d816188fe25abd94">LEXEME_INT</a>;</div>

@@ -69,7 +69,7 @@ $(function() {
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="derleyici_front_end_page.html">Derleyici Front Endi</a></li>  </ul>
+<li class="navelem"><a class="el" href="derleyici_front_end_page.html">Derleyici Front End&#39;i</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div><div class="header">
@@ -98,11 +98,11 @@ $(function() {
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><a class="el" href="tokenizer_8h.html#a7ffbf59a256be2852e91e6ccecafb7ad">TK_IDENT</a>   </td><td class="markdownTableBodyNone">Identifier token ID'si.     </td></tr>
 </table>
-<p>Benzer şekilde identifier'lara de sayısal ID'ler atayacağız. Tokenizer, daha önce karşılaşmadığı bir identifier gelince ona sıradaki ID'yi atayacak.</p>
+<p>Benzer şekilde identifier'lara da sayısal ID'ler atayacağız. Tokenizer, daha önce karşılaşmadığı bir identifier gelince ona sıradaki ID'yi atayacak.</p>
 <dl class="section see"><dt>Ayrıca Bakınız</dt><dd><a class="el" href="taslak.html#taslak_veri_yapilari_sec">Veri Yapıları</a></dd></dl>
 <table class="markdownTable">
 <tr class="markdownTableHead">
-<th class="markdownTableHeadNone">symbol   </th><th class="markdownTableHeadNone">ID    </th></tr>
+<th class="markdownTableHeadNone">identifier   </th><th class="markdownTableHeadNone">ID    </th></tr>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone">degisken1   </td><td class="markdownTableBodyNone">0    </td></tr>
 <tr class="markdownTableRowEven">
@@ -136,7 +136,7 @@ Tokenizer Tasarımı</h1>
 <div class="ttc" id="astructtokenizer_html"><div class="ttname"><a href="structtokenizer.html">tokenizer</a></div><div class="ttdoc">tokenizer.</div><div class="ttdef"><b>Definition</b> <a href="tokenizer_8h_source.html#l00033">tokenizer.h:33</a></div></div>
 <div class="ttc" id="atokenizer_8h_html_a91b6fe31be04c8262446395e5b61c7b4"><div class="ttname"><a href="tokenizer_8h.html#a91b6fe31be04c8262446395e5b61c7b4">tokenizer_feed</a></div><div class="ttdeci">void tokenizer_feed(struct tokenizer *tokenizer, struct lexeme lexeme)</div><div class="ttdoc">Lexemeyi tokenizere gönderir.</div></div>
 <div class="ttc" id="atokenizer_8h_html_ae76c8323e13da9eaddd2a3cdbfbd6fdf"><div class="ttname"><a href="tokenizer_8h.html#ae76c8323e13da9eaddd2a3cdbfbd6fdf">tokenizer_next</a></div><div class="ttdeci">struct token tokenizer_next(struct tokenizer *tokenzier)</div><div class="ttdoc">Sıradaki tokeni çek.</div></div>
-</div><!-- fragment --><p>Bir lexemede birden fazla token olabileceği için bu yapıyı kurduk. Operatörleri tokenize ederken bu yapı daha da mantıklı gelecek.</p>
+</div><!-- fragment --><p>Bir lexeme'de birden fazla token olabileceği için bu yapıyı kurduk. Punctuation'ları tokenize ederken bu yapı daha da mantıklı gelecek.</p>
 <div class="fragment"><div class="line"><span class="keyword">struct </span><a class="code hl_struct" href="structtokenizer.html">tokenizer</a> {</div>
 <div class="line">        <span class="keyword">struct </span><a class="code hl_struct" href="structmap.html">map</a> <a class="code hl_variable" href="structtokenizer.html#a9df21e9a0bb4a2c3c590735b6cff6bbc">ident_map</a>;</div>
 <div class="line">        <span class="keywordtype">size_t</span> <a class="code hl_variable" href="structtokenizer.html#a86c72300c47da8d8e38b7d28b071d1f1">last_id</a>;</div>
@@ -149,9 +149,9 @@ Tokenizer Tasarımı</h1>
 <div class="ttc" id="astructmap_html"><div class="ttname"><a href="structmap.html">map</a></div><div class="ttdoc">map.</div><div class="ttdef"><b>Definition</b> <a href="map_8h_source.html#l00018">map.h:18</a></div></div>
 <div class="ttc" id="astructtokenizer_html_a0c51ea77dd2ad2b16c6b484579d82445"><div class="ttname"><a href="structtokenizer.html#a0c51ea77dd2ad2b16c6b484579d82445">tokenizer::current_lexeme</a></div><div class="ttdeci">struct lexeme current_lexeme</div><div class="ttdoc">İşlenmekte olan lexeme.</div><div class="ttdef"><b>Definition</b> <a href="tokenizer_8h_source.html#l00045">tokenizer.h:45</a></div></div>
 <div class="ttc" id="astructtokenizer_html_a86c72300c47da8d8e38b7d28b071d1f1"><div class="ttname"><a href="structtokenizer.html#a86c72300c47da8d8e38b7d28b071d1f1">tokenizer::last_id</a></div><div class="ttdeci">size_t last_id</div><div class="ttdoc">Identifier'lara eşsiz ID'ler ataybilmek için yardımcı sayaç.</div><div class="ttdef"><b>Definition</b> <a href="tokenizer_8h_source.html#l00037">tokenizer.h:37</a></div></div>
-<div class="ttc" id="astructtokenizer_html_a924d670164bc6f65b26af096dab0f7d2"><div class="ttname"><a href="structtokenizer.html#a924d670164bc6f65b26af096dab0f7d2">tokenizer::punctuations</a></div><div class="ttdeci">struct map punctuations</div><div class="ttdoc">Yazılım dilindeki sembol ve operatörler.</div><div class="ttdef"><b>Definition</b> <a href="tokenizer_8h_source.html#l00042">tokenizer.h:42</a></div></div>
+<div class="ttc" id="astructtokenizer_html_a924d670164bc6f65b26af096dab0f7d2"><div class="ttname"><a href="structtokenizer.html#a924d670164bc6f65b26af096dab0f7d2">tokenizer::punctuations</a></div><div class="ttdeci">struct map punctuations</div><div class="ttdoc">Yazılım dilindeki punctuation'lar (sembol ve operatörler).</div><div class="ttdef"><b>Definition</b> <a href="tokenizer_8h_source.html#l00042">tokenizer.h:42</a></div></div>
 <div class="ttc" id="astructtokenizer_html_a9df21e9a0bb4a2c3c590735b6cff6bbc"><div class="ttname"><a href="structtokenizer.html#a9df21e9a0bb4a2c3c590735b6cff6bbc">tokenizer::ident_map</a></div><div class="ttdeci">struct map ident_map</div><div class="ttdoc">Identifier'a karşılık atanan sayısal ID.</div><div class="ttdef"><b>Definition</b> <a href="tokenizer_8h_source.html#l00035">tokenizer.h:35</a></div></div>
-<div class="ttc" id="astructtokenizer_html_ac36e37ee91a63f44151497af4b5b72cc"><div class="ttname"><a href="structtokenizer.html#ac36e37ee91a63f44151497af4b5b72cc">tokenizer::keywords</a></div><div class="ttdeci">struct map keywords</div><div class="ttdoc">Yazılım dilindeki keywordler.</div><div class="ttdef"><b>Definition</b> <a href="tokenizer_8h_source.html#l00040">tokenizer.h:40</a></div></div>
+<div class="ttc" id="astructtokenizer_html_ac36e37ee91a63f44151497af4b5b72cc"><div class="ttname"><a href="structtokenizer.html#ac36e37ee91a63f44151497af4b5b72cc">tokenizer::keywords</a></div><div class="ttdeci">struct map keywords</div><div class="ttdoc">Yazılım dilindeki keyword'ler.</div><div class="ttdef"><b>Definition</b> <a href="tokenizer_8h_source.html#l00040">tokenizer.h:40</a></div></div>
 </div><!-- fragment --><p>Basma kalıp init ve destroy fonksiyonlarımızı yazalaım:</p>
 <div class="fragment"><div class="line"><span class="keywordtype">void</span> <a class="code hl_function" href="tokenizer_8h.html#a73d455e90e9f0e517198663d56d6b5a3">tokenizer_init</a>(<span class="keyword">struct</span> <a class="code hl_struct" href="structtokenizer.html">tokenizer</a> *t)</div>
 <div class="line">{</div>
@@ -267,67 +267,12 @@ Tokenizing</h1>
 <div class="line">        assert(0);  <span class="comment">// GCOVR_EXCL_LINE: unreachable</span></div>
 <div class="line">}</div>
 <div class="ttc" id="atokenizer_8h_html_a6fa87d7080a9a48e43877b84d6341be3"><div class="ttname"><a href="tokenizer_8h.html#a6fa87d7080a9a48e43877b84d6341be3">TK_NOTOKEN</a></div><div class="ttdeci">static const size_t TK_NOTOKEN</div><div class="ttdoc">tokenizer_feed() ile verilen lexemenin bittiğini belirtir.</div><div class="ttdef"><b>Definition</b> <a href="tokenizer_8h_source.html#l00019">tokenizer.h:19</a></div></div>
-</div><!-- fragment --><p>Sırasıyla fonksiyonları inceleyelim:</p>
-<div class="fragment"><div class="line"><span class="keyword">static</span> <span class="keyword">struct </span><a class="code hl_struct" href="structtoken.html">token</a> consume_ident(struct <a class="code hl_struct" href="structtokenizer.html">tokenizer</a> *t)</div>
-<div class="line">{</div>
-<div class="line">        <span class="comment">/* Identifier&#39;ın keyword olup olmadığına bakıyoruz. */</span></div>
-<div class="line">        <span class="keywordtype">size_t</span> *keyword_id = <a class="code hl_function" href="map_8h.html#ab61c37aaaf3a19a6bf24da8f1d35379b">map_get2</a>(&amp;t-&gt;<a class="code hl_variable" href="structtokenizer.html#ac36e37ee91a63f44151497af4b5b72cc">keywords</a>,</div>
-<div class="line">                               t-&gt;<a class="code hl_variable" href="structtokenizer.html#a0c51ea77dd2ad2b16c6b484579d82445">current_lexeme</a>.<a class="code hl_variable" href="structlexeme.html#a7fba035b50a3af17cab8f337892b1461">seminfo</a>,</div>
-<div class="line">                               t-&gt;<a class="code hl_variable" href="structtokenizer.html#a0c51ea77dd2ad2b16c6b484579d82445">current_lexeme</a>.<a class="code hl_variable" href="structlexeme.html#aa9093b6755d0a5bebe502490ec567b83">seminfo_len</a>);</div>
-<div class="line"> </div>
-<div class="line">        clear_lexeme(t);</div>
-<div class="line">        <span class="keywordflow">if</span> (keyword_id) {</div>
-<div class="line">                <span class="keywordflow">return</span> (<span class="keyword">struct</span> <a class="code hl_struct" href="structtoken.html">token</a>) { .id = *keyword_id };</div>
-<div class="line">        } <span class="keywordflow">else</span> {</div>
-<div class="line">                <span class="keywordtype">size_t</span> <a class="code hl_variable" href="structtoken.html#a06a1175feedfb389be7f585fba9d5c2f">ident_id</a> = <a class="code hl_function" href="tokenizer_8h.html#a214f3e013176bd41dff1de7da7d6c886">tokenizer_ident_id2</a>(t,</div>
-<div class="line">                                       t-&gt;<a class="code hl_variable" href="structtokenizer.html#a0c51ea77dd2ad2b16c6b484579d82445">current_lexeme</a>.<a class="code hl_variable" href="structlexeme.html#a7fba035b50a3af17cab8f337892b1461">seminfo</a>,</div>
-<div class="line">                                       t-&gt;<a class="code hl_variable" href="structtokenizer.html#a0c51ea77dd2ad2b16c6b484579d82445">current_lexeme</a>.<a class="code hl_variable" href="structlexeme.html#aa9093b6755d0a5bebe502490ec567b83">seminfo_len</a>);</div>
-<div class="line"> </div>
-<div class="line">                <span class="keywordflow">return</span> (<span class="keyword">struct</span> <a class="code hl_struct" href="structtoken.html">token</a>) { .id = <a class="code hl_variable" href="tokenizer_8h.html#a7ffbf59a256be2852e91e6ccecafb7ad">TK_IDENT</a>, .seminfo.ident_id = <a class="code hl_variable" href="structtoken.html#a06a1175feedfb389be7f585fba9d5c2f">ident_id</a>};</div>
-<div class="line">        }</div>
-<div class="line">}</div>
-<div class="ttc" id="astructlexeme_html_a7fba035b50a3af17cab8f337892b1461"><div class="ttname"><a href="structlexeme.html#a7fba035b50a3af17cab8f337892b1461">lexeme::seminfo</a></div><div class="ttdeci">const char * seminfo</div><div class="ttdef"><b>Definition</b> <a href="lexer_8h_source.html#l00023">lexer.h:23</a></div></div>
-<div class="ttc" id="astructlexeme_html_aa9093b6755d0a5bebe502490ec567b83"><div class="ttname"><a href="structlexeme.html#aa9093b6755d0a5bebe502490ec567b83">lexeme::seminfo_len</a></div><div class="ttdeci">size_t seminfo_len</div><div class="ttdef"><b>Definition</b> <a href="lexer_8h_source.html#l00026">lexer.h:26</a></div></div>
-<div class="ttc" id="atokenizer_8h_html_a7ffbf59a256be2852e91e6ccecafb7ad"><div class="ttname"><a href="tokenizer_8h.html#a7ffbf59a256be2852e91e6ccecafb7ad">TK_IDENT</a></div><div class="ttdeci">static const size_t TK_IDENT</div><div class="ttdoc">Identifier token ID'si.</div><div class="ttdef"><b>Definition</b> <a href="tokenizer_8h_source.html#l00028">tokenizer.h:28</a></div></div>
-</div><!-- fragment --> <div class="fragment"><div class="line"><span class="keyword">static</span> <span class="keyword">struct </span><a class="code hl_struct" href="structtoken.html">token</a> consume_punct(struct <a class="code hl_struct" href="structtokenizer.html">tokenizer</a> *t)</div>
-<div class="line">{</div>
-<div class="line">        <span class="keywordtype">size_t</span> *punct_id;</div>
-<div class="line">        <span class="keywordtype">size_t</span> i;</div>
-<div class="line"> </div>
-<div class="line">        <span class="comment">/* Uzun punctuation&#39;lardan başlayarak tek tek punctuation map&#39;ten ID</span></div>
-<div class="line"><span class="comment">         * arar. Örneğin hem `*` hem de `**` operatörü varsa `1 ** 2` ifadesini</span></div>
-<div class="line"><span class="comment">         * uygun şekilde tokenize etmek için uzun sembollerden başlamak</span></div>
-<div class="line"><span class="comment">         * gerekir. */</span></div>
-<div class="line">        <span class="keywordflow">for</span> (</div>
-<div class="line">             i = MAX_PUNCT_LEN &gt; t-&gt;<a class="code hl_variable" href="structtokenizer.html#a0c51ea77dd2ad2b16c6b484579d82445">current_lexeme</a>.<a class="code hl_variable" href="structlexeme.html#aa9093b6755d0a5bebe502490ec567b83">seminfo_len</a> ?</div>
-<div class="line">                t-&gt;<a class="code hl_variable" href="structtokenizer.html#a0c51ea77dd2ad2b16c6b484579d82445">current_lexeme</a>.<a class="code hl_variable" href="structlexeme.html#aa9093b6755d0a5bebe502490ec567b83">seminfo_len</a> : MAX_PUNCT_LEN;</div>
-<div class="line">             i &gt; 0;</div>
-<div class="line">             i--) {</div>
-<div class="line">                punct_id = <a class="code hl_function" href="map_8h.html#ab61c37aaaf3a19a6bf24da8f1d35379b">map_get2</a>(&amp;t-&gt;<a class="code hl_variable" href="structtokenizer.html#a924d670164bc6f65b26af096dab0f7d2">punctuations</a>,</div>
-<div class="line">                             t-&gt;<a class="code hl_variable" href="structtokenizer.html#a0c51ea77dd2ad2b16c6b484579d82445">current_lexeme</a>.<a class="code hl_variable" href="structlexeme.html#a7fba035b50a3af17cab8f337892b1461">seminfo</a>, i);</div>
-<div class="line"> </div>
-<div class="line">                <span class="keywordflow">if</span> (punct_id) {</div>
-<div class="line">                        t-&gt;<a class="code hl_variable" href="structtokenizer.html#a0c51ea77dd2ad2b16c6b484579d82445">current_lexeme</a>.<a class="code hl_variable" href="structlexeme.html#a7fba035b50a3af17cab8f337892b1461">seminfo</a> += i;</div>
-<div class="line">                        t-&gt;<a class="code hl_variable" href="structtokenizer.html#a0c51ea77dd2ad2b16c6b484579d82445">current_lexeme</a>.<a class="code hl_variable" href="structlexeme.html#aa9093b6755d0a5bebe502490ec567b83">seminfo_len</a> -= i;</div>
-<div class="line"> </div>
-<div class="line">                        <span class="keywordflow">break</span>;</div>
-<div class="line">                }</div>
-<div class="line">        }</div>
-<div class="line"> </div>
-<div class="line">        <span class="comment">/* i&#39;in 0&#39;a kadar inmesi, hiçbir punctuation bulunamamıştır demektir. */</span></div>
-<div class="line">        assert(i &amp;&amp; <span class="stringliteral">&quot;Bilinmeyen punctuation.&quot;</span>);</div>
-<div class="line"> </div>
-<div class="line">        <span class="comment">/* punctuation lexemenin tamamı tüketilmişse current_lexemeyi temizle. */</span></div>
-<div class="line">        <span class="keywordflow">if</span> (t-&gt;<a class="code hl_variable" href="structtokenizer.html#a0c51ea77dd2ad2b16c6b484579d82445">current_lexeme</a>.<a class="code hl_variable" href="structlexeme.html#aa9093b6755d0a5bebe502490ec567b83">seminfo_len</a> == 0)</div>
-<div class="line">                clear_lexeme(t);</div>
-<div class="line"> </div>
-<div class="line">        <span class="keywordflow">return</span> (<span class="keyword">struct</span> <a class="code hl_struct" href="structtoken.html">token</a>) { .id = *punct_id };</div>
-<div class="line">}</div>
-</div><!-- fragment --> <div class="fragment"><div class="line"><span class="keyword">static</span> <span class="keyword">struct </span><a class="code hl_struct" href="structtoken.html">token</a> consume_num(struct <a class="code hl_struct" href="structtokenizer.html">tokenizer</a> *t)</div>
+</div><!-- fragment --><p>Tokenizer'ın karakter parçalarını anlamlandırmasını irdeleyelim. <code>TK_NUM</code> üretmek, nispeten daha düz mantık:</p>
+<div class="fragment"><div class="line"><span class="keyword">static</span> <span class="keyword">struct </span><a class="code hl_struct" href="structtoken.html">token</a> consume_num(struct <a class="code hl_struct" href="structtokenizer.html">tokenizer</a> *t)</div>
 <div class="line">{</div>
 <div class="line">        <span class="keywordtype">char</span> num[t-&gt;<a class="code hl_variable" href="structtokenizer.html#a0c51ea77dd2ad2b16c6b484579d82445">current_lexeme</a>.<a class="code hl_variable" href="structlexeme.html#aa9093b6755d0a5bebe502490ec567b83">seminfo_len</a> + 1];</div>
 <div class="line"> </div>
-<div class="line">        <span class="comment">/* Lexemeden gelen seminfo, null terminated değildir, devamında diğer</span></div>
+<div class="line">        <span class="comment">/* Lexeme&#39;den gelen seminfo null terminated değildir ve devamında diğer</span></div>
 <div class="line"><span class="comment">         * tokenleri içerebilir. Onu bir char[]&#39;a kopyalayarak stringden sayı</span></div>
 <div class="line"><span class="comment">         * dönüşümünü yapıyoruz. */</span></div>
 <div class="line">        num[t-&gt;<a class="code hl_variable" href="structtokenizer.html#a0c51ea77dd2ad2b16c6b484579d82445">current_lexeme</a>.<a class="code hl_variable" href="structlexeme.html#aa9093b6755d0a5bebe502490ec567b83">seminfo_len</a>] = <span class="charliteral">&#39;\0&#39;</span>;</div>
@@ -346,8 +291,65 @@ Tokenizing</h1>
 <div class="line">        clear_lexeme(t);</div>
 <div class="line">        <span class="keywordflow">return</span> tk;</div>
 <div class="line">}</div>
+<div class="ttc" id="astructlexeme_html_a7fba035b50a3af17cab8f337892b1461"><div class="ttname"><a href="structlexeme.html#a7fba035b50a3af17cab8f337892b1461">lexeme::seminfo</a></div><div class="ttdeci">const char * seminfo</div><div class="ttdef"><b>Definition</b> <a href="lexer_8h_source.html#l00023">lexer.h:23</a></div></div>
+<div class="ttc" id="astructlexeme_html_aa9093b6755d0a5bebe502490ec567b83"><div class="ttname"><a href="structlexeme.html#aa9093b6755d0a5bebe502490ec567b83">lexeme::seminfo_len</a></div><div class="ttdeci">size_t seminfo_len</div><div class="ttdef"><b>Definition</b> <a href="lexer_8h_source.html#l00026">lexer.h:26</a></div></div>
 <div class="ttc" id="atokenizer_8h_html_a6e3d5f8635d47064e61bd89a16aa9219"><div class="ttname"><a href="tokenizer_8h.html#a6e3d5f8635d47064e61bd89a16aa9219">TK_FLOAT</a></div><div class="ttdeci">static const size_t TK_FLOAT</div><div class="ttdoc">Ondalık sayı token ID'si.</div><div class="ttdef"><b>Definition</b> <a href="tokenizer_8h_source.html#l00025">tokenizer.h:25</a></div></div>
 <div class="ttc" id="atokenizer_8h_html_a8616b93391ec951a4d353a10315cad54"><div class="ttname"><a href="tokenizer_8h.html#a8616b93391ec951a4d353a10315cad54">TK_INT</a></div><div class="ttdeci">static const size_t TK_INT</div><div class="ttdoc">Tam sayı token ID'si.</div><div class="ttdef"><b>Definition</b> <a href="tokenizer_8h_source.html#l00022">tokenizer.h:22</a></div></div>
+</div><!-- fragment --><p>Lexer'da grupladığımız identifier ve punctuation'ları şimdi anlamlandıracağız. Lexer keyword ve identifier ayrımını yapmamıştı, şimdi tokenizer'da karakter grubunun keyword olup olmadığına bakıp token üreteceğiz:</p>
+<div class="fragment"><div class="line"><span class="keyword">static</span> <span class="keyword">struct </span><a class="code hl_struct" href="structtoken.html">token</a> consume_ident(struct <a class="code hl_struct" href="structtokenizer.html">tokenizer</a> *t)</div>
+<div class="line">{</div>
+<div class="line">        <span class="comment">/* Identifier&#39;ın keyword olup olmadığına bakıyoruz. */</span></div>
+<div class="line">        <span class="keywordtype">size_t</span> *keyword_id = <a class="code hl_function" href="map_8h.html#ab61c37aaaf3a19a6bf24da8f1d35379b">map_get2</a>(&amp;t-&gt;<a class="code hl_variable" href="structtokenizer.html#ac36e37ee91a63f44151497af4b5b72cc">keywords</a>,</div>
+<div class="line">                               t-&gt;<a class="code hl_variable" href="structtokenizer.html#a0c51ea77dd2ad2b16c6b484579d82445">current_lexeme</a>.<a class="code hl_variable" href="structlexeme.html#a7fba035b50a3af17cab8f337892b1461">seminfo</a>,</div>
+<div class="line">                               t-&gt;<a class="code hl_variable" href="structtokenizer.html#a0c51ea77dd2ad2b16c6b484579d82445">current_lexeme</a>.<a class="code hl_variable" href="structlexeme.html#aa9093b6755d0a5bebe502490ec567b83">seminfo_len</a>);</div>
+<div class="line"> </div>
+<div class="line">        clear_lexeme(t);</div>
+<div class="line">        <span class="keywordflow">if</span> (keyword_id) {</div>
+<div class="line">                <span class="keywordflow">return</span> (<span class="keyword">struct</span> <a class="code hl_struct" href="structtoken.html">token</a>) { .id = *keyword_id };</div>
+<div class="line">        } <span class="keywordflow">else</span> {</div>
+<div class="line">                <span class="keywordtype">size_t</span> <a class="code hl_variable" href="structtoken.html#a06a1175feedfb389be7f585fba9d5c2f">ident_id</a> = <a class="code hl_function" href="tokenizer_8h.html#a214f3e013176bd41dff1de7da7d6c886">tokenizer_ident_id2</a>(t,</div>
+<div class="line">                                       t-&gt;<a class="code hl_variable" href="structtokenizer.html#a0c51ea77dd2ad2b16c6b484579d82445">current_lexeme</a>.<a class="code hl_variable" href="structlexeme.html#a7fba035b50a3af17cab8f337892b1461">seminfo</a>,</div>
+<div class="line">                                       t-&gt;<a class="code hl_variable" href="structtokenizer.html#a0c51ea77dd2ad2b16c6b484579d82445">current_lexeme</a>.<a class="code hl_variable" href="structlexeme.html#aa9093b6755d0a5bebe502490ec567b83">seminfo_len</a>);</div>
+<div class="line"> </div>
+<div class="line">                <span class="keywordflow">return</span> (<span class="keyword">struct</span> <a class="code hl_struct" href="structtoken.html">token</a>) { .id = <a class="code hl_variable" href="tokenizer_8h.html#a7ffbf59a256be2852e91e6ccecafb7ad">TK_IDENT</a>, .seminfo.ident_id = <a class="code hl_variable" href="structtoken.html#a06a1175feedfb389be7f585fba9d5c2f">ident_id</a>};</div>
+<div class="line">        }</div>
+<div class="line">}</div>
+<div class="ttc" id="atokenizer_8h_html_a7ffbf59a256be2852e91e6ccecafb7ad"><div class="ttname"><a href="tokenizer_8h.html#a7ffbf59a256be2852e91e6ccecafb7ad">TK_IDENT</a></div><div class="ttdeci">static const size_t TK_IDENT</div><div class="ttdoc">Identifier token ID'si.</div><div class="ttdef"><b>Definition</b> <a href="tokenizer_8h_source.html#l00028">tokenizer.h:28</a></div></div>
+</div><!-- fragment --><p>Tek parça olarak gruplanmış punctuation'ları böleceğiz.</p>
+<div class="fragment"><div class="line"><span class="keyword">static</span> <span class="keyword">struct </span><a class="code hl_struct" href="structtoken.html">token</a> consume_punct(struct <a class="code hl_struct" href="structtokenizer.html">tokenizer</a> *t)</div>
+<div class="line">{</div>
+<div class="line">        <span class="keywordtype">size_t</span> *punct_id;</div>
+<div class="line">        <span class="keywordtype">size_t</span> i;</div>
+<div class="line"> </div>
+<div class="line">        <span class="comment">/* Uzun punctuation&#39;lardan başlayarak tek tek punctuation map&#39;ten ID</span></div>
+<div class="line"><span class="comment">         * arar. Örneğin hem `*` hem de `**` operatörü varsa `1 ** 2` ifadesini</span></div>
+<div class="line"><span class="comment">         * uygun şekilde tokenize etmek için uzun punctuation&#39;lardan başlamak</span></div>
+<div class="line"><span class="comment">         * gerekir. */</span></div>
+<div class="line">        <span class="keywordflow">for</span> (</div>
+<div class="line">             i = MAX_PUNCT_LEN &gt; t-&gt;<a class="code hl_variable" href="structtokenizer.html#a0c51ea77dd2ad2b16c6b484579d82445">current_lexeme</a>.<a class="code hl_variable" href="structlexeme.html#aa9093b6755d0a5bebe502490ec567b83">seminfo_len</a> ?</div>
+<div class="line">                t-&gt;<a class="code hl_variable" href="structtokenizer.html#a0c51ea77dd2ad2b16c6b484579d82445">current_lexeme</a>.<a class="code hl_variable" href="structlexeme.html#aa9093b6755d0a5bebe502490ec567b83">seminfo_len</a> : MAX_PUNCT_LEN;</div>
+<div class="line">             i &gt; 0;</div>
+<div class="line">             i--) {</div>
+<div class="line">                punct_id = <a class="code hl_function" href="map_8h.html#ab61c37aaaf3a19a6bf24da8f1d35379b">map_get2</a>(&amp;t-&gt;<a class="code hl_variable" href="structtokenizer.html#a924d670164bc6f65b26af096dab0f7d2">punctuations</a>,</div>
+<div class="line">                             t-&gt;<a class="code hl_variable" href="structtokenizer.html#a0c51ea77dd2ad2b16c6b484579d82445">current_lexeme</a>.<a class="code hl_variable" href="structlexeme.html#a7fba035b50a3af17cab8f337892b1461">seminfo</a>, i);</div>
+<div class="line"> </div>
+<div class="line">                <span class="keywordflow">if</span> (punct_id) {</div>
+<div class="line">                        t-&gt;<a class="code hl_variable" href="structtokenizer.html#a0c51ea77dd2ad2b16c6b484579d82445">current_lexeme</a>.<a class="code hl_variable" href="structlexeme.html#a7fba035b50a3af17cab8f337892b1461">seminfo</a> += i;</div>
+<div class="line">                        t-&gt;<a class="code hl_variable" href="structtokenizer.html#a0c51ea77dd2ad2b16c6b484579d82445">current_lexeme</a>.<a class="code hl_variable" href="structlexeme.html#aa9093b6755d0a5bebe502490ec567b83">seminfo_len</a> -= i;</div>
+<div class="line"> </div>
+<div class="line">                        <span class="keywordflow">break</span>;</div>
+<div class="line">                }</div>
+<div class="line">        }</div>
+<div class="line"> </div>
+<div class="line">        <span class="comment">/* i&#39;in 0&#39;a kadar inmesi, hiçbir punctuation bulunamamıştır demektir. */</span></div>
+<div class="line">        assert(i != 0 &amp;&amp; <span class="stringliteral">&quot;Bilinmeyen punctuation.&quot;</span>);</div>
+<div class="line"> </div>
+<div class="line">        <span class="comment">/* punctuation lexemenin tamamı tüketilmişse current_lexemeyi temizle. */</span></div>
+<div class="line">        <span class="keywordflow">if</span> (t-&gt;<a class="code hl_variable" href="structtokenizer.html#a0c51ea77dd2ad2b16c6b484579d82445">current_lexeme</a>.<a class="code hl_variable" href="structlexeme.html#aa9093b6755d0a5bebe502490ec567b83">seminfo_len</a> == 0)</div>
+<div class="line">                clear_lexeme(t);</div>
+<div class="line"> </div>
+<div class="line">        <span class="keywordflow">return</span> (<span class="keyword">struct</span> <a class="code hl_struct" href="structtoken.html">token</a>) { .id = *punct_id };</div>
+<div class="line">}</div>
 </div><!-- fragment --><p>Soyut syntax elemanlarını, tokenleri, ürettik. Artık yazılım dilimizin söz dizimini, gramerini, tasarlayabiliriz: <a class="el" href="parser_page.html">Parser</a> </p>
 </div></div><!-- contents -->
 </div><!-- PageDoc -->

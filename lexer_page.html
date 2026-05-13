@@ -69,17 +69,20 @@ $(function() {
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="derleyici_front_end_page.html">Derleyici Front Endi</a></li>  </ul>
+<li class="navelem"><a class="el" href="derleyici_front_end_page.html">Derleyici Front End&#39;i</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div><div class="header">
   <div class="headertitle"><div class="title">Lexer</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>Lexerimiz iki katmandan oluşacak:</p><ul>
+<div class="textblock"><dl class="section user"><dt>identifier</dt><dd>harf/rakam/alt çizgiden oluşan, değişken ve fonksiyon ismi olan token. <code>x</code>, <code>b</code>, <code>func</code> gibi.</dd></dl>
+<dl class="section user"><dt>punctuation</dt><dd>harf/rakam olmayan karakter grubu. <code>==</code>, <code>(</code>, <code>;</code> gibi.</dd></dl>
+<p>Lexer'ımız iki katmandan oluşacak:</p><ul>
 <li>Sayı, identifier, punctuation gibi tipleri direkt toplayacak; lexeme üretecek katman. Bu katmanda ürettiğimiz lexemeler, gramer açısından hâlâ gereksiz bilgi içeriyor olacak.</li>
 <li>Bu lexemelerdeki keyword ve punctuation'ları çıkaracak, soyut tokenler üretecek üst katman.</li>
 </ul>
+<p>Lexer katmanında identifier ve punctuation'ların ne anlama geldiğini tam bilmiyoruz, sadece metin parçaları olarak grupluyoruz.</p>
 <div class="fragment"><div class="line"><span class="keyword">struct </span><a class="code hl_struct" href="structlexeme.html">lexeme</a> {</div>
 <div class="line">        <span class="keyword">const</span> <span class="keywordtype">char</span> *<a class="code hl_variable" href="structlexeme.html#a7fba035b50a3af17cab8f337892b1461">seminfo</a>;</div>
 <div class="line"> </div>
@@ -103,7 +106,7 @@ $(function() {
 <div class="ttc" id="astructlexeme_html_a76d0f0eb5eb899305ec7d40898c5c351af044d467b8dc5d12378de61299094d2b"><div class="ttname"><a href="structlexeme.html#a76d0f0eb5eb899305ec7d40898c5c351af044d467b8dc5d12378de61299094d2b">lexeme::LEXEME_PUNCT</a></div><div class="ttdeci">@ LEXEME_PUNCT</div><div class="ttdef"><b>Definition</b> <a href="lexer_8h_source.html#l00039">lexer.h:39</a></div></div>
 <div class="ttc" id="astructlexeme_html_a7fba035b50a3af17cab8f337892b1461"><div class="ttname"><a href="structlexeme.html#a7fba035b50a3af17cab8f337892b1461">lexeme::seminfo</a></div><div class="ttdeci">const char * seminfo</div><div class="ttdef"><b>Definition</b> <a href="lexer_8h_source.html#l00023">lexer.h:23</a></div></div>
 <div class="ttc" id="astructlexeme_html_aa9093b6755d0a5bebe502490ec567b83"><div class="ttname"><a href="structlexeme.html#aa9093b6755d0a5bebe502490ec567b83">lexeme::seminfo_len</a></div><div class="ttdeci">size_t seminfo_len</div><div class="ttdef"><b>Definition</b> <a href="lexer_8h_source.html#l00026">lexer.h:26</a></div></div>
-</div><!-- fragment --><p>Yukarıdaki lexemeleri, <a class="el" href="structlexer.html">lexer</a> ile üreteceğiz:</p>
+</div><!-- fragment --><p>Bu lexemeleri, <a class="el" href="structlexer.html">lexer</a> ile üreteceğiz:</p>
 <div class="fragment"><div class="line"><span class="keywordtype">void</span> <a class="code hl_function" href="lexer_8h.html#a702027edae6526a7b51687def11fad46">lexer_init</a>(<span class="keyword">struct</span> <a class="code hl_struct" href="structlexer.html">lexer</a> *<a class="code hl_struct" href="structlexer.html">lexer</a>, <span class="keyword">const</span> <span class="keywordtype">char</span> *text);</div>
 <div class="line"> </div>
 <div class="line"><span class="keyword">struct </span><a class="code hl_struct" href="structlexeme.html">lexeme</a> <a class="code hl_function" href="lexer_8h.html#a5691ba3e7cd10458aa508728a742a2db">lexer_next</a>(struct <a class="code hl_struct" href="structlexer.html">lexer</a> *<a class="code hl_struct" href="structlexer.html">lexer</a>);</div>
@@ -142,14 +145,14 @@ $(function() {
 <div class="line">                <span class="keywordflow">return</span> collect_number(<a class="code hl_struct" href="structlexer.html">lexer</a>);</div>
 <div class="line">        }</div>
 <div class="line"> </div>
-<div class="line">        <span class="comment">/* semboller */</span></div>
+<div class="line">        <span class="comment">/* punctuation */</span></div>
 <div class="line">        <span class="keywordflow">if</span> (ispunct(c))</div>
 <div class="line">                <span class="keywordflow">return</span> collect_punctuation(<a class="code hl_struct" href="structlexer.html">lexer</a>);</div>
 <div class="line"> </div>
 <div class="line">        assert(0 &amp;&amp; <span class="stringliteral">&quot;Tanınmayan karakter.&quot;</span>);  <span class="comment">// GCOVR_EXCL_LINE: not tested</span></div>
 <div class="line">}</div>
 </div><!-- fragment --><p><a class="el" href="lexer_8h.html#a5691ba3e7cd10458aa508728a742a2db">lexer_next()</a> fonksiyonunda kodun okunabilirliğini artırmak için birkaç basit fonksiyon tanımladım: <a class="el" href="lexer_yardimci_fonksiyonlar_page.html">Lexer için Yardımcı Fonsiyonlar</a></p>
-<p>Lexeme toplayan fonksiyonları tek tek inceleyelim. Identifier ve sembol toplama fonksiyonları birebir aynı şekilde çalışıyor. Aralarındaki tek fark, biri <code>ispunct</code> kullanırken diğeri <code>isalnum</code> kullanıyor.</p>
+<p>Lexeme toplayan fonksiyonları tek tek inceleyelim. Identifier ve punctuation toplama fonksiyonları birebir aynı şekilde çalışıyor. Aralarındaki tek fark, biri <code>ispunct</code> kullanırken diğeri <code>isalnum</code> kullanıyor.</p>
 <div class="fragment"><div class="line"><span class="keyword">static</span> <span class="keyword">struct </span><a class="code hl_struct" href="structlexeme.html">lexeme</a> collect_identifier(struct <a class="code hl_struct" href="structlexer.html">lexer</a> *<a class="code hl_struct" href="structlexer.html">lexer</a>)</div>
 <div class="line">{</div>
 <div class="line">        <span class="comment">/* a-z|A-Z|_|0-9 */</span></div>
@@ -161,8 +164,8 @@ $(function() {
 <div class="line"> </div>
 <div class="line"><span class="keyword">static</span> <span class="keyword">struct </span><a class="code hl_struct" href="structlexeme.html">lexeme</a> collect_punctuation(struct <a class="code hl_struct" href="structlexer.html">lexer</a> *<a class="code hl_struct" href="structlexer.html">lexer</a>)</div>
 <div class="line">{</div>
-<div class="line">        <span class="comment">/* Lexer, birden fazla karakterden oluşan sembolleri de toplayabilmek</span></div>
-<div class="line"><span class="comment">         * adına punctuationları gruplar. */</span></div>
+<div class="line">        <span class="comment">/* Lexer, birden fazla karakterden oluşan punctuation&#39;ları da</span></div>
+<div class="line"><span class="comment">         * toplayabilmek adına punctuation&#39;ları gruplar. */</span></div>
 <div class="line">        <span class="keywordflow">while</span> (ispunct(peek(<a class="code hl_struct" href="structlexer.html">lexer</a>)))</div>
 <div class="line">                advance(<a class="code hl_struct" href="structlexer.html">lexer</a>);</div>
 <div class="line"> </div>

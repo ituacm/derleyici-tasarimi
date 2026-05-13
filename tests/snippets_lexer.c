@@ -13,17 +13,17 @@ int main()
 	struct lexer l;
 
 	enum lexeme_kind kinds[] = {
-		LEXEME_IDENT, LEXEME_INT, LEXEME_FLOAT, LEXEME_INT,
-		LEXEME_FLOAT, LEXEME_PUNCT, LEXEME_PUNCT, LEXEME_PUNCT,
-		LEXEME_PUNCT, LEXEME_EOF,
+		LEXEME_IDENT, LEXEME_INT, LEXEME_PUNCT, LEXEME_FLOAT,
+		LEXEME_INT, LEXEME_FLOAT, LEXEME_PUNCT, LEXEME_PUNCT,
+		LEXEME_PUNCT, LEXEME_PUNCT, LEXEME_EOF,
 	};
 
 	const char *seminfos[] = {
-		"ident", "123", "123.123", "-123", "-213.123", "->", "...",
+		"ident", "123", "-", "123.123", "12", "213.123", "->", "...",
 		"(", ")",
 	};
 
-	lexer_init(&l, "ident 123   123.123 -123  -213.123 -> ... ( )");
+	lexer_init(&l, "ident 123   -123.123 12  213.123 -> ... ( )");
 
 	for (size_t i = 0; i < sizeof(kinds) / sizeof(enum lexeme_kind); i++) {
 		struct lexeme lexeme = lexer_next(&l);

@@ -6,6 +6,7 @@
 #include <assert.h>
 #include <inttypes.h>
 #include <stdlib.h>
+#include <stdbool.h>
 #include <string.h>
 
 
@@ -86,24 +87,24 @@ static struct token consume_ident(struct tokenizer *t)
 
 static struct token consume_num(struct tokenizer *t)
 {
-	char null_terminated_num[t->current_lexeme.seminfo_len + 1];
+	bool is_int = t->current_lexeme.kind == LEXEME_INT;
 
-	null_terminated_num[t->current_lexeme.seminfo_len] = '\0';
-	memcpy(null_terminated_num,
-	       t->current_lexeme.seminfo,
-	       t->current_lexeme.seminfo_len);
+	t->current_lexeme.kind = LEXEME_EOF;
+
+	char num[t->current_lexeme.seminfo_len + 1];
+
+	num[t->current_lexeme.seminfo_len] = '\0';
+	memcpy(num, t->current_lexeme.seminfo, t->current_lexeme.seminfo_len);
 
 	struct token tk;
 
-	if (t->current_lexeme.kind == LEXEME_INT) {
+	if (is_int) {
 		tk.id = TK_INT;
-		tk.seminfo.num_int = strtoimax(null_terminated_num, NULL, 10);
+		tk.seminfo.num_int = strtoimax(num, NULL, 10);
 	} else {
 		tk.id = TK_FLOAT;
-		tk.seminfo.num_float = strtod(null_terminated_num, NULL);
+		tk.seminfo.num_float = strtod(num, NULL);
 	}
-
-	t->current_lexeme.kind = LEXEME_EOF;
 
 	return tk;
 }

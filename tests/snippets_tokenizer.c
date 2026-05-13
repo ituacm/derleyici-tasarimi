@@ -25,7 +25,7 @@ int main()
 	tokenizer_add_punctuation(&t, ">", 6);
 
 	size_t ids[] = {
-		0, TK_IDENT, 1, TK_IDENT, TK_IDENT, TK_INT, TK_FLOAT,
+		0, TK_IDENT, 1, TK_IDENT, TK_IDENT, TK_INT, 4, TK_FLOAT,
 		5, 4, 2, 3, 6, TK_IDENT, TK_NOTOKEN
 	};
 
@@ -42,12 +42,12 @@ int main()
 			assert(tk.seminfo.num_int == 123);
 
 		if (tk.id == TK_FLOAT)
-			assert(tk.seminfo.num_float == -1.2);
+			assert(tk.seminfo.num_float == 1.2);
 
 		if (tk.id == TK_IDENT)
 			assert((tk.seminfo.ident_id == 0 && (i == 1 || i == 3)) ||
 			       (tk.seminfo.ident_id == 1 && i == 4) ||
-			       (tk.seminfo.ident_id == 2 && i == 12));
+			       (tk.seminfo.ident_id == 2 && i == 13));
 	}
 
 	lexer_init(&l, "-->->>->");

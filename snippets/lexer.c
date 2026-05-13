@@ -25,25 +25,25 @@ static struct lexeme lexeme(struct lexer *l, enum lexeme_kind kind)
 	};
 }
 
-/* Lexerin tükenip tükenmediğini kontrol eder. */
+/* Lexer'da okunmamış karakter kaldı mı? */
 static bool is_at_end(struct lexer *l)
 {
 	return *l->current == '\0';
 }
 
-/* Mevcut karaktere bakar. */
+/* Mevcut karakter. */
 static char peek(struct lexer *l)
 {
 	return l->current[0];
 }
 
-/* Varsa bir sonraki karaktere bakar. */
+/* Varsa, bir sonraki karakter. */
 static char peek_next(struct lexer *l)
 {
 	return is_at_end(l) ? '\0' : l->current[1];
 }
 
-/* Bir sonraki karaktere bakar. */
+/* Mevcut karakteri consume ederek bir sonraki karaktere geç. */
 static void advance(struct lexer *l)
 {
 	l->current++;
@@ -114,12 +114,8 @@ struct lexeme lexer_next(struct lexer *lexer)
 	if (isalpha(c) || c == '_')
 		return collect_identifier(lexer);
 
-	/* (+|-)?0-9 */
-	if (isdigit(c) ||
-	    ((c == '-' || c == '+') && isdigit(peek_next(lexer)))) {
-		if (c == '-' || c == '+')
-			advance(lexer);
-
+	/* 0-9 */
+	if (isdigit(c)) {
 		return collect_number(lexer);
 	}
 
@@ -127,6 +123,6 @@ struct lexeme lexer_next(struct lexer *lexer)
 	if (ispunct(c))
 		return collect_punctuation(lexer);
 
-	assert(0 && "bilinemeyen lexeme.");  // GCOVR_EXCL_LINE: not tested
+	assert(0 && "Tanınmayan karakter.");  // GCOVR_EXCL_LINE: not tested
 }
 //! [lexer_next]

@@ -57,8 +57,96 @@ Bu CST'yi oluşturan gramer,
 ⟨F⟩ → id
 ```
 
-Gramer dedik demesine ancak bu yapı insan dillerinin gramerinden biraz farklı,
-bu *formal dillerin* grameridir. *Context free grammar* (CFG) olarak
-adlandırılır. Diğer formal dil gramer sınıflarına değinmeyeceğiz. Yazılım
+Gramer dedik demesine ancak bu yapı insan dillerinin gramerinden biraz farklı.
+Bu *formal dillerin* grameridir, *context free grammar* (CFG) olarak
+adlandırılır. Formal dillerin gramer sınıflarına değinmeyeceğiz, yazılım
 dilimizi CFG olarak tanımayacağız.
+
+Formal dillere niçin gramer dediğimizi biraz somutlaştıralım. Türkçenin basit
+bir formunu formal dil olarak tanımlayalım ve gramer olarak hatasız "Formal
+dilleri öğreniyorum." cümlesini irdeleyelim:
+
+@dot
+digraph gramer {
+    node [shape = "plaintext"];
+
+    s1 [label = "Formal"];
+    i1 [label = "dilleri"];
+    y1 [label = "öğreniyorum."];
+
+    s2 [label = "Yabancı"];
+    i2 [label = "dil"];
+    y2 [label = "biliyorum."];
+
+    r1, r2 [style = "invis"];
+
+    r1 -> r2 [color = "none", label = "Sözcükleri aynı türden kelimelerle değiştirelim."];
+
+    s1 -> s2 [label = "sıfat"];
+    i1 -> i2 [label = "isim"];
+    y1 -> y2 [label = "fiil"];
+}
+@enddot
+
+Aynı cümledeki kelimeleri türden kelimelerle değiştirdik ve tekrardan gramer
+yapısı olarak "doğru" bir cümle edindik.
+
+@dot
+digraph gramer {
+    node [shape = "plaintext"];
+
+    {
+        rank = "same";
+
+        s1 [label = "Formal"];
+        i1 [label = "dilleri"];
+        f1 [label = "öğreniyorum."];
+    }
+
+    s [label = "⟨Sıfat⟩"]
+    i [label = "⟨İsim⟩"]
+    f [label = "⟨Fiil⟩"]
+
+    st [label = "⟨SıfatTamlaması⟩"]
+
+    S [label = "⟨S⟩"]
+
+    s1 -> s;
+    i1 -> i;
+    f1 -> f;
+
+    s -> st;
+    i -> st;
+
+    st -> S;
+    f -> S;
+}
+@enddot
+
+```
+⟨S⟩ → ⟨SıfatTamlaması⟩ ⟨Fiil⟩
+⟨SıfatTamlaması⟩ → ⟨Sıfat⟩ ⟨İsim⟩
+⟨Sıfat⟩ → Formal | Yabancı
+⟨İsim⟩ → dilleri | dil
+⟨Fiil⟩ → öğreniyorum. | biliyorum.
+```
+
+@par nonterminal
+    Örnekteki `⟨Sıfat⟩` veya `⟨SıfatTamlaması⟩` gibi, cümlenin yapısını
+    tanımlayan ve başka kurallarla daha alt parçalara genişletilebilen yapısal
+    kategorilerdir.
+
+@par terminal/token
+    Örnekteki "Formal", "dilleri" veya "öğreniyorum." gibi, ağacın en ucunda
+    yer alan ve artık daha alt parçalara bölünemeyen somut sözcüklere denir.
+
+@par production rules
+    `⟨SıfatTamlaması⟩ → ⟨Sıfat⟩ ⟨İsim⟩` satırında olduğu gibi, bir
+    nonterminal'in hangi öğelere (terminal veya nonterminal) dönüşebileceğini
+    tanımlayan kuralların her birine denir.
+
+@par grammar
+    Yukarıdaki tüm kuralları kapsayan ve o dildeki geçerli tüm cümlelerin hangi
+    yapıtaşlarıyla nasıl türetileceğini belirleyen matematiksel/kuralsal
+    çerçevenin bütününe denir.
 */

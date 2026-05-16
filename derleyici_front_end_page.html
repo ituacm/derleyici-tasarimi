@@ -13,6 +13,7 @@
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="style.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -82,7 +83,7 @@ $(function() {
 <iframe scrolling="no" frameborder="0" src="dot_ast-if-stmt.svg" width="390" height="443"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 <p>Aslında epey kolay! Metin formundaki kodu <em>bir şekilde</em> ağaç yapısına dönüştürdüğümüzde değer hesaplamak için <em>tree traversal</em> yeterli oluyor! Peki, bu ağacı nasıl oluşturacağız? Asıl soruna geliyoruz: <em>lexing</em> ve sonrasında <em>parsing</em>.</p>
 <div class="dotgraph">
-<iframe scrolling="no" frameborder="0" src="dot_inline_dotgraph_2.svg" width="486" height="62"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<iframe scrolling="no" frameborder="0" src="dot_inline_dotgraph_4.svg" width="486" height="62"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 <h1><a class="anchor" id="front_end_lexical_analysis"></a>
 Lexical Analysis</h1>
 <p><em>String</em> üzerinde çalışmak genel olarak zor. Ağaca oturtma sürecinde bir sayının değeri, değişkenin ya da fonksiyonun ismi bizi ilgilendirmiyor. <em>Tokenizer</em> ile metin işleme sürecinde lexeme denilen syntax parçalarının anlamını çıkarırız. Mesela, <code>if (x == -1) y = 2;</code>i ele alalım.</p>

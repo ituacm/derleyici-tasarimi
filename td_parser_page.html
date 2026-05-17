@@ -102,8 +102,8 @@ $(function() {
 <div class="dotgraph">
 <iframe scrolling="no" frameborder="0" src="dot_top-down-parsing.svg" width="382" height="502"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 <p>Bu yöntem için önce recursive fonksiyon kullanan parser yazacağız. Sonrasında top-down parsing'deki sorunlarını ve elle her bir kural için fonksiyon yazmanın zorluğunu çözen bir kütüphane kullanacağız.</p>
-<h1><a class="anchor" id="Recursive"></a>
-Descent Parser</h1>
+<h1><a class="anchor" id="rd_parser_sec"></a>
+Recursive Descent Parser</h1>
 <div class="fragment"><div class="line"><span class="keyword">struct </span><a class="code hl_struct" href="structparser.html">parser</a> {</div>
 <div class="line">        <span class="keyword">struct </span><a class="code hl_struct" href="structtokenizer.html">tokenizer</a> <a class="code hl_struct" href="structtokenizer.html">tokenizer</a>;</div>
 <div class="line"> </div>
@@ -169,7 +169,60 @@ Descent Parser</h1>
 <div class="ttc" id="atokenizer_8h_html_a6fa87d7080a9a48e43877b84d6341be3"><div class="ttname"><a href="tokenizer_8h.html#a6fa87d7080a9a48e43877b84d6341be3">TK_NOTOKEN</a></div><div class="ttdeci">static const size_t TK_NOTOKEN</div><div class="ttdoc">tokenizer_feed() ile verilen lexemenin bittiğini belirtir.</div><div class="ttdef"><b>Definition</b> <a href="tokenizer_8h_source.html#l00019">tokenizer.h:19</a></div></div>
 <div class="ttc" id="atokenizer_8h_html_a73d455e90e9f0e517198663d56d6b5a3"><div class="ttname"><a href="tokenizer_8h.html#a73d455e90e9f0e517198663d56d6b5a3">tokenizer_init</a></div><div class="ttdeci">void tokenizer_init(struct tokenizer *tokenizer)</div><div class="ttdoc">[Token tanımı]</div></div>
 </div><!-- fragment --><p>Lexer'da kullandığımız <code>advance</code>/<code>peek</code> tasarımını yine kullanıyoruz:</p>
-<div class="fragment"></div><!-- fragment --><p>Artık <code><a class="el" href="recursive-parser_8h.html#a3a3324cd588cbd87bcf9d3e2f6221f99" title="Metin girdisini evaluate eder.">parser_eval()</a></code> fonksiyonunu yazmaya başlayabiliriz:</p>
+<div class="fragment"><div class="line"><span class="keyword">static</span> <span class="keywordtype">size_t</span> current_id(<span class="keyword">struct</span> <a class="code hl_struct" href="structparser.html">parser</a> *p)</div>
+<div class="line">{</div>
+<div class="line">        <span class="keywordflow">return</span> p-&gt;<a class="code hl_variable" href="structparser.html#a8cc4a0c1cdb444ec9c4adaa86939679a">token</a>.<a class="code hl_variable" href="structtoken.html#ad9fe17e79b07cf3db954169fba0117cb">id</a>;</div>
+<div class="line">}</div>
+<div class="line"> </div>
+<div class="line"><span class="keyword">static</span> <span class="keyword">union </span><a class="code hl_union" href="unionseminfo.html">seminfo</a> current_seminfo(struct <a class="code hl_struct" href="structparser.html">parser</a> *p)</div>
+<div class="line">{</div>
+<div class="line">        <span class="keywordflow">return</span> p-&gt;token.seminfo;</div>
+<div class="line">}</div>
+<div class="line"> </div>
+<div class="line"><span class="comment">/* Sıradaki token&#39;a geçer. */</span></div>
+<div class="line"><span class="keyword">static</span> <span class="keywordtype">void</span> consume(<span class="keyword">struct</span> <a class="code hl_struct" href="structparser.html">parser</a> *p)</div>
+<div class="line">{</div>
+<div class="line">        p-&gt;<a class="code hl_variable" href="structparser.html#a8cc4a0c1cdb444ec9c4adaa86939679a">token</a> = <a class="code hl_function" href="tokenizer_8h.html#ae76c8323e13da9eaddd2a3cdbfbd6fdf">tokenizer_next</a>(&amp;p-&gt;<a class="code hl_variable" href="structparser.html#a96f7bf8944ff197eca5dd90184d9fb9c">tokenizer</a>);</div>
+<div class="line"> </div>
+<div class="line">        <span class="comment">/* Tokenizer, lexeme&#39;yi tüketmişse yeni lexeme çek. */</span></div>
+<div class="line">        <span class="keywordflow">if</span> (current_id(p) == <a class="code hl_variable" href="tokenizer_8h.html#a6fa87d7080a9a48e43877b84d6341be3">TK_NOTOKEN</a>) {</div>
+<div class="line">                <span class="keyword">struct </span><a class="code hl_struct" href="structlexeme.html">lexeme</a> next_lexeme = <a class="code hl_function" href="lexer_8h.html#a5691ba3e7cd10458aa508728a742a2db">lexer_next</a>(&amp;p-&gt;<a class="code hl_variable" href="structparser.html#a20a5c2f6d3828e6c761e13d401cc567f">lexer</a>);</div>
+<div class="line"> </div>
+<div class="line">                <span class="comment">/* Lexeme&#39;ler tükenmişse token TK_NOTOKEN olarak işaretle. */</span></div>
+<div class="line">                <span class="keywordflow">if</span> (next_lexeme.<a class="code hl_variable" href="structlexeme.html#a277858432fd14fe69933cdeb5092552c">kind</a> == <a class="code hl_enumvalue" href="structlexeme.html#a76d0f0eb5eb899305ec7d40898c5c351aac8b7b8215d076599804f0aaf41692ab">LEXEME_EOF</a>) {</div>
+<div class="line">                        p-&gt;<a class="code hl_variable" href="structparser.html#a8cc4a0c1cdb444ec9c4adaa86939679a">token</a>.<a class="code hl_variable" href="structtoken.html#ad9fe17e79b07cf3db954169fba0117cb">id</a> = <a class="code hl_variable" href="tokenizer_8h.html#a6fa87d7080a9a48e43877b84d6341be3">TK_NOTOKEN</a>;</div>
+<div class="line"> </div>
+<div class="line">                        <span class="keywordflow">return</span>;</div>
+<div class="line">                } <span class="keywordflow">else</span> {</div>
+<div class="line">                        <span class="comment">/* Yeni lexeme gelmişse ona geçmek için bu fonksiyonu</span></div>
+<div class="line"><span class="comment">                         * tekrar çağır. */</span></div>
+<div class="line">                        <a class="code hl_function" href="tokenizer_8h.html#a91b6fe31be04c8262446395e5b61c7b4">tokenizer_feed</a>(&amp;p-&gt;<a class="code hl_variable" href="structparser.html#a96f7bf8944ff197eca5dd90184d9fb9c">tokenizer</a>, next_lexeme);</div>
+<div class="line"> </div>
+<div class="line">                        <span class="keywordflow">return</span> consume(p);</div>
+<div class="line">                }</div>
+<div class="line">        }</div>
+<div class="line">}</div>
+<div class="line"> </div>
+<div class="line"><span class="comment">/* Beklenen token geldiyse tüketir ve true döner. */</span></div>
+<div class="line"><span class="keyword">static</span> <span class="keywordtype">bool</span> match(<span class="keyword">struct</span> <a class="code hl_struct" href="structparser.html">parser</a> *p, <span class="keywordtype">size_t</span> tk_id)</div>
+<div class="line">{</div>
+<div class="line">        <span class="keywordflow">if</span> (current_id(p) == tk_id) {</div>
+<div class="line">                consume(p);</div>
+<div class="line"> </div>
+<div class="line">                <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line">        }</div>
+<div class="line"> </div>
+<div class="line">        <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line">}</div>
+<div class="ttc" id="alexer_8h_html_a5691ba3e7cd10458aa508728a742a2db"><div class="ttname"><a href="lexer_8h.html#a5691ba3e7cd10458aa508728a742a2db">lexer_next</a></div><div class="ttdeci">struct lexeme lexer_next(struct lexer *lexer)</div><div class="ttdoc">Sıradaki lexeme.</div></div>
+<div class="ttc" id="astructlexeme_html"><div class="ttname"><a href="structlexeme.html">lexeme</a></div><div class="ttdoc">Ham lexer çıktısı.</div><div class="ttdef"><b>Definition</b> <a href="lexer_8h_source.html#l00021">lexer.h:21</a></div></div>
+<div class="ttc" id="astructlexeme_html_a277858432fd14fe69933cdeb5092552c"><div class="ttname"><a href="structlexeme.html#a277858432fd14fe69933cdeb5092552c">lexeme::kind</a></div><div class="ttdeci">enum lexeme::lexeme_kind kind</div></div>
+<div class="ttc" id="astructlexeme_html_a76d0f0eb5eb899305ec7d40898c5c351aac8b7b8215d076599804f0aaf41692ab"><div class="ttname"><a href="structlexeme.html#a76d0f0eb5eb899305ec7d40898c5c351aac8b7b8215d076599804f0aaf41692ab">lexeme::LEXEME_EOF</a></div><div class="ttdeci">@ LEXEME_EOF</div><div class="ttdef"><b>Definition</b> <a href="lexer_8h_source.html#l00031">lexer.h:31</a></div></div>
+<div class="ttc" id="astructparser_html_a20a5c2f6d3828e6c761e13d401cc567f"><div class="ttname"><a href="structparser.html#a20a5c2f6d3828e6c761e13d401cc567f">parser::lexer</a></div><div class="ttdeci">struct lexer lexer</div><div class="ttdoc">Metin girdisini saran lexer.</div><div class="ttdef"><b>Definition</b> <a href="recursive-parser_8h_source.html#l00029">recursive-parser.h:29</a></div></div>
+<div class="ttc" id="atokenizer_8h_html_a91b6fe31be04c8262446395e5b61c7b4"><div class="ttname"><a href="tokenizer_8h.html#a91b6fe31be04c8262446395e5b61c7b4">tokenizer_feed</a></div><div class="ttdeci">void tokenizer_feed(struct tokenizer *tokenizer, struct lexeme lexeme)</div><div class="ttdoc">Lexemeyi tokenizere gönderir.</div></div>
+<div class="ttc" id="atokenizer_8h_html_ae76c8323e13da9eaddd2a3cdbfbd6fdf"><div class="ttname"><a href="tokenizer_8h.html#ae76c8323e13da9eaddd2a3cdbfbd6fdf">tokenizer_next</a></div><div class="ttdeci">struct token tokenizer_next(struct tokenizer *tokenzier)</div><div class="ttdoc">Sıradaki tokeni çek.</div></div>
+<div class="ttc" id="aunionseminfo_html"><div class="ttname"><a href="unionseminfo.html">seminfo</a></div><div class="ttdoc">[Tokenizer tanımı]</div><div class="ttdef"><b>Definition</b> <a href="tokenizer_8h_source.html#l00051">tokenizer.h:51</a></div></div>
+</div><!-- fragment --><p>Artık <code><a class="el" href="recursive-parser_8h.html#a3a3324cd588cbd87bcf9d3e2f6221f99" title="Metin girdisini evaluate eder.">parser_eval()</a></code> fonksiyonunu yazmaya başlayabiliriz:</p>
 <div class="fragment"><div class="line"><span class="keywordtype">void</span> <a class="code hl_function" href="recursive-parser_8h.html#a3a3324cd588cbd87bcf9d3e2f6221f99">parser_eval</a>(<span class="keyword">struct</span> <a class="code hl_struct" href="structparser.html">parser</a> *p, <span class="keyword">const</span> <span class="keywordtype">char</span> *text)</div>
 <div class="line">{</div>
 <div class="line">        <a class="code hl_function" href="lexer_8h.html#a702027edae6526a7b51687def11fad46">lexer_init</a>(&amp;p-&gt;<a class="code hl_variable" href="structparser.html#a20a5c2f6d3828e6c761e13d401cc567f">lexer</a>, text);</div>
@@ -184,9 +237,8 @@ Descent Parser</h1>
 <div class="line">                        <span class="keywordflow">continue</span>;</div>
 <div class="line">                }</div>
 <div class="line"> </div>
-<div class="line">                <span class="keywordtype">size_t</span> <span class="keywordtype">id</span> = current_seminfo(p).ident_id;</div>
-<div class="line">                <span class="keywordflow">if</span> (match(p, <a class="code hl_variable" href="tokenizer_8h.html#a7ffbf59a256be2852e91e6ccecafb7ad">TK_IDENT</a>)) {</div>
-<div class="line">                        eval_asgn(p, <span class="keywordtype">id</span>);</div>
+<div class="line">                <span class="keywordflow">if</span> (current_id(p) == <a class="code hl_variable" href="tokenizer_8h.html#a7ffbf59a256be2852e91e6ccecafb7ad">TK_IDENT</a>) {</div>
+<div class="line">                        eval_asgn(p);</div>
 <div class="line">                        <span class="keywordflow">continue</span>;</div>
 <div class="line">                }</div>
 <div class="line"> </div>
@@ -196,15 +248,134 @@ Descent Parser</h1>
 <div class="line"> </div>
 <div class="line"><span class="comment">/* Bütün production rule&#39;ları fonksiyon olarak tanımlayacağız. */</span></div>
 <div class="line"><span class="keywordtype">void</span> eval_print(<span class="keyword">struct</span> <a class="code hl_struct" href="structparser.html">parser</a> *p);</div>
-<div class="line"><span class="keywordtype">void</span> eval_asgn(<span class="keyword">struct</span> <a class="code hl_struct" href="structparser.html">parser</a> *p, <span class="keywordtype">size_t</span> <span class="keywordtype">id</span>);</div>
+<div class="line"><span class="keywordtype">void</span> eval_asgn(<span class="keyword">struct</span> <a class="code hl_struct" href="structparser.html">parser</a> *p);</div>
 <div class="line"><span class="keywordtype">double</span> eval_expr(<span class="keyword">struct</span> <a class="code hl_struct" href="structparser.html">parser</a> *p);</div>
 <div class="line"><span class="keywordtype">double</span> eval_term(<span class="keyword">struct</span> <a class="code hl_struct" href="structparser.html">parser</a> *p);</div>
 <div class="line"><span class="keywordtype">double</span> eval_factor(<span class="keyword">struct</span> <a class="code hl_struct" href="structparser.html">parser</a> *p);</div>
 <div class="line"><span class="keywordtype">double</span> eval_atom(<span class="keyword">struct</span> <a class="code hl_struct" href="structparser.html">parser</a> *p);</div>
 <div class="ttc" id="alexer_8h_html_a702027edae6526a7b51687def11fad46"><div class="ttname"><a href="lexer_8h.html#a702027edae6526a7b51687def11fad46">lexer_init</a></div><div class="ttdeci">void lexer_init(struct lexer *lexer, const char *text)</div><div class="ttdoc">[Lexeme]</div></div>
-<div class="ttc" id="astructparser_html_a20a5c2f6d3828e6c761e13d401cc567f"><div class="ttname"><a href="structparser.html#a20a5c2f6d3828e6c761e13d401cc567f">parser::lexer</a></div><div class="ttdeci">struct lexer lexer</div><div class="ttdoc">Metin girdisini saran lexer.</div><div class="ttdef"><b>Definition</b> <a href="recursive-parser_8h_source.html#l00029">recursive-parser.h:29</a></div></div>
 <div class="ttc" id="atokenizer_8h_html_a7ffbf59a256be2852e91e6ccecafb7ad"><div class="ttname"><a href="tokenizer_8h.html#a7ffbf59a256be2852e91e6ccecafb7ad">TK_IDENT</a></div><div class="ttdeci">static const size_t TK_IDENT</div><div class="ttdoc">Identifier token ID'si.</div><div class="ttdef"><b>Definition</b> <a href="tokenizer_8h_source.html#l00028">tokenizer.h:28</a></div></div>
-</div><!-- fragment --> </div></div><!-- contents -->
+</div><!-- fragment --><h1><a class="anchor" id="rd_parser_fonksiyonlar_subsec"></a>
+Evaluation Fonksiyonları</h1>
+<p>Dilimizde iki çeşit <em>statement</em> var: <code>print</code> ve <code>asgn</code>. <code>print</code>, bir ifadeyi evaluate edip terminale yazdırırken <code>asgn</code>, onu değişkene kaydediyor.</p>
+<div class="fragment"><div class="line"><span class="keywordtype">void</span> eval_print(<span class="keyword">struct</span> <a class="code hl_struct" href="structparser.html">parser</a> *p)</div>
+<div class="line">{</div>
+<div class="line">        <span class="comment">/* print&#39;in hemen sonrasında bir expression olmalı. */</span></div>
+<div class="line">        <span class="keywordtype">double</span> value = eval_expr(p);</div>
+<div class="line"> </div>
+<div class="line">        <span class="comment">/* expression bitiminde ; olduğundan emin ol. */</span></div>
+<div class="line">        assert(match(p, TK_SEMI));</div>
+<div class="line"> </div>
+<div class="line">        printf(<span class="stringliteral">&quot;&gt; %.2lf\n&quot;</span>, value);</div>
+<div class="line">}</div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">void</span> eval_asgn(<span class="keyword">struct</span> <a class="code hl_struct" href="structparser.html">parser</a> *p)</div>
+<div class="line">{</div>
+<div class="line">        <span class="keywordtype">size_t</span> <span class="keywordtype">id</span> = current_seminfo(p).ident_id;</div>
+<div class="line">        consume(p);</div>
+<div class="line"> </div>
+<div class="line">        <span class="comment">/* eval fonksiyonunda id match etmiştik, ondan sonra = olmalı. */</span></div>
+<div class="line">        assert(match(p, TK_EQ));</div>
+<div class="line"> </div>
+<div class="line">        <span class="comment">/* =&#39;den sonraki expression&#39;u evaluate et ve değişkene ata. */</span></div>
+<div class="line">        <span class="keywordtype">double</span> new_value = eval_expr(p);</div>
+<div class="line"> </div>
+<div class="line">        assert(match(p, TK_SEMI));</div>
+<div class="line"> </div>
+<div class="line">        <span class="keywordtype">double</span> *value = <a class="code hl_function" href="map_8h.html#ab61c37aaaf3a19a6bf24da8f1d35379b">map_get2</a>(&amp;p-&gt;<a class="code hl_variable" href="structparser.html#a693f7c1dc262a1680f22cd3ab0de1fd3">variables</a>, &amp;<span class="keywordtype">id</span>, <span class="keyword">sizeof</span>(<span class="keywordtype">size_t</span>));</div>
+<div class="line"> </div>
+<div class="line">        <span class="keywordflow">if</span> (value)</div>
+<div class="line">                *value = new_value;</div>
+<div class="line">        <span class="keywordflow">else</span></div>
+<div class="line">                <a class="code hl_function" href="map_8h.html#a297eb0f9400291169c15f0be21107c70">map_insert2</a>(&amp;p-&gt;<a class="code hl_variable" href="structparser.html#a693f7c1dc262a1680f22cd3ab0de1fd3">variables</a>, &amp;<span class="keywordtype">id</span>, <span class="keyword">sizeof</span>(<span class="keywordtype">size_t</span>), &amp;new_value);</div>
+<div class="line">}</div>
+<div class="ttc" id="amap_8h_html_a297eb0f9400291169c15f0be21107c70"><div class="ttname"><a href="map_8h.html#a297eb0f9400291169c15f0be21107c70">map_insert2</a></div><div class="ttdeci">void map_insert2(struct map *map, const void *key, size_t keylen, const void *value)</div><div class="ttdoc">map'e key-value ikilisini ekler.</div></div>
+<div class="ttc" id="amap_8h_html_ab61c37aaaf3a19a6bf24da8f1d35379b"><div class="ttname"><a href="map_8h.html#ab61c37aaaf3a19a6bf24da8f1d35379b">map_get2</a></div><div class="ttdeci">void * map_get2(struct map *map, const void *key, size_t keylen)</div><div class="ttdoc">Key ile eşleşen valueyı döner, key bulunamazsa NULL döner.</div></div>
+</div><!-- fragment --><p>Benzer mantıkla tanımlanmış <code>expr</code>, <code>term</code> ve <code>factor</code> kurallarını match ediyoruz:</p>
+<div class="fragment"><div class="line"><span class="keywordtype">double</span> eval_expr(<span class="keyword">struct</span> <a class="code hl_struct" href="structparser.html">parser</a> *p)</div>
+<div class="line">{</div>
+<div class="line">        <span class="keywordtype">double</span> lhs = eval_term(p);</div>
+<div class="line"> </div>
+<div class="line">        <span class="comment">/* expression, toplama ya da çıkarma içeriyorsa dallanmaya devam et. */</span></div>
+<div class="line">        <span class="keywordflow">if</span> (match(p, TK_PLUS)) {</div>
+<div class="line">                <span class="keywordtype">double</span> rhs = eval_expr(p);</div>
+<div class="line"> </div>
+<div class="line">                lhs += rhs;</div>
+<div class="line">        } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (match(p, TK_MINUS)) {</div>
+<div class="line">                <span class="keywordtype">double</span> rhs = eval_expr(p);</div>
+<div class="line"> </div>
+<div class="line">                lhs -= rhs;</div>
+<div class="line">        }</div>
+<div class="line"> </div>
+<div class="line">        <span class="keywordflow">return</span> lhs;</div>
+<div class="line">}</div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">double</span> eval_term(<span class="keyword">struct</span> <a class="code hl_struct" href="structparser.html">parser</a> *p)</div>
+<div class="line">{</div>
+<div class="line">        <span class="keywordtype">double</span> lhs = eval_factor(p);</div>
+<div class="line"> </div>
+<div class="line">        <span class="comment">/* term, expression&#39;a benzer şekilde dallanır. */</span></div>
+<div class="line">        <span class="keywordflow">if</span> (match(p, TK_STAR)) {</div>
+<div class="line">                <span class="keywordtype">double</span> rhs = eval_term(p);</div>
+<div class="line"> </div>
+<div class="line">                lhs *= rhs;</div>
+<div class="line">        } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (match(p, TK_SLASH)) {</div>
+<div class="line">                <span class="keywordtype">double</span> rhs = eval_term(p);</div>
+<div class="line"> </div>
+<div class="line">                lhs /= rhs;</div>
+<div class="line">        }</div>
+<div class="line"> </div>
+<div class="line">        <span class="keywordflow">return</span> lhs;</div>
+<div class="line">}</div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">double</span> eval_factor(<span class="keyword">struct</span> <a class="code hl_struct" href="structparser.html">parser</a> *p)</div>
+<div class="line">{</div>
+<div class="line">        <span class="keywordflow">if</span> (match(p, TK_PLUS))</div>
+<div class="line">                <span class="keywordflow">return</span> eval_atom(p);</div>
+<div class="line">        <span class="keywordflow">else</span> <span class="keywordflow">if</span> (match(p, TK_MINUS))</div>
+<div class="line">                <span class="keywordflow">return</span> -eval_atom(p);</div>
+<div class="line">        <span class="keywordflow">else</span></div>
+<div class="line">                <span class="keywordflow">return</span> eval_atom(p);</div>
+<div class="line"> </div>
+<div class="line">}</div>
+</div><!-- fragment --><p>Son olarak da sayısal değer ifade eden en küçük birimleri, <code>atom</code>ları evaluate ediyoruz.</p>
+<div class="fragment"><div class="line"><span class="keywordtype">double</span> eval_atom(<span class="keyword">struct</span> <a class="code hl_struct" href="structparser.html">parser</a> *p)</div>
+<div class="line">{</div>
+<div class="line">        <span class="comment">/* `match` fonksiyonu, bir sonraki tokene geçeceği için seminfo&#39;yu</span></div>
+<div class="line"><span class="comment">         * kaydet. */</span></div>
+<div class="line">        <span class="keyword">union </span><a class="code hl_union" href="unionseminfo.html">seminfo</a> s = current_seminfo(p);</div>
+<div class="line"> </div>
+<div class="line">        <span class="keywordflow">if</span> (match(p, <a class="code hl_variable" href="tokenizer_8h.html#a8616b93391ec951a4d353a10315cad54">TK_INT</a>)) {</div>
+<div class="line">                <span class="keywordflow">return</span> (<span class="keywordtype">double</span>) s.<a class="code hl_variable" href="unionseminfo.html#a3d15aa2ad642d3a62513f9ef33d65e09">num_int</a>;</div>
+<div class="line">        } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (match(p, <a class="code hl_variable" href="tokenizer_8h.html#a6e3d5f8635d47064e61bd89a16aa9219">TK_FLOAT</a>)) {</div>
+<div class="line">                <span class="keywordflow">return</span> s.<a class="code hl_variable" href="unionseminfo.html#a912262d0c837ce3c024bd2e8a74d39bb">num_float</a>;</div>
+<div class="line">        } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (match(p, <a class="code hl_variable" href="tokenizer_8h.html#a7ffbf59a256be2852e91e6ccecafb7ad">TK_IDENT</a>)) {</div>
+<div class="line">                <span class="keywordtype">double</span> *value = <a class="code hl_function" href="map_8h.html#ab61c37aaaf3a19a6bf24da8f1d35379b">map_get2</a>(&amp;p-&gt;<a class="code hl_variable" href="structparser.html#a693f7c1dc262a1680f22cd3ab0de1fd3">variables</a>,</div>
+<div class="line">                                         &amp;s.<a class="code hl_variable" href="unionseminfo.html#a2e08e1dfa14127a98144d1e5f6cd089e">ident_id</a>,</div>
+<div class="line">                                         <span class="keyword">sizeof</span>(<span class="keywordtype">size_t</span>));</div>
+<div class="line"> </div>
+<div class="line">                <span class="keywordflow">return</span> value ? *value : 0;</div>
+<div class="line">        } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (match(p, TK_LPAREN)) {</div>
+<div class="line">                <span class="keywordtype">double</span> expr = eval_expr(p);</div>
+<div class="line"> </div>
+<div class="line">                assert(match(p, TK_RPAREN));</div>
+<div class="line"> </div>
+<div class="line">                <span class="keywordflow">return</span> expr;</div>
+<div class="line">        }</div>
+<div class="line"> </div>
+<div class="line">        assert(0 &amp;&amp; <span class="stringliteral">&quot;Syntax error.&quot;</span>);  <span class="comment">// GCOVR_EXCL_LINE</span></div>
+<div class="line">}</div>
+<div class="ttc" id="atokenizer_8h_html_a6e3d5f8635d47064e61bd89a16aa9219"><div class="ttname"><a href="tokenizer_8h.html#a6e3d5f8635d47064e61bd89a16aa9219">TK_FLOAT</a></div><div class="ttdeci">static const size_t TK_FLOAT</div><div class="ttdoc">Ondalık sayı token ID'si.</div><div class="ttdef"><b>Definition</b> <a href="tokenizer_8h_source.html#l00025">tokenizer.h:25</a></div></div>
+<div class="ttc" id="atokenizer_8h_html_a8616b93391ec951a4d353a10315cad54"><div class="ttname"><a href="tokenizer_8h.html#a8616b93391ec951a4d353a10315cad54">TK_INT</a></div><div class="ttdeci">static const size_t TK_INT</div><div class="ttdoc">Tam sayı token ID'si.</div><div class="ttdef"><b>Definition</b> <a href="tokenizer_8h_source.html#l00022">tokenizer.h:22</a></div></div>
+<div class="ttc" id="aunionseminfo_html_a2e08e1dfa14127a98144d1e5f6cd089e"><div class="ttname"><a href="unionseminfo.html#a2e08e1dfa14127a98144d1e5f6cd089e">seminfo::ident_id</a></div><div class="ttdeci">size_t ident_id</div><div class="ttdoc">TK_IDENT tipi için seminfo.</div><div class="ttdef"><b>Definition</b> <a href="tokenizer_8h_source.html#l00057">tokenizer.h:57</a></div></div>
+<div class="ttc" id="aunionseminfo_html_a3d15aa2ad642d3a62513f9ef33d65e09"><div class="ttname"><a href="unionseminfo.html#a3d15aa2ad642d3a62513f9ef33d65e09">seminfo::num_int</a></div><div class="ttdeci">intmax_t num_int</div><div class="ttdoc">TK_INT tipi için seminfo.</div><div class="ttdef"><b>Definition</b> <a href="tokenizer_8h_source.html#l00055">tokenizer.h:55</a></div></div>
+<div class="ttc" id="aunionseminfo_html_a912262d0c837ce3c024bd2e8a74d39bb"><div class="ttname"><a href="unionseminfo.html#a912262d0c837ce3c024bd2e8a74d39bb">seminfo::num_float</a></div><div class="ttdeci">double num_float</div><div class="ttdoc">TK_FLOAT tipi için seminfo.</div><div class="ttdef"><b>Definition</b> <a href="tokenizer_8h_source.html#l00053">tokenizer.h:53</a></div></div>
+</div><!-- fragment --><h1><a class="anchor" id="rd_parser_bug_sec"></a>
+İşlem Önceliği...</h1>
+<p>Bu kadar! Artık değişken ve matematiksel ifade içeren bir yazılım dilimiz var... sanıyorsanız yanılıyorsunuz. Yazdığımız koda şu ifadeyi verirsek büyük bir hüsrana uğrarız: <code>print 10 - 2 - 3;</code></p>
+<p>Bu işlemin matematiksel sonucu <em>5</em> olmalıdır. Fakat bizim parser'ımız ekrana 11* yazdırır!</p>
+<p>Neden mi? Çünkü sonsuz döngüden (Left-Recursion) kurtulmak için <code>eval_expr</code> fonksiyonumuzu sağ-özyinelemeli (right-recursive) yaptık. Böylece parser ifadeyi <code>10 - (2 - 3)</code> şeklinde, matematikteki Left-Associative kuralının tam tersi olan Right-Associative kuralıyla hesapladı. Manuel parser'larda bu sorunu çözmek kodu spagettiye çevirir. Bir sonraki aşamada dili <code>if</code>/<code>while</code> ile genişletmeden önce, hem parsing'i evaluation'dan ayırıp CST kurmak hem de bu "İşlem Önceliği" hatasından zarifçe kurtulmak için tekerleği yeniden icat etmeyeceğiz: <a class="el" href="rdesc_page.html">librdesc</a> </p>
+</div></div><!-- contents -->
 </div><!-- PageDoc -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

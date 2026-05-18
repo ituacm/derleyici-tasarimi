@@ -116,7 +116,7 @@ $(function() {
 <p>Peki işlem önceliği niçin ters? <code>eval_expr</code>'ın oluşturduğu ağaca aşina olduğumuz bir görünümden bakalım:</p>
 <div class="dotgraph">
 <iframe scrolling="no" frameborder="0" src="dot_implicit-parse-tree-simplified-td.svg" width="455" height="347"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
-<p>Bunu in order traverse edecek olursak işlemin 10 - (3 - 2) şeklinde yapıldığını görüyoruz, (10 - 3) - 2 değil! Elde etmemiz gerek tree tam tersiydi:</p>
+<p>Bunu in order traverse edecek olursak işlemin 10 - (2 - 3) şeklinde yapıldığını görüyoruz, (10 - 2) - 3 değil! Elde etmemiz gerek tree tam tersiydi:</p>
 <div class="dotgraph">
 <iframe scrolling="no" frameborder="0" src="dot_implicit-parse-tree-simplified-flip.svg" width="455" height="347"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 <p>Ancak bunu top-down parser'larla elde etmek kolay değil. <code>eval_expr</code> ile <code>eval_term</code>'in yerini değiştirince parse tree elde etmek isterken sonsuz döngüye giriyoruz.</p>
@@ -143,7 +143,7 @@ $(function() {
 </div><!-- fragment --><div class="dotgraph">
 <iframe scrolling="no" frameborder="0" src="dot_implicit-parse-tree-infinite-loop.svg" width="1135" height="203"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 <p>Başta gramer tanımını, ⟨Expr⟩'dan hemen sonra ⟨Expr⟩ gelmeyecek şekilde yaptık. </p><div class="fragment"><div class="line">⟨Expr⟩ → ⟨Term⟩ + ⟨Expr⟩ | ⟨Term⟩ - ⟨Expr⟩ | ⟨Term⟩</div>
-</div><!-- fragment --><p>Neden mi? Çünkü sonsuz döngüden (Left-Recursion) kurtulmak için <code>eval_expr</code> fonksiyonumuzu sağ-özyinelemeli (right-recursive) yapmak zorundaydık! Ancak parser ifadeyi <code>10 - (2 - 3)</code> şeklinde, matematikteki Left-Associative kuralının tam tersi olan Right-Associative kuralıyla parse etmiş oldu. Manuel parser'larda bu sorunu çözmek kodu spagettiye çevirir. Bir sonraki aşamada dili <code>if</code>/<code>while</code> ile genişletmeden önce, hem parsing'i evaluation'dan ayırıp ST kurmak hem de bu "İşlem Önceliği" hatasından zarifçe kurtulmak için tekerleği yeniden icat etmeyeceğiz: <a class="el" href="rdesc_page.html">librdesc</a> </p>
+</div><!-- fragment --><p>Neden mi? Çünkü sonsuz döngüden (Left-Recursion) kurtulmak için <code>eval_expr</code> fonksiyonumuzu sağ-özyinelemeli (right-recursive) yapmak zorundaydık! Ancak parser ifadeyi <code>10 - (2 - 3)</code> şeklinde, matematikteki Left-Associative kuralının tam tersi olan Right-Associative kuralıyla parse etmiş oldu. Manuel parser'larda bu sorunu çözmek kodu spagettiye çevirir. Bir sonraki aşamada dili <code>if</code>/<code>while</code> ile genişletmeden önce, hem parsing'i evaluation'dan ayırıp CST kurmak hem de bu "İşlem Önceliği" hatasından zarifçe kurtulmak için tekerleği yeniden icat etmeyeceğiz: <a class="el" href="rdesc_page.html">librdesc</a> </p>
 </div></div><!-- contents -->
 </div><!-- PageDoc -->
 <!-- start footer part -->

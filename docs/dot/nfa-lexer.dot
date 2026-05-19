@@ -28,7 +28,7 @@ digraph nfa_lexer {
     num_B [label = "B₁", peripheries = 2];
 
     num_S -> num_A [label = "(+|-)"];
-    num_S -> num_A [label = "ε"];
+    num_S -> num_B [label = "(0-9)"];
     num_A -> num_B [label = "(0-9)"];
-    num_B -> num_A [label = "ε"];
+    num_B -> num_B [label = "(0-9)"];
 }

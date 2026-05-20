@@ -27,6 +27,7 @@ enum tk_id {
 	TK_MINUS,
 	TK_STAR,
 	TK_SEMI,
+	TK_LPAREN, TK_RPAREN,
 	/* TK_INT'i tokenizer tanımlıyor. */
 };
 

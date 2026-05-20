@@ -95,9 +95,14 @@ ediyoruz.
 
 @section rd_parser_bug_sec İşlem Önceliği...
 Bu kadar! Artık değişken ve matematiksel ifade içeren bir yazılım dilimiz
-var... sanıyorsanız yanılıyorsunuz. Yazdığımız koda şu ifadeyi verirsek büyük
+var...
+
+@snippet snippets/recursive-parser.test.c Çalışan örnek
+
+sanıyorsanız yanılıyorsunuz. Yazdığımız koda şu ifadeyi verirsek büyük
 bir hüsrana uğrarız:
-`print 10 - 2 - 3;`
+
+@snippet snippets/recursive-parser.test.c Ters associativity
 
 Bu işlemin matematiksel sonucu *5* olmalıdır. Fakat bizim parser'ımız ekrana
 * *11* yazdırır! Top-down parsing'de parser'la evaluation'ı birlikte yazdığımız

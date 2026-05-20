@@ -98,7 +98,8 @@ href="https://en.wikipedia.org/wiki/Nondeterministic_finite_automaton">
 implementasyonunu (en azından doğrudan) yapmamız mümkün değil,
 <a href="https://en.wikipedia.org/wiki/Deterministic_finite_automaton">
 * *deterministic finite state macine*</a> (DFA) oluşturmamız gerekiyor. DFA-NFA
-dönüşümleri bu dersin konusu değil, sadece örnek olsun diye veriyorum:
+dönüşümleri bu dersin konusu değil, örneği gerçek lexer kütüphaneleri bu
+dönüşümü yaptığından kulak aşinalığı olsun diye veriyorum.
 
 @dotfile dot/dfa-combined-lexer.dot
 

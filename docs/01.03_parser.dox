@@ -52,8 +52,11 @@ Bu ağaçlara, yazılım dilinin gramerinden ziyade anlamını içermesinden öt
 Bu CST'yi oluşturan gramer,
 ```
 ⟨S⟩ → id = ⟨E⟩ ;
+
 ⟨E⟩ → ⟨E⟩ + ⟨T⟩ | ⟨T⟩
+
 ⟨T⟩ → ⟨T⟩ * ⟨F⟩ | ⟨F⟩
+
 ⟨F⟩ → id
 ```
 
@@ -125,9 +128,13 @@ digraph gramer {
 
 ```
 ⟨S⟩ → ⟨SıfatTamlaması⟩ ⟨Fiil⟩
+
 ⟨SıfatTamlaması⟩ → ⟨Sıfat⟩ ⟨İsim⟩
+
 ⟨Sıfat⟩ → Formal | Yabancı
+
 ⟨İsim⟩ → dilleri | dil
+
 ⟨Fiil⟩ → öğreniyorum. | biliyorum.
 ```
 
@@ -152,7 +159,9 @@ digraph gramer {
     tanımlanır.
 
 Şimdi bu nonterminal, token ve production rules'tan tree oluşturacak sistematik
-bir yapıya ihtiyacımız var: @ref td_parser_page
+bir yapıya ihtiyacımız var. Türkçe örnekte "Sıfat" yerine "Term", "Fiil" yerine
+"Expr" geçiyor; kurallar değişiyor ama formalizmini kurduğumuz o altyapı aynı
+kalıyor: @ref td_parser_page
 
 Alt sayfalar
 - @subpage td_parser_page

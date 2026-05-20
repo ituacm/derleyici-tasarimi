@@ -91,6 +91,11 @@ static bool match(struct parser *p, size_t tk_id)
 
 void eval_print(struct parser *p);
 void eval_asgn(struct parser *p);
+double eval_expr(struct parser *p);
+double eval_term(struct parser *p);
+double eval_factor(struct parser *p);
+double eval_atom(struct parser *p);
+
 //! [eval]
 void parser_eval(struct parser *p, const char *text)
 {
@@ -114,14 +119,6 @@ void parser_eval(struct parser *p, const char *text)
 		assert(0 && "Beklenmeyen token! IDENT ya da PRINT gelmeliydi."); // GCOVR_EXCL_LINE
 	} while (current_id(p) != TK_NOTOKEN);
 }
-
-/* Bütün production rule'ları fonksiyon olarak tanımlayacağız. */
-void eval_print(struct parser *p);
-void eval_asgn(struct parser *p);
-double eval_expr(struct parser *p);
-double eval_term(struct parser *p);
-double eval_factor(struct parser *p);
-double eval_atom(struct parser *p);
 //! [eval]
 
 //! [print/asgn]

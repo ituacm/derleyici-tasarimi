@@ -25,7 +25,7 @@ tavsiyem yine de sisteme kurmanızdır, böylece tüm metin editörlerinin librd
 fonksiyonlarını görüp uygun önerilerde bulunabilir.
 
 
-@section rdesc_grammar_sec Grameri rdesc Makrolarına Dökmek
+@section rdesc_grammar_sec Grameri librdesc Makrolarına Dökmek
 
 Kendi stack implementasyonunu kullanıp CST kuran bu parser'ı çalıştırmak için,
 kütüphanenin `rule_macros.h` başlığındaki makroları kullanacağız.
@@ -47,12 +47,12 @@ oluşacak şekilde sadeleştirelim:
 
 ⟨TermRest⟩ → * ⟨Atom⟩ ⟨TermRest⟩ | ε
 
-⟨Atom⟩ → int
+⟨Atom⟩ → int | ( ⟨Expr⟩ )
 ```
 
 Önceki gramer yapımızı librdesc ile kullanmanın önünde bir engel yoktu, ancak
 librdesc'in bazı özelliklerini kullanabilmek için şimdiden bu değişikliği
-yaptık.
+yaptık. Bir sonraki bölümde bu tercihi yapma nedenimizi detaylandıracağız.
 
 Gramer için gerekli declaration'ları header'da yapalım:
 
@@ -72,7 +72,8 @@ Sonrasında, bu tabloyu kullanarak `struct rdesc` oluşturuyoruz:
 
 @snippet snippets/rdesc-parser.test.c rdesc init
 
-Bu kadar! Sonrasında rdesc'e token göndermeye başlayabiliriz:
+Bu kadar!  Tokenizer ile `(token_id, seminfo)` ikilisini üretiyorduk, şimdilik
+hard-coded birkaç tokeni rdesc'e gönderip test edelim:
 
 @snippet snippets/rdesc-parser.test.c rdesc pump
 
@@ -91,12 +92,14 @@ için `rdesc_flip_left()` çağırmamız yeterli:
 
 @dotfile dot/rdesc-match-flip.dot
 
-Bu CST'yi traverse edip evaluate etmenin detaylarına ineceğiz.
-`rdesc_dump_cst()` fonksiyonuna verdiğimiz `node_printer()`'ın tanımını tek
-bir node'ı traverse etme örneği olarak verebiliriz:
+`rdesc_flip_left()` sonrası elimizde Left-Associative, matematiksel olarak
+doğru bir CST var. Sıradaki adım bu ağacı traverse etmek ve değerleri
+hesaplamak. Artık parsing ile evaluation'ı birbirinden tam olarak ayırmış
+olacağız.
+
+Ayrıca, `rdesc_dump_cst()` fonksiyonuna verdiğimiz `node_printer()`'ın tanımını
+tek bir node'ı traverse etme örneği olarak verebiliriz, bir sonraki aşama olan
+@ref treewalk_interpreter_page'da bunu yapacağız:
 
 @snippet snippets/rdesc-parser.c Node print
-
-Artık tam-teşekküllü bir dil kodlamaya başlayabiliriz:
-@ref treewalk_interpreter_page
 */

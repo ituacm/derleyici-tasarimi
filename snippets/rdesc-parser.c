@@ -11,47 +11,43 @@
 
 
 struct rdesc_grammar_symbol
-	production_rules[NT_COUNT][MAX_ALT_COUNT + 1][MAX_ALT_SIZE + 1] = {
-    /* ⟨S⟩ → ⟨Expr⟩ ; */
-    r(
-        NT(EXPR), TK(SEMI)
-    ),
+production_rules[NT_COUNT][MAX_ALT_COUNT + 1][MAX_ALT_SIZE + 1] = {
+	/* ⟨S⟩ → ⟨Expr⟩ ; */ r(
+		NT(EXPR), TK(SEMI)
+	),
 
-    /* ⟨Expr⟩ → ⟨Term⟩ ⟨ExprRest⟩ */
-    r(
-        NT(TERM), NT(EXPR_REST)
-    ),
+	/* ⟨Expr⟩ → ⟨Term⟩ ⟨ExprRest⟩ */ r(
+		NT(TERM), NT(EXPR_REST)
+	),
 
-    /* ⟨ExprRest⟩ → - ⟨Term⟩ ⟨ExprRest⟩ | ε */
-    r(
-        TK(MINUS), NT(TERM), NT(EXPR_REST)
-    alt EPSILON
-    ),
+	/* ⟨ExprRest⟩ → - ⟨Term⟩ ⟨ExprRest⟩ | ε */ r(
+		TK(MINUS), NT(TERM), NT(EXPR_REST)
+	alt	EPSILON
+	),
 
-    /* ⟨Term⟩ → ⟨Atom⟩ ⟨TermRest⟩ */
-    r(
-        NT(ATOM), NT(TERM_REST)
-    ),
+	/* ⟨Term⟩ → ⟨Atom⟩ ⟨TermRest⟩ */ r(
+		NT(ATOM), NT(TERM_REST)
+	),
 
-    /* ⟨TermRest⟩ → * ⟨Atom⟩ ⟨TermRest⟩ | ε */
-    r(
-        TK(STAR), NT(ATOM), NT(TERM_REST)
-    alt EPSILON
-    ),
+	/* ⟨TermRest⟩ → * ⟨Atom⟩ ⟨TermRest⟩ | ε */ r(
+		TK(STAR), NT(ATOM), NT(TERM_REST)
+	alt	EPSILON
+	),
 
-    /* ⟨Atom⟩ → num */
-    r(
-        TK(INT)
-    )
+	/* ⟨Atom⟩ → num | ( ⟨EXPR⟩ ) */ r(
+		TK(INT)
+	alt	TK(LPAREN), NT(EXPR), TK(RPAREN)
+	)
 };
 //! [Gramer tablosu]
 
+
+//! [Node print]
 #include <rdesc/cst_macros.h>
 
 
-//! [Node print]
 const char *tk_names[] = {
-	"-", "*", ";",
+	"-", "*", ";", "(", ")"
 };
 
 const char *nt_names[] = {

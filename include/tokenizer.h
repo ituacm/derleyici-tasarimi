@@ -16,16 +16,16 @@
 
 
 /** @brief @ref tokenizer_feed() ile verilen lexemenin bittiğini belirtir. */
-static const size_t TK_NOTOKEN = INT16_MAX - 1;
+#define TK_NOTOKEN (INT16_MAX - 1)
 
 /** @brief Tam sayı token ID'si. */
-static const size_t TK_INT = INT16_MAX - 2;
+#define TK_INT (INT16_MAX - 2)
 
 /** @brief Ondalık sayı token ID'si. */
-static const size_t TK_FLOAT = INT16_MAX - 3;
+#define TK_FLOAT (INT16_MAX - 3)
 
 /** @brief Identifier token ID'si. */
-static const size_t TK_IDENT = INT16_MAX - 4;
+#define TK_IDENT (INT16_MAX - 4)
 
 
 /** @brief tokenizer. */

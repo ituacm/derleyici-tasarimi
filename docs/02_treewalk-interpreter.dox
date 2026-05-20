@@ -15,4 +15,31 @@ digraph navigation {
     B -> C;
 }
 @enddot
+
+<a href="https://en.wikipedia.org/wiki/Bc_(programming_language)">POSIX bc</a>'nin
+```
++     -     *     /     %     ^         (arithmethic)
++=    -=    *=    /=    %=    ^=     =  (assignment)
+++    --                                (increment/decrement)
+<     >     ==    !=    <=    >=        (comparasion)
+( )   { }   ;     ,
+```
+punctuation'larını ve
+```
+define  break   quit    print
+return  for     if      while
+```
+keyword'lerini içeren bir subsetini kodlayacağız. bc'nin `define` ve `quit`
+keyword'leriyle `^=` dışındaki tokenleri, C ile neredeyse eşdeğerdir.
+
+Gramerin standart tanımı için
+<a href="https://pubs.opengroup.org/onlinepubs/9799919799/utilities/bc.html">The Open Group</a>
+sitesindeki dokümantasyona göz atabilirsiniz.
+
+`define`, bc'de fonksiyon tanımlamak için kullanılır, `^=` ise XOR yerine üs
+alma işlemi yapar. Tree-walk interpreter'ımızda `define` dışındaki özellikleri
+kodlayacağız. @ref bc_grammar_page'ni tanımlayarak başlayalım.
+
+Alt sayfalar
+- @subpage bc_grammar_page
 */

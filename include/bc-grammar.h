@@ -20,6 +20,7 @@
 #define BC_MAX_ALT_SIZE 10
 
 /** @brief Token ID. */
+//! [Token/nonterminal ID]
 enum bc_tk_id {
 	TK_PLUS, TK_MINUS, TK_STAR, TK_SLASH, TK_PERCENT, TK_CARET,
 	TK_PLUSEQ, TK_MINUSEQ, TK_STAREQ, TK_SLASHEQ, TK_PERCENTEQ, TK_CARETEQ, TK_EQ,
@@ -50,11 +51,8 @@ enum bc_nt_id {
 };
 
 /**_*/
-/* Gramer tanımını tutacak struct'ı declare ediyoruz.*/
-extern struct rdesc_grammar_symbol bc_production_rules
-	[BC_NT_COUNT][BC_MAX_ALT_COUNT + 1][BC_MAX_ALT_SIZE + 1];
-//! [Gramer declaration]
-
+/* Bu string karşılıkları tokenizer'a punctuation ve keyword eklemek için
+ * kullanacağız. */
 static const char *bc_tk_names[] = {
 	"+", "-", "*", "/", "%", "^",
 	"+=", "-=", "*=", "/=", "%=", "^=", "=",
@@ -64,9 +62,14 @@ static const char *bc_tk_names[] = {
 	"define", "break", "quit", "print",
 	"return", "for", "if", "while",
 
+	/* librdesc'in dump_bnf fonksiyonuyla gramer yapımızı birazdan print
+	 * edeceğiz. */
 	[TK_INT] = "@int", [TK_FLOAT] = "@float", [TK_IDENT] = "@ident",
 };
 
+/**_*/
+/* Nonterminal isimleri ve yukarıdaki [] içindeki token isimleri, dump_bnf
+ * özelligi için. */
 static const char *bc_nt_names[] = {
 	"stmt", "stmts",
 
@@ -83,6 +86,16 @@ static const char *bc_nt_names[] = {
 
 	"expr",
 };
+//! [Token/nonterminal ID]
+
+/**_*/
+/* Gramer tanımını tutacak struct'ı declare ediyoruz.*/
+extern struct rdesc_grammar_symbol bc_production_rules
+	[BC_NT_COUNT][BC_MAX_ALT_COUNT + 1][BC_MAX_ALT_SIZE + 1];
+//! [Gramer declaration]
+
+/** @brief Tokenizer oluşturur ve pucntuation'larla keyword'leri ekler. */
+void bc_tokenizer_init(struct tokenizer *tokenizer);
 
 
 #endif

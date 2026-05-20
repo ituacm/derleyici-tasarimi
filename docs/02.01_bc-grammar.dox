@@ -1,3 +1,19 @@
 /**
 @page bc_grammar_page bc Grameri
+
+Devasa gramer tanımımız:
+
+@snippet snippets/bc-grammar.c Gramer tanımı
+
+Burada kullandığımız token ve nonterminal ID'lerinin enum'u ise:
+
+@snippet include/bc-grammar.h Token/nonterminal ID
+
+ID ve string'ler üzerinden tokenizer üretmek için:
+
+@snippet snippets/bc-grammar.c Tokenizer init
+
+Aşağıdaki fonksiyon, grameri daha kolay okunur bir formatta ekrana yazdırır:
+
+@snippet snippets/bc-grammar-bnf.test.c Dump grammar
 */

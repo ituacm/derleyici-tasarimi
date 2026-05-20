@@ -4,6 +4,7 @@
 #include <rdesc/rule_macros.h>
 
 
+//! [Gramer tanımı]
 struct rdesc_grammar_symbol bc_production_rules
 	[BC_NT_COUNT][BC_MAX_ALT_COUNT + 1][BC_MAX_ALT_SIZE + 1] = {
 /* <stmt> ::= */ r(
@@ -108,3 +109,17 @@ alt	TK(FLOAT)
 alt	NT(REL_EXPR)
 )
 };
+//! [Gramer tanımı]
+
+//! [Tokenizer init]
+void bc_tokenizer_init(struct tokenizer *t)
+{
+	tokenizer_init(t);
+
+	for (int i = TK_PLUS; i <= TK_COMMA; i++)
+		tokenizer_add_punctuation(t, bc_tk_names[i], i);
+
+	for (int i = TK_DEFINE; i <= TK_WHILE; i++)
+		tokenizer_add_keyword(t, bc_tk_names[i], i);
+}
+//! [Tokenizer init]

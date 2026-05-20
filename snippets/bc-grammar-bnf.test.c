@@ -18,7 +18,9 @@ int main()
 					  BC_MAX_ALT_SIZE,
 					  bc_production_rules) == 0);
 
-	rdesc_dump_bnf(stdout, &grammar, bc_tk_names, bc_nt_names);
+//! [Dump grammar]
+rdesc_dump_bnf(stdout, &grammar, bc_tk_names, bc_nt_names);
+//! [Dump grammar]
 
 	rdesc_grammar_destroy(&grammar);
 }

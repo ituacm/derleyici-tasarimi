@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['dökmek_0',['Grameri rdesc Makrolarına Dökmek',['../rdesc_page.html#rdesc_grammar_sec',1,'']]],
+  ['dökmek_0',['Grameri librdesc Makrolarına Dökmek',['../rdesc_page.html#rdesc_grammar_sec',1,'']]],
   ['derleme_1',['Derleme',['../taslak.html#taslak_derleme_sec',1,'']]],
   ['derleyici_20front_20end_20i_2',['Derleyici Front End&apos;i',['../derleyici_front_end_page.html',1,'']]],
   ['derleyici_20tasarımı_3',['Derleyici Tasarımı',['../index.html',1,'']]],

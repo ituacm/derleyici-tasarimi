@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['makrolarına_20dökmek_0',['Grameri rdesc Makrolarına Dökmek',['../rdesc_page.html#rdesc_grammar_sec',1,'']]],
+  ['makrolarına_20dökmek_0',['Grameri librdesc Makrolarına Dökmek',['../rdesc_page.html#rdesc_grammar_sec',1,'']]],
   ['map_1',['map',['../structmap.html',1,'']]],
   ['map_2eh_2',['map.h',['../map_8h.html',1,'']]],
   ['map_5fdelete_3',['map_delete',['../map_8h.html#afeac31b0d35b3bfef3501a9b50138e9c',1,'map.h']]],

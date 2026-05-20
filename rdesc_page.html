@@ -89,7 +89,7 @@ $(function() {
 <div class="line">sudo make FEATURES=&#39;full&#39; -j install</div>
 </div><!-- fragment --><p>Tabii proje taslağını kullanıyorsanız librdesc otomatik indirilecek. Ancak tavsiyem yine de sisteme kurmanızdır, böylece tüm metin editörlerinin librdesc fonksiyonlarını görüp uygun önerilerde bulunabilir.</p>
 <h1><a class="anchor" id="rdesc_grammar_sec"></a>
-Grameri rdesc Makrolarına Dökmek</h1>
+Grameri librdesc Makrolarına Dökmek</h1>
 <p>Kendi stack implementasyonunu kullanıp CST kuran bu parser'ı çalıştırmak için, kütüphanenin <code>rule_macros.h</code> başlığındaki makroları kullanacağız.</p>
 <p>Önceki sayfalarda sonsuz döngüye girmemek için gramerimizi mecburen right-recursive olarak tasarlamıştık. Şimdi bu right-recursive yapıyı <code>_REST</code> isimli yardımcı nonterminal'lerle ifade edelim. Anlaşılırlığı artırmak için gramerimizi sadece çıkarma (<code>-</code>), çarpma (<code>*</code>) ve sayılardan (<code>INT</code>) oluşacak şekilde sadeleştirelim:</p>
 <div class="fragment"><div class="line">⟨S⟩ → ⟨Expr⟩ ;</div>
@@ -102,8 +102,8 @@ Grameri rdesc Makrolarına Dökmek</h1>
 <div class="line"> </div>
 <div class="line">⟨TermRest⟩ → * ⟨Atom⟩ ⟨TermRest⟩ | ε</div>
 <div class="line"> </div>
-<div class="line">⟨Atom⟩ → <span class="keywordtype">int</span></div>
-</div><!-- fragment --><p>Önceki gramer yapımızı librdesc ile kullanmanın önünde bir engel yoktu, ancak librdesc'in bazı özelliklerini kullanabilmek için şimdiden bu değişikliği yaptık.</p>
+<div class="line">⟨Atom⟩ → <span class="keywordtype">int</span> | ( ⟨Expr⟩ )</div>
+</div><!-- fragment --><p>Önceki gramer yapımızı librdesc ile kullanmanın önünde bir engel yoktu, ancak librdesc'in bazı özelliklerini kullanabilmek için şimdiden bu değişikliği yaptık. Bir sonraki bölümde bu tercihi yapma nedenimizi detaylandıracağız.</p>
 <p>Gramer için gerekli declaration'ları header'da yapalım:</p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;rdesc/grammar.h&gt;</span></div>
 <div class="line"> </div>
@@ -118,6 +118,7 @@ Grameri rdesc Makrolarına Dökmek</h1>
 <div class="line">        TK_MINUS,</div>
 <div class="line">        TK_STAR,</div>
 <div class="line">        TK_SEMI,</div>
+<div class="line">        TK_LPAREN, TK_RPAREN,</div>
 <div class="line">        <span class="comment">/* TK_INT&#39;i tokenizer tanımlıyor. */</span></div>
 <div class="line">};</div>
 <div class="line"> </div>
@@ -136,7 +137,7 @@ Grameri rdesc Makrolarına Dökmek</h1>
 <div class="ttc" id="ardesc-parser_8h_html_a89eb09a8df613d18bf79d07502137fd7"><div class="ttname"><a href="rdesc-parser_8h.html#a89eb09a8df613d18bf79d07502137fd7">tk_id</a></div><div class="ttdeci">tk_id</div><div class="ttdoc">Token ID.</div><div class="ttdef"><b>Definition</b> <a href="rdesc-parser_8h_source.html#l00026">rdesc-parser.h:26</a></div></div>
 <div class="ttc" id="ardesc-parser_8h_html_ac9b28ede377316f9fb2d4266526a09d1"><div class="ttname"><a href="rdesc-parser_8h.html#ac9b28ede377316f9fb2d4266526a09d1">NT_COUNT</a></div><div class="ttdeci">#define NT_COUNT</div><div class="ttdoc">[Gramer declaration]</div><div class="ttdef"><b>Definition</b> <a href="rdesc-parser_8h_source.html#l00017">rdesc-parser.h:17</a></div></div>
 <div class="ttc" id="ardesc-parser_8h_html_adf030161c13251406f3c38b0c167c43c"><div class="ttname"><a href="rdesc-parser_8h.html#adf030161c13251406f3c38b0c167c43c">MAX_ALT_COUNT</a></div><div class="ttdeci">#define MAX_ALT_COUNT</div><div class="ttdef"><b>Definition</b> <a href="rdesc-parser_8h_source.html#l00020">rdesc-parser.h:20</a></div></div>
-<div class="ttc" id="ardesc-parser_8h_html_af93c51282f8ad7270e9aa72dc7d0c175"><div class="ttname"><a href="rdesc-parser_8h.html#af93c51282f8ad7270e9aa72dc7d0c175">nt_id</a></div><div class="ttdeci">nt_id</div><div class="ttdoc">Nonterminal ID.</div><div class="ttdef"><b>Definition</b> <a href="rdesc-parser_8h_source.html#l00034">rdesc-parser.h:34</a></div></div>
+<div class="ttc" id="ardesc-parser_8h_html_af93c51282f8ad7270e9aa72dc7d0c175"><div class="ttname"><a href="rdesc-parser_8h.html#af93c51282f8ad7270e9aa72dc7d0c175">nt_id</a></div><div class="ttdeci">nt_id</div><div class="ttdoc">Nonterminal ID.</div><div class="ttdef"><b>Definition</b> <a href="rdesc-parser_8h_source.html#l00035">rdesc-parser.h:35</a></div></div>
 </div><!-- fragment --><p>Grameri, formal gösterimine neredeyse birebir benzeyen bir tabloya dönüştürmek için, librdesc'in sağladığı makroları kullanacağız. Spagetti gibi birbirini çağıran fonksiyonlar yok!</p>
 <ul>
 <li><code>r(...)</code>: Production rule'ı başlatır.</li>
@@ -150,38 +151,33 @@ Grameri rdesc Makrolarına Dökmek</h1>
 <div class="line"> </div>
 <div class="line"> </div>
 <div class="line"><span class="keyword">struct </span>rdesc_grammar_symbol</div>
-<div class="line">        <a class="code hl_variable" href="rdesc-parser_8h.html#a3d604c863b6ac3e353d823700814cf53">production_rules</a>[<a class="code hl_define" href="rdesc-parser_8h.html#ac9b28ede377316f9fb2d4266526a09d1">NT_COUNT</a>][<a class="code hl_define" href="rdesc-parser_8h.html#adf030161c13251406f3c38b0c167c43c">MAX_ALT_COUNT</a> + 1][<a class="code hl_define" href="rdesc-parser_8h.html#a7f24a70f2904a003e5329eeaf3ee8ba3">MAX_ALT_SIZE</a> + 1] = {</div>
-<div class="line">    <span class="comment">/* ⟨S⟩ → ⟨Expr⟩ ; */</span></div>
-<div class="line">    r(</div>
-<div class="line">        NT(EXPR), TK(SEMI)</div>
-<div class="line">    ),</div>
+<div class="line"><a class="code hl_variable" href="rdesc-parser_8h.html#a3d604c863b6ac3e353d823700814cf53">production_rules</a>[<a class="code hl_define" href="rdesc-parser_8h.html#ac9b28ede377316f9fb2d4266526a09d1">NT_COUNT</a>][<a class="code hl_define" href="rdesc-parser_8h.html#adf030161c13251406f3c38b0c167c43c">MAX_ALT_COUNT</a> + 1][<a class="code hl_define" href="rdesc-parser_8h.html#a7f24a70f2904a003e5329eeaf3ee8ba3">MAX_ALT_SIZE</a> + 1] = {</div>
+<div class="line">        <span class="comment">/* ⟨S⟩ → ⟨Expr⟩ ; */</span> r(</div>
+<div class="line">                NT(EXPR), TK(SEMI)</div>
+<div class="line">        ),</div>
 <div class="line"> </div>
-<div class="line">    <span class="comment">/* ⟨Expr⟩ → ⟨Term⟩ ⟨ExprRest⟩ */</span></div>
-<div class="line">    r(</div>
-<div class="line">        NT(TERM), NT(EXPR_REST)</div>
-<div class="line">    ),</div>
+<div class="line">        <span class="comment">/* ⟨Expr⟩ → ⟨Term⟩ ⟨ExprRest⟩ */</span> r(</div>
+<div class="line">                NT(TERM), NT(EXPR_REST)</div>
+<div class="line">        ),</div>
 <div class="line"> </div>
-<div class="line">    <span class="comment">/* ⟨ExprRest⟩ → - ⟨Term⟩ ⟨ExprRest⟩ | ε */</span></div>
-<div class="line">    r(</div>
-<div class="line">        TK(MINUS), NT(TERM), NT(EXPR_REST)</div>
-<div class="line">    alt EPSILON</div>
-<div class="line">    ),</div>
+<div class="line">        <span class="comment">/* ⟨ExprRest⟩ → - ⟨Term⟩ ⟨ExprRest⟩ | ε */</span> r(</div>
+<div class="line">                TK(MINUS), NT(TERM), NT(EXPR_REST)</div>
+<div class="line">        alt     EPSILON</div>
+<div class="line">        ),</div>
 <div class="line"> </div>
-<div class="line">    <span class="comment">/* ⟨Term⟩ → ⟨Atom⟩ ⟨TermRest⟩ */</span></div>
-<div class="line">    r(</div>
-<div class="line">        NT(ATOM), NT(TERM_REST)</div>
-<div class="line">    ),</div>
+<div class="line">        <span class="comment">/* ⟨Term⟩ → ⟨Atom⟩ ⟨TermRest⟩ */</span> r(</div>
+<div class="line">                NT(ATOM), NT(TERM_REST)</div>
+<div class="line">        ),</div>
 <div class="line"> </div>
-<div class="line">    <span class="comment">/* ⟨TermRest⟩ → * ⟨Atom⟩ ⟨TermRest⟩ | ε */</span></div>
-<div class="line">    r(</div>
-<div class="line">        TK(STAR), NT(ATOM), NT(TERM_REST)</div>
-<div class="line">    alt EPSILON</div>
-<div class="line">    ),</div>
+<div class="line">        <span class="comment">/* ⟨TermRest⟩ → * ⟨Atom⟩ ⟨TermRest⟩ | ε */</span> r(</div>
+<div class="line">                TK(STAR), NT(ATOM), NT(TERM_REST)</div>
+<div class="line">        alt     EPSILON</div>
+<div class="line">        ),</div>
 <div class="line"> </div>
-<div class="line">    <span class="comment">/* ⟨Atom⟩ → num */</span></div>
-<div class="line">    r(</div>
-<div class="line">        TK(INT)</div>
-<div class="line">    )</div>
+<div class="line">        <span class="comment">/* ⟨Atom⟩ → num | ( ⟨EXPR⟩ ) */</span> r(</div>
+<div class="line">                TK(INT)</div>
+<div class="line">        alt     TK(LPAREN), NT(EXPR), TK(RPAREN)</div>
+<div class="line">        )</div>
 <div class="line">};</div>
 </div><!-- fragment --><p>Sonrasında, bu tabloyu kullanarak <code>struct rdesc</code> oluşturuyoruz:</p>
 <div class="fragment"><div class="line"><span class="keyword">struct </span>rdesc_grammar grammar;</div>
@@ -193,7 +189,7 @@ Grameri rdesc Makrolarına Dökmek</h1>
 <div class="line">assert(rdesc_init(&amp;<a class="code hl_struct" href="structparser.html">parser</a>, &amp;grammar, <span class="keyword">sizeof</span>(<span class="keyword">union</span> <a class="code hl_union" href="unionseminfo.html">seminfo</a>), NULL) == 0);</div>
 <div class="ttc" id="astructparser_html"><div class="ttname"><a href="structparser.html">parser</a></div><div class="ttdoc">Parser.</div><div class="ttdef"><b>Definition</b> <a href="recursive-parser_8h_source.html#l00019">recursive-parser.h:19</a></div></div>
 <div class="ttc" id="aunionseminfo_html"><div class="ttname"><a href="unionseminfo.html">seminfo</a></div><div class="ttdoc">[Tokenizer tanımı]</div><div class="ttdef"><b>Definition</b> <a href="tokenizer_8h_source.html#l00051">tokenizer.h:51</a></div></div>
-</div><!-- fragment --><p>Bu kadar! Sonrasında rdesc'e token göndermeye başlayabiliriz:</p>
+</div><!-- fragment --><p>Bu kadar! Tokenizer ile <code>(token_id, seminfo)</code> ikilisini üretiyorduk, şimdilik hard-coded birkaç tokeni rdesc'e gönderip test edelim:</p>
 <div class="fragment"><div class="line">assert(rdesc_start(&amp;<a class="code hl_struct" href="structparser.html">parser</a>, NT_STMT) == 0);</div>
 <div class="line"> </div>
 <div class="line"><span class="keyword">union </span><a class="code hl_union" href="unionseminfo.html">seminfo</a> s;</div>
@@ -225,9 +221,13 @@ Grameri rdesc Makrolarına Dökmek</h1>
 <div class="line">rdesc_dump_cst(stdout, rdesc_get_root(&amp;<a class="code hl_struct" href="structparser.html">parser</a>), <a class="code hl_function" href="rdesc-parser_8h.html#af1198cab2f3cb32ed8414011fdacb28b">node_printer</a>);</div>
 </div><!-- fragment --><div class="dotgraph">
 <iframe scrolling="no" frameborder="0" src="dot_rdesc-match-flip.svg" width="790" height="639"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
-<p>Bu CST'yi traverse edip evaluate etmenin detaylarına ineceğiz. <code>rdesc_dump_cst()</code> fonksiyonuna verdiğimiz <code><a class="el" href="rdesc-parser_8h.html#af1198cab2f3cb32ed8414011fdacb28b" title="[Gramer declaration]">node_printer()</a></code>'ın tanımını tek bir node'ı traverse etme örneği olarak verebiliriz:</p>
-<div class="fragment"><div class="line"><span class="keyword">const</span> <span class="keywordtype">char</span> *tk_names[] = {</div>
-<div class="line">        <span class="stringliteral">&quot;-&quot;</span>, <span class="stringliteral">&quot;*&quot;</span>, <span class="stringliteral">&quot;;&quot;</span>,</div>
+<p><code>rdesc_flip_left()</code> sonrası elimizde Left-Associative, matematiksel olarak doğru bir CST var. Sıradaki adım bu ağacı traverse etmek ve değerleri hesaplamak. Artık parsing ile evaluation'ı birbirinden tam olarak ayırmış olacağız.</p>
+<p>Ayrıca, <code>rdesc_dump_cst()</code> fonksiyonuna verdiğimiz <code><a class="el" href="rdesc-parser_8h.html#af1198cab2f3cb32ed8414011fdacb28b" title="[Gramer declaration]">node_printer()</a></code>'ın tanımını tek bir node'ı traverse etme örneği olarak verebiliriz, bir sonraki aşama olan <a class="el" href="treewalk_interpreter_page.html">Tree-Walk Interpreter</a>'da bunu yapacağız:</p>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;rdesc/cst_macros.h&gt;</span></div>
+<div class="line"> </div>
+<div class="line"> </div>
+<div class="line"><span class="keyword">const</span> <span class="keywordtype">char</span> *tk_names[] = {</div>
+<div class="line">        <span class="stringliteral">&quot;-&quot;</span>, <span class="stringliteral">&quot;*&quot;</span>, <span class="stringliteral">&quot;;&quot;</span>, <span class="stringliteral">&quot;(&quot;</span>, <span class="stringliteral">&quot;)&quot;</span></div>
 <div class="line">};</div>
 <div class="line"> </div>
 <div class="line"><span class="keyword">const</span> <span class="keywordtype">char</span> *nt_names[] = {</div>
@@ -253,8 +253,7 @@ Grameri rdesc Makrolarına Dökmek</h1>
 <div class="line">                fprintf(out, <span class="stringliteral">&quot;[label=\&quot;%s\&quot;]&quot;</span>, nt_names[rid(node)]);</div>
 <div class="line">        }</div>
 <div class="line">}</div>
-</div><!-- fragment --><p>Artık tam-teşekküllü bir dil kodlamaya başlayabiliriz: <a class="el" href="treewalk_interpreter_page.html">Tree-Walk Interpreter</a> </p>
-</div></div><!-- contents -->
+</div><!-- fragment --> </div></div><!-- contents -->
 </div><!-- PageDoc -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

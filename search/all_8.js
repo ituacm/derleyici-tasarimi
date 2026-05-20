@@ -14,5 +14,6 @@ var searchData=
   ['lexer_5finit_11',['lexer_init',['../lexer_8h.html#a702027edae6526a7b51687def11fad46',1,'lexer.h']]],
   ['lexer_5fnext_12',['lexer_next',['../lexer_8h.html#a5691ba3e7cd10458aa508728a742a2db',1,'lexer.h']]],
   ['lexical_20analysis_13',['Lexical Analysis',['../derleyici_front_end_page.html#front_end_lexical_analysis',1,'']]],
-  ['librdesc_14',['librdesc',['../rdesc_page.html',1,'parser_page']]]
+  ['librdesc_14',['librdesc',['../rdesc_page.html',1,'parser_page']]],
+  ['librdesc_20makrolarına_20dökmek_15',['Grameri librdesc Makrolarına Dökmek',['../rdesc_page.html#rdesc_grammar_sec',1,'']]]
 ];

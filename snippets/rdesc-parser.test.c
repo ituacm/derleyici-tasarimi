@@ -53,6 +53,8 @@ rdesc_flip_left(rdesc_get_root(&parser), 0);
 rdesc_dump_cst(stdout, rdesc_get_root(&parser), node_printer);
 //! [rdesc flip&print]
 
-	rdesc_destroy(&parser);
-	rdesc_grammar_destroy(&grammar);
+//! [rdesc destroy]
+rdesc_destroy(&parser);
+rdesc_grammar_destroy(&grammar);
+//! [rdesc destroy]
 }

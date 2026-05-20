@@ -1,0 +1,156 @@
+/**
+@page rdesc_detaylari_page librdesc Detayları
+
+librdesc dokümantasyon linkini referans için tekrardan veriyorum:
+https://metwse.github.io/rdesc/
+
+En basit anlamıyla `rdesc` ve `rdesc_grammar` initialize etmek için
+
+@snippet snippets/rdesc-parser.test.c rdesc init
+
+ve temizlemek için
+
+@snippet snippets/rdesc-parser.test.c rdesc destroy
+
+kullanıyoruz.
+
+
+@section rdesc_detaylari_gramer_sec Gramer Makroları (rule_macros.h)
+
+Hatırlarsanız, librdesc'te gramer kurallarımızı, top-down parser'ı
+yazarkenkinden farklı olarak
+
+```
+// çıkarma için
+⟨Expr⟩ → ⟨Term⟩ - ⟨Expr⟩ | ⟨Term⟩
+```
+
+ekstra nonterminaller tanımlayarak
+
+```
+// yine sadece çıkarma için
+⟨Expr⟩ → ⟨Term⟩ ⟨ExprRest⟩
+
+⟨ExprRest⟩ → - ⟨Term⟩ ⟨ExprRest⟩ | ε
+```
+
+yapmıştık. Detayları önemli değil, ancak ikinci yöntemin daha optimize olduğunu
+(ya da daha kolay optimize edilebildiğini) bilseniz iyi olur. İkinci yöntemin
+kullanımını standardize etmek için librdesc,
+<a href="https://metwse.github.io/rdesc/rule__macros_8h.html#a03e4574711eea9045941b122bf664d55">rrr</a>
+makrosunu sunar:
+
+(librdesc dokümantasyonundan)
+@subsection rdesc_detaylari_rrr_subsec rrr(head, (base...), (suffix...))
+
+Right-Recursive liste kuralı tanımlar. İki nonterminal oluşturur: liste head'i
+(base'i içerir) ve onun devamı (tekrarlı suffix). `rrr(A, (β), (α))` şuna
+eşittir:
+
+```
+A  → β A'
+A' → α A' / ε
+```
+
+`rdesc_flip_left()`, bu iki production rule ile oluşturulmuş bir subtree'yi,
+aşağıdaki kurala çevirir:
+
+
+```
+A  → A α / β
+```
+
+`rrr()` makrosunu hem toplama hem de çıkarma işlemi için kullanırken
+`rrr(EXPR, (NT(TERM)), (NT(EXPR_OP), NT(TERM)))` kullanacağız. Sonuç olarak
+elde edeceğimiz kurallar:
+
+```
+⟨Expr⟩ → ⟨Term⟩ ⟨ExprRest⟩
+
+⟨ExprRest⟩ → ⟨ExprOp⟩ ⟨Term⟩ ⟨ExprRest⟩ | ε
+
+...
+
+⟨ExprOp⟩ → + | -
+```
+
+Eş işlem önceliğine sahip operatörleri tek bir nonterminal içerisinde
+gruplayarak `rrr()` ile kullanabiliriz. Fark ettiyseniz `rrr()`'de tekrarlı
+suffix'ler arasına birden fazla çeşit tokeni direkt koymanın yöntemi yok,
+yardımcı bir nonterminal tanımlamak gerekti.
+
+@subsection rdesc_detaylari_ropt_subsec ropt(...)
+
+Opsiyonel production rule tanımlamak için. Nonterminal içinde iki alternatif
+oluşturur. `ropt(α)` şuna eşittir:
+
+```
+A → α / ε
+```
+
+Bu nispeten çok daha basit bir makro. Aşağıdaki production rules'ı tekrar
+tekrar yazmak yerine `ropt()` kullanacağız.
+
+```
+r(
+        NT(EXPR_OP),
+alt     EPSILON
+)
+```
+
+yazmak yerine ropt(NT(EXPR_OP)) yazacağız.
+
+```
+⟨OptExprOp⟩ → ⟨ExprOp⟩ | ε
+
+...
+
+⟨ExprOp⟩ → + | -
+
+// sonrasında işaretli sayılar için,
+⟨Factor⟩ → ⟨OptExprOp⟩ ⟨Atom⟩
+```
+
+
+@section rdesc_detaylari_cst_sec CST Makroları (cst_macros.h)
+
+Node'ların tuttuğu veriye erişmeyi aşağıdaki tablo net bir şekilde özetliyor:
+
+| Dönüt Tipi | Macro | Açıklama |
+|--|--|--|
+| node | rparent(n) | Ağaçtaki bir üst node'u döner. Root için kullanmayın. |
+| `RDESC_TOKEN`/`RDESC_NONTERMINAL` | rtype(n) | Nonterminal-token düzeyinde node tipi. |
+| int | rid(n) | Match edilmiş token ya da nonterminal'in ID'si. Örneğin TK_INT ya da NT_EXPR. |
+| int | ralt_idx(n) | Nonterminal'in kaçıncı alternatifinin match edildiğini verir. |
+| `void *` | rseminfo(n) | Token node'un seminfo'suna işaret eden pointer döner. |
+| int | rchild_count(n) | Nonterminal node'un kaç child'ı oluğunu döner. |
+| node | rchild(n, i) | Nonterminal node'un i. çocuğunu döner. |
+
+Şimdi `node_printer()` daha anlamlı gelmiştir.
+
+@snippet snippets/rdesc-parser.c Node print
+
+
+@section rdesc_detaylari_ordered_choice_sec Ordered-Choice (Sıralı Seçim)
+
+Şimdiye kadar gramerlerde alternatifleri `|` operatörüyle gösterdik. librdesc,
+alternatifleri sırayla denenir ve ilk eşleşen seçilir. Buna ordered-choice
+denir ve `/` operatörüyle gösterilir.
+
+Bu fark kritik, ancak burada detaylarına girmeyeceğiz. Kısaca, başta
+konuştuğumuz CFG'de `|` belirsizliğe (ambiguity) yol açabilir. Detaylarını
+merak edenler,
+<a href="https://en.wikipedia.org/wiki/Dangling_else">Dangling Else Problem</a>'a
+göze atabilir.
+
+Buradan itibaren gramerlerimizi librdesc'in notasyonuyla yazacağız:
+| Eski (CFG) | Yeni (librdesc) |
+|--|--|
+| `⟨Expr⟩ → ...` | `<expr> ::= ...` |
+| `\|` (alternatif) | `/` (ordered-choice) |
+| `⟨Term⟩` | `<term>` |
+| `+`, `-`, int | `"+"`, `"-"`, int |
+
+
+Artık @ref treewalk_interpreter_page yazmaya başlayabiliriz!
+*/

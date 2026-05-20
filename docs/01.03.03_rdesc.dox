@@ -99,7 +99,9 @@ olacağız.
 
 Ayrıca, `rdesc_dump_cst()` fonksiyonuna verdiğimiz `node_printer()`'ın tanımını
 tek bir node'ı traverse etme örneği olarak verebiliriz, bir sonraki aşama olan
-@ref treewalk_interpreter_page'da bunu yapacağız:
+@ref treewalk_interpreter_page'da bu tarz şeyler yapacağız:
 
 @snippet snippets/rdesc-parser.c Node print
+
+Biraz librdesc'in derinliklerine inelim: @ref rdesc_detaylari_page.
 */

@@ -8,7 +8,7 @@ digraph navigation {
     node [shape = "box"];
 
     A [label = "lexing"];
-    B [label = "parsing\nBİRAZ DAHA"];
+    B [label = "parsing"];
     C [label = "evaluation\nBURADASINIZ"];
 
     A -> B;

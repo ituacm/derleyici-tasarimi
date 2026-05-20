@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['current_0',['current',['../structlexer.html#a77180d60d2b0b57591e383ffca76e289',1,'lexer']]],
-  ['current_5flexeme_1',['current_lexeme',['../structtokenizer.html#a0c51ea77dd2ad2b16c6b484579d82445',1,'tokenizer']]]
+  ['bc_5fproduction_5frules_0',['bc_production_rules',['../bc-grammar_8h.html#a239d5691512e3491ad633bfc4e0fce24',1,'bc-grammar.h']]],
+  ['bc_5ftk_5fnames_1',['bc_tk_names',['../bc-grammar_8h.html#a5e455b6da20a4337ef9fa4bc07a057c1',1,'bc-grammar.h']]]
 ];

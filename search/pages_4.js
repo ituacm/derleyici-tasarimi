@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['kullanımı_0',['Taslak Kullanımı',['../taslak.html',1,'']]]
+  ['grameri_0',['bc Grameri',['../bc_grammar_page.html',1,'treewalk_interpreter_page']]]
 ];

@@ -135,7 +135,7 @@ Recursive Descent Parser</h1>
 <div class="line">        <a class="code hl_function" href="map_8h.html#a1dbec0654dc6da754bd79053882d9b90">map_init</a>(&amp;p-&gt;<a class="code hl_variable" href="structparser.html#a693f7c1dc262a1680f22cd3ab0de1fd3">variables</a>, <span class="keyword">sizeof</span>(<span class="keywordtype">double</span>));</div>
 <div class="line"> </div>
 <div class="line">        <span class="comment">/* Eşleştirilmekte olan token. */</span></div>
-<div class="line">        p-&gt;<a class="code hl_variable" href="structparser.html#a8cc4a0c1cdb444ec9c4adaa86939679a">token</a>.<a class="code hl_variable" href="structtoken.html#ad9fe17e79b07cf3db954169fba0117cb">id</a> = <a class="code hl_variable" href="tokenizer_8h.html#a6fa87d7080a9a48e43877b84d6341be3">TK_NOTOKEN</a>;</div>
+<div class="line">        p-&gt;<a class="code hl_variable" href="structparser.html#a8cc4a0c1cdb444ec9c4adaa86939679a">token</a>.<a class="code hl_variable" href="structtoken.html#ad9fe17e79b07cf3db954169fba0117cb">id</a> = <a class="code hl_define" href="tokenizer_8h.html#ad1d2c2f9070f28bde67fa499877a0bf6">TK_NOTOKEN</a>;</div>
 <div class="line"> </div>
 <div class="line">        <span class="comment">/* Dilimizdeki keyword ve punctuation&#39;ları tokenizer&#39;a bildirelim. */</span></div>
 <div class="line">        <a class="code hl_function" href="tokenizer_8h.html#a1493eba53b25f319f9c3d18c73fc18a3">tokenizer_add_keyword</a>(&amp;p-&gt;<a class="code hl_variable" href="structparser.html#a96f7bf8944ff197eca5dd90184d9fb9c">tokenizer</a>, <span class="stringliteral">&quot;print&quot;</span>, TK_PRINT);</div>
@@ -165,8 +165,8 @@ Recursive Descent Parser</h1>
 <div class="ttc" id="atokenizer_8h_html_a01c5dc98d1a56c559e4bbe87ad3be1fd"><div class="ttname"><a href="tokenizer_8h.html#a01c5dc98d1a56c559e4bbe87ad3be1fd">tokenizer_destroy</a></div><div class="ttdeci">void tokenizer_destroy(struct tokenizer *tokenizer)</div><div class="ttdoc">Tokenizerın tahsis ettiği belleği temizler.</div></div>
 <div class="ttc" id="atokenizer_8h_html_a1493eba53b25f319f9c3d18c73fc18a3"><div class="ttname"><a href="tokenizer_8h.html#a1493eba53b25f319f9c3d18c73fc18a3">tokenizer_add_keyword</a></div><div class="ttdeci">void tokenizer_add_keyword(struct tokenizer *tokenizer, const char *keyword, size_t id)</div><div class="ttdoc">Tokenizera bir keyword kaydeder.</div></div>
 <div class="ttc" id="atokenizer_8h_html_a28727c04edc110906ea054372c8a9adb"><div class="ttname"><a href="tokenizer_8h.html#a28727c04edc110906ea054372c8a9adb">tokenizer_add_punctuation</a></div><div class="ttdeci">void tokenizer_add_punctuation(struct tokenizer *tokenizer, const char *punctuation, size_t id)</div><div class="ttdoc">Tokenizera bir punctuation kaydeder..</div></div>
-<div class="ttc" id="atokenizer_8h_html_a6fa87d7080a9a48e43877b84d6341be3"><div class="ttname"><a href="tokenizer_8h.html#a6fa87d7080a9a48e43877b84d6341be3">TK_NOTOKEN</a></div><div class="ttdeci">static const size_t TK_NOTOKEN</div><div class="ttdoc">tokenizer_feed() ile verilen lexemenin bittiğini belirtir.</div><div class="ttdef"><b>Definition</b> <a href="tokenizer_8h_source.html#l00019">tokenizer.h:19</a></div></div>
 <div class="ttc" id="atokenizer_8h_html_a73d455e90e9f0e517198663d56d6b5a3"><div class="ttname"><a href="tokenizer_8h.html#a73d455e90e9f0e517198663d56d6b5a3">tokenizer_init</a></div><div class="ttdeci">void tokenizer_init(struct tokenizer *tokenizer)</div><div class="ttdoc">[Token tanımı]</div></div>
+<div class="ttc" id="atokenizer_8h_html_ad1d2c2f9070f28bde67fa499877a0bf6"><div class="ttname"><a href="tokenizer_8h.html#ad1d2c2f9070f28bde67fa499877a0bf6">TK_NOTOKEN</a></div><div class="ttdeci">#define TK_NOTOKEN</div><div class="ttdoc">tokenizer_feed() ile verilen lexemenin bittiğini belirtir.</div><div class="ttdef"><b>Definition</b> <a href="tokenizer_8h_source.html#l00019">tokenizer.h:19</a></div></div>
 </div><!-- fragment --><p>Lexer'da kullandığımız <code>advance</code>/<code>peek</code> tasarımını yine kullanıyoruz:</p>
 <div class="fragment"><div class="line"><span class="keyword">static</span> <span class="keywordtype">size_t</span> current_id(<span class="keyword">struct</span> <a class="code hl_struct" href="structparser.html">parser</a> *p)</div>
 <div class="line">{</div>
@@ -184,12 +184,12 @@ Recursive Descent Parser</h1>
 <div class="line">        p-&gt;<a class="code hl_variable" href="structparser.html#a8cc4a0c1cdb444ec9c4adaa86939679a">token</a> = <a class="code hl_function" href="tokenizer_8h.html#ae76c8323e13da9eaddd2a3cdbfbd6fdf">tokenizer_next</a>(&amp;p-&gt;<a class="code hl_variable" href="structparser.html#a96f7bf8944ff197eca5dd90184d9fb9c">tokenizer</a>);</div>
 <div class="line"> </div>
 <div class="line">        <span class="comment">/* Tokenizer, lexeme&#39;yi tüketmişse yeni lexeme çek. */</span></div>
-<div class="line">        <span class="keywordflow">if</span> (current_id(p) == <a class="code hl_variable" href="tokenizer_8h.html#a6fa87d7080a9a48e43877b84d6341be3">TK_NOTOKEN</a>) {</div>
+<div class="line">        <span class="keywordflow">if</span> (current_id(p) == <a class="code hl_define" href="tokenizer_8h.html#ad1d2c2f9070f28bde67fa499877a0bf6">TK_NOTOKEN</a>) {</div>
 <div class="line">                <span class="keyword">struct </span><a class="code hl_struct" href="structlexeme.html">lexeme</a> next_lexeme = <a class="code hl_function" href="lexer_8h.html#a5691ba3e7cd10458aa508728a742a2db">lexer_next</a>(&amp;p-&gt;<a class="code hl_variable" href="structparser.html#a20a5c2f6d3828e6c761e13d401cc567f">lexer</a>);</div>
 <div class="line"> </div>
 <div class="line">                <span class="comment">/* Lexeme&#39;ler tükenmişse token TK_NOTOKEN olarak işaretle. */</span></div>
 <div class="line">                <span class="keywordflow">if</span> (next_lexeme.<a class="code hl_variable" href="structlexeme.html#a277858432fd14fe69933cdeb5092552c">kind</a> == <a class="code hl_enumvalue" href="structlexeme.html#a76d0f0eb5eb899305ec7d40898c5c351aac8b7b8215d076599804f0aaf41692ab">LEXEME_EOF</a>) {</div>
-<div class="line">                        p-&gt;<a class="code hl_variable" href="structparser.html#a8cc4a0c1cdb444ec9c4adaa86939679a">token</a>.<a class="code hl_variable" href="structtoken.html#ad9fe17e79b07cf3db954169fba0117cb">id</a> = <a class="code hl_variable" href="tokenizer_8h.html#a6fa87d7080a9a48e43877b84d6341be3">TK_NOTOKEN</a>;</div>
+<div class="line">                        p-&gt;<a class="code hl_variable" href="structparser.html#a8cc4a0c1cdb444ec9c4adaa86939679a">token</a>.<a class="code hl_variable" href="structtoken.html#ad9fe17e79b07cf3db954169fba0117cb">id</a> = <a class="code hl_define" href="tokenizer_8h.html#ad1d2c2f9070f28bde67fa499877a0bf6">TK_NOTOKEN</a>;</div>
 <div class="line"> </div>
 <div class="line">                        <span class="keywordflow">return</span>;</div>
 <div class="line">                } <span class="keywordflow">else</span> {</div>
@@ -237,16 +237,16 @@ Recursive Descent Parser</h1>
 <div class="line">                        <span class="keywordflow">continue</span>;</div>
 <div class="line">                }</div>
 <div class="line"> </div>
-<div class="line">                <span class="keywordflow">if</span> (current_id(p) == <a class="code hl_variable" href="tokenizer_8h.html#a7ffbf59a256be2852e91e6ccecafb7ad">TK_IDENT</a>) {</div>
+<div class="line">                <span class="keywordflow">if</span> (current_id(p) == <a class="code hl_define" href="tokenizer_8h.html#a17418dc08469feed2d96b62f2e84b2a0">TK_IDENT</a>) {</div>
 <div class="line">                        eval_asgn(p);</div>
 <div class="line">                        <span class="keywordflow">continue</span>;</div>
 <div class="line">                }</div>
 <div class="line"> </div>
 <div class="line">                assert(0 &amp;&amp; <span class="stringliteral">&quot;Beklenmeyen token! IDENT ya da PRINT gelmeliydi.&quot;</span>); <span class="comment">// GCOVR_EXCL_LINE</span></div>
-<div class="line">        } <span class="keywordflow">while</span> (current_id(p) != <a class="code hl_variable" href="tokenizer_8h.html#a6fa87d7080a9a48e43877b84d6341be3">TK_NOTOKEN</a>);</div>
+<div class="line">        } <span class="keywordflow">while</span> (current_id(p) != <a class="code hl_define" href="tokenizer_8h.html#ad1d2c2f9070f28bde67fa499877a0bf6">TK_NOTOKEN</a>);</div>
 <div class="line">}</div>
 <div class="ttc" id="alexer_8h_html_a702027edae6526a7b51687def11fad46"><div class="ttname"><a href="lexer_8h.html#a702027edae6526a7b51687def11fad46">lexer_init</a></div><div class="ttdeci">void lexer_init(struct lexer *lexer, const char *text)</div><div class="ttdoc">[Lexeme]</div></div>
-<div class="ttc" id="atokenizer_8h_html_a7ffbf59a256be2852e91e6ccecafb7ad"><div class="ttname"><a href="tokenizer_8h.html#a7ffbf59a256be2852e91e6ccecafb7ad">TK_IDENT</a></div><div class="ttdeci">static const size_t TK_IDENT</div><div class="ttdoc">Identifier token ID'si.</div><div class="ttdef"><b>Definition</b> <a href="tokenizer_8h_source.html#l00028">tokenizer.h:28</a></div></div>
+<div class="ttc" id="atokenizer_8h_html_a17418dc08469feed2d96b62f2e84b2a0"><div class="ttname"><a href="tokenizer_8h.html#a17418dc08469feed2d96b62f2e84b2a0">TK_IDENT</a></div><div class="ttdeci">#define TK_IDENT</div><div class="ttdoc">Identifier token ID'si.</div><div class="ttdef"><b>Definition</b> <a href="tokenizer_8h_source.html#l00028">tokenizer.h:28</a></div></div>
 </div><!-- fragment --><h1><a class="anchor" id="rd_parser_fonksiyonlar_subsec"></a>
 Evaluation Fonksiyonları</h1>
 <p>Dilimizde iki çeşit <em>statement</em> var: <code>print</code> ve <code>asgn</code>. <code>print</code>, bir ifadeyi evaluate edip terminale yazdırırken <code>asgn</code>, onu değişkene kaydediyor.</p>
@@ -337,11 +337,11 @@ Evaluation Fonksiyonları</h1>
 <div class="line"><span class="comment">         * kaydet. */</span></div>
 <div class="line">        <span class="keyword">union </span><a class="code hl_union" href="unionseminfo.html">seminfo</a> s = current_seminfo(p);</div>
 <div class="line"> </div>
-<div class="line">        <span class="keywordflow">if</span> (match(p, <a class="code hl_variable" href="tokenizer_8h.html#a8616b93391ec951a4d353a10315cad54">TK_INT</a>)) {</div>
+<div class="line">        <span class="keywordflow">if</span> (match(p, <a class="code hl_define" href="tokenizer_8h.html#a691e10d8d7c7c95260428b7d0afae343">TK_INT</a>)) {</div>
 <div class="line">                <span class="keywordflow">return</span> (<span class="keywordtype">double</span>) s.<a class="code hl_variable" href="unionseminfo.html#a3d15aa2ad642d3a62513f9ef33d65e09">num_int</a>;</div>
-<div class="line">        } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (match(p, <a class="code hl_variable" href="tokenizer_8h.html#a6e3d5f8635d47064e61bd89a16aa9219">TK_FLOAT</a>)) {</div>
+<div class="line">        } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (match(p, <a class="code hl_define" href="tokenizer_8h.html#a76166a57ba5861e71c0b332b2d94a75d">TK_FLOAT</a>)) {</div>
 <div class="line">                <span class="keywordflow">return</span> s.<a class="code hl_variable" href="unionseminfo.html#a912262d0c837ce3c024bd2e8a74d39bb">num_float</a>;</div>
-<div class="line">        } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (match(p, <a class="code hl_variable" href="tokenizer_8h.html#a7ffbf59a256be2852e91e6ccecafb7ad">TK_IDENT</a>)) {</div>
+<div class="line">        } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (match(p, <a class="code hl_define" href="tokenizer_8h.html#a17418dc08469feed2d96b62f2e84b2a0">TK_IDENT</a>)) {</div>
 <div class="line">                <span class="keywordtype">double</span> *value = <a class="code hl_function" href="map_8h.html#ab61c37aaaf3a19a6bf24da8f1d35379b">map_get2</a>(&amp;p-&gt;<a class="code hl_variable" href="structparser.html#a693f7c1dc262a1680f22cd3ab0de1fd3">variables</a>,</div>
 <div class="line">                                         &amp;s.<a class="code hl_variable" href="unionseminfo.html#a2e08e1dfa14127a98144d1e5f6cd089e">ident_id</a>,</div>
 <div class="line">                                         <span class="keyword">sizeof</span>(<span class="keywordtype">size_t</span>));</div>
@@ -357,8 +357,8 @@ Evaluation Fonksiyonları</h1>
 <div class="line"> </div>
 <div class="line">        assert(0 &amp;&amp; <span class="stringliteral">&quot;Syntax error.&quot;</span>);  <span class="comment">// GCOVR_EXCL_LINE</span></div>
 <div class="line">}</div>
-<div class="ttc" id="atokenizer_8h_html_a6e3d5f8635d47064e61bd89a16aa9219"><div class="ttname"><a href="tokenizer_8h.html#a6e3d5f8635d47064e61bd89a16aa9219">TK_FLOAT</a></div><div class="ttdeci">static const size_t TK_FLOAT</div><div class="ttdoc">Ondalık sayı token ID'si.</div><div class="ttdef"><b>Definition</b> <a href="tokenizer_8h_source.html#l00025">tokenizer.h:25</a></div></div>
-<div class="ttc" id="atokenizer_8h_html_a8616b93391ec951a4d353a10315cad54"><div class="ttname"><a href="tokenizer_8h.html#a8616b93391ec951a4d353a10315cad54">TK_INT</a></div><div class="ttdeci">static const size_t TK_INT</div><div class="ttdoc">Tam sayı token ID'si.</div><div class="ttdef"><b>Definition</b> <a href="tokenizer_8h_source.html#l00022">tokenizer.h:22</a></div></div>
+<div class="ttc" id="atokenizer_8h_html_a691e10d8d7c7c95260428b7d0afae343"><div class="ttname"><a href="tokenizer_8h.html#a691e10d8d7c7c95260428b7d0afae343">TK_INT</a></div><div class="ttdeci">#define TK_INT</div><div class="ttdoc">Tam sayı token ID'si.</div><div class="ttdef"><b>Definition</b> <a href="tokenizer_8h_source.html#l00022">tokenizer.h:22</a></div></div>
+<div class="ttc" id="atokenizer_8h_html_a76166a57ba5861e71c0b332b2d94a75d"><div class="ttname"><a href="tokenizer_8h.html#a76166a57ba5861e71c0b332b2d94a75d">TK_FLOAT</a></div><div class="ttdeci">#define TK_FLOAT</div><div class="ttdoc">Ondalık sayı token ID'si.</div><div class="ttdef"><b>Definition</b> <a href="tokenizer_8h_source.html#l00025">tokenizer.h:25</a></div></div>
 <div class="ttc" id="aunionseminfo_html_a2e08e1dfa14127a98144d1e5f6cd089e"><div class="ttname"><a href="unionseminfo.html#a2e08e1dfa14127a98144d1e5f6cd089e">seminfo::ident_id</a></div><div class="ttdeci">size_t ident_id</div><div class="ttdoc">TK_IDENT tipi için seminfo.</div><div class="ttdef"><b>Definition</b> <a href="tokenizer_8h_source.html#l00057">tokenizer.h:57</a></div></div>
 <div class="ttc" id="aunionseminfo_html_a3d15aa2ad642d3a62513f9ef33d65e09"><div class="ttname"><a href="unionseminfo.html#a3d15aa2ad642d3a62513f9ef33d65e09">seminfo::num_int</a></div><div class="ttdeci">intmax_t num_int</div><div class="ttdoc">TK_INT tipi için seminfo.</div><div class="ttdef"><b>Definition</b> <a href="tokenizer_8h_source.html#l00055">tokenizer.h:55</a></div></div>
 <div class="ttc" id="aunionseminfo_html_a912262d0c837ce3c024bd2e8a74d39bb"><div class="ttname"><a href="unionseminfo.html#a912262d0c837ce3c024bd2e8a74d39bb">seminfo::num_float</a></div><div class="ttdeci">double num_float</div><div class="ttdoc">TK_FLOAT tipi için seminfo.</div><div class="ttdef"><b>Definition</b> <a href="tokenizer_8h_source.html#l00053">tokenizer.h:53</a></div></div>

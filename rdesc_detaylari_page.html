@@ -180,7 +180,7 @@ CST Makroları (cst_macros.h)</h1>
 <div class="line"><span class="keywordtype">void</span> <a class="code hl_function" href="rdesc-parser_8h.html#af1198cab2f3cb32ed8414011fdacb28b">node_printer</a>(FILE *out, <span class="keyword">struct</span> rdesc_node node)</div>
 <div class="line">{</div>
 <div class="line">        <span class="keywordflow">if</span> (rtype(node) == RDESC_TOKEN) {</div>
-<div class="line">                <span class="keywordflow">if</span> (rid(node) == <a class="code hl_variable" href="tokenizer_8h.html#a8616b93391ec951a4d353a10315cad54">TK_INT</a>) {</div>
+<div class="line">                <span class="keywordflow">if</span> (rid(node) == <a class="code hl_define" href="tokenizer_8h.html#a691e10d8d7c7c95260428b7d0afae343">TK_INT</a>) {</div>
 <div class="line">                        <span class="keyword">union </span><a class="code hl_union" href="unionseminfo.html">seminfo</a> s;</div>
 <div class="line"> </div>
 <div class="line">                        memcpy(&amp;s, rseminfo(node), <span class="keyword">sizeof</span>(<span class="keyword">union</span> <a class="code hl_union" href="unionseminfo.html">seminfo</a>));</div>
@@ -194,7 +194,7 @@ CST Makroları (cst_macros.h)</h1>
 <div class="line">        }</div>
 <div class="line">}</div>
 <div class="ttc" id="ardesc-parser_8h_html_af1198cab2f3cb32ed8414011fdacb28b"><div class="ttname"><a href="rdesc-parser_8h.html#af1198cab2f3cb32ed8414011fdacb28b">node_printer</a></div><div class="ttdeci">void node_printer(FILE *out, struct rdesc_node node)</div><div class="ttdoc">[Gramer declaration]</div></div>
-<div class="ttc" id="atokenizer_8h_html_a8616b93391ec951a4d353a10315cad54"><div class="ttname"><a href="tokenizer_8h.html#a8616b93391ec951a4d353a10315cad54">TK_INT</a></div><div class="ttdeci">static const size_t TK_INT</div><div class="ttdoc">Tam sayı token ID'si.</div><div class="ttdef"><b>Definition</b> <a href="tokenizer_8h_source.html#l00022">tokenizer.h:22</a></div></div>
+<div class="ttc" id="atokenizer_8h_html_a691e10d8d7c7c95260428b7d0afae343"><div class="ttname"><a href="tokenizer_8h.html#a691e10d8d7c7c95260428b7d0afae343">TK_INT</a></div><div class="ttdeci">#define TK_INT</div><div class="ttdoc">Tam sayı token ID'si.</div><div class="ttdef"><b>Definition</b> <a href="tokenizer_8h_source.html#l00022">tokenizer.h:22</a></div></div>
 </div><!-- fragment --><h1><a class="anchor" id="rdesc_detaylari_ordered_choice_sec"></a>
 Ordered-Choice (Sıralı Seçim)</h1>
 <p>Şimdiye kadar gramerlerde alternatifleri <code>|</code> operatörüyle gösterdik. librdesc, alternatifleri sırayla denenir ve ilk eşleşen seçilir. Buna ordered-choice denir ve <code>/</code> operatörüyle gösterilir.</p>

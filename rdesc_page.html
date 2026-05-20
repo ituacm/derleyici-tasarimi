@@ -195,20 +195,20 @@ Grameri librdesc Makrolarına Dökmek</h1>
 <div class="line"><span class="keyword">union </span><a class="code hl_union" href="unionseminfo.html">seminfo</a> s;</div>
 <div class="line"> </div>
 <div class="line">s.<a class="code hl_variable" href="unionseminfo.html#a3d15aa2ad642d3a62513f9ef33d65e09">num_int</a> = 10;</div>
-<div class="line">assert(rdesc_pump(&amp;<a class="code hl_struct" href="structparser.html">parser</a>, <a class="code hl_variable" href="tokenizer_8h.html#a8616b93391ec951a4d353a10315cad54">TK_INT</a>, &amp;s) == RDESC_CONTINUE);</div>
+<div class="line">assert(rdesc_pump(&amp;<a class="code hl_struct" href="structparser.html">parser</a>, <a class="code hl_define" href="tokenizer_8h.html#a691e10d8d7c7c95260428b7d0afae343">TK_INT</a>, &amp;s) == RDESC_CONTINUE);</div>
 <div class="line"> </div>
 <div class="line">assert(rdesc_pump(&amp;<a class="code hl_struct" href="structparser.html">parser</a>, TK_MINUS, NULL) == RDESC_CONTINUE);</div>
 <div class="line"> </div>
 <div class="line">s.num_int = 2;</div>
-<div class="line">assert(rdesc_pump(&amp;<a class="code hl_struct" href="structparser.html">parser</a>, <a class="code hl_variable" href="tokenizer_8h.html#a8616b93391ec951a4d353a10315cad54">TK_INT</a>, &amp;s) == RDESC_CONTINUE);</div>
+<div class="line">assert(rdesc_pump(&amp;<a class="code hl_struct" href="structparser.html">parser</a>, <a class="code hl_define" href="tokenizer_8h.html#a691e10d8d7c7c95260428b7d0afae343">TK_INT</a>, &amp;s) == RDESC_CONTINUE);</div>
 <div class="line"> </div>
 <div class="line">assert(rdesc_pump(&amp;<a class="code hl_struct" href="structparser.html">parser</a>, TK_MINUS, NULL) == RDESC_CONTINUE);</div>
 <div class="line"> </div>
 <div class="line">s.num_int = 3;</div>
-<div class="line">assert(rdesc_pump(&amp;<a class="code hl_struct" href="structparser.html">parser</a>, <a class="code hl_variable" href="tokenizer_8h.html#a8616b93391ec951a4d353a10315cad54">TK_INT</a>, &amp;s) == RDESC_CONTINUE);</div>
+<div class="line">assert(rdesc_pump(&amp;<a class="code hl_struct" href="structparser.html">parser</a>, <a class="code hl_define" href="tokenizer_8h.html#a691e10d8d7c7c95260428b7d0afae343">TK_INT</a>, &amp;s) == RDESC_CONTINUE);</div>
 <div class="line"> </div>
 <div class="line">assert(rdesc_pump(&amp;<a class="code hl_struct" href="structparser.html">parser</a>, TK_SEMI, NULL) == RDESC_READY);</div>
-<div class="ttc" id="atokenizer_8h_html_a8616b93391ec951a4d353a10315cad54"><div class="ttname"><a href="tokenizer_8h.html#a8616b93391ec951a4d353a10315cad54">TK_INT</a></div><div class="ttdeci">static const size_t TK_INT</div><div class="ttdoc">Tam sayı token ID'si.</div><div class="ttdef"><b>Definition</b> <a href="tokenizer_8h_source.html#l00022">tokenizer.h:22</a></div></div>
+<div class="ttc" id="atokenizer_8h_html_a691e10d8d7c7c95260428b7d0afae343"><div class="ttname"><a href="tokenizer_8h.html#a691e10d8d7c7c95260428b7d0afae343">TK_INT</a></div><div class="ttdeci">#define TK_INT</div><div class="ttdoc">Tam sayı token ID'si.</div><div class="ttdef"><b>Definition</b> <a href="tokenizer_8h_source.html#l00022">tokenizer.h:22</a></div></div>
 <div class="ttc" id="aunionseminfo_html_a3d15aa2ad642d3a62513f9ef33d65e09"><div class="ttname"><a href="unionseminfo.html#a3d15aa2ad642d3a62513f9ef33d65e09">seminfo::num_int</a></div><div class="ttdeci">intmax_t num_int</div><div class="ttdoc">TK_INT tipi için seminfo.</div><div class="ttdef"><b>Definition</b> <a href="tokenizer_8h_source.html#l00055">tokenizer.h:55</a></div></div>
 </div><!-- fragment --><p><code>rdesc_pump()</code>, pompalama sonrasında kuralın tamamlanıp tamamlanmamasına göre <code>RDESC_CONTINUE</code> ve <code>RDESC_READY</code> döner. rdesc, kuralı match ettikten sonra ekrana yazdıralım:</p>
 <div class="fragment"><div class="line">rdesc_dump_cst(stdout, rdesc_get_root(&amp;<a class="code hl_struct" href="structparser.html">parser</a>), <a class="code hl_function" href="rdesc-parser_8h.html#af1198cab2f3cb32ed8414011fdacb28b">node_printer</a>);</div>
@@ -240,7 +240,7 @@ Grameri librdesc Makrolarına Dökmek</h1>
 <div class="line"><span class="keywordtype">void</span> <a class="code hl_function" href="rdesc-parser_8h.html#af1198cab2f3cb32ed8414011fdacb28b">node_printer</a>(FILE *out, <span class="keyword">struct</span> rdesc_node node)</div>
 <div class="line">{</div>
 <div class="line">        <span class="keywordflow">if</span> (rtype(node) == RDESC_TOKEN) {</div>
-<div class="line">                <span class="keywordflow">if</span> (rid(node) == <a class="code hl_variable" href="tokenizer_8h.html#a8616b93391ec951a4d353a10315cad54">TK_INT</a>) {</div>
+<div class="line">                <span class="keywordflow">if</span> (rid(node) == <a class="code hl_define" href="tokenizer_8h.html#a691e10d8d7c7c95260428b7d0afae343">TK_INT</a>) {</div>
 <div class="line">                        <span class="keyword">union </span><a class="code hl_union" href="unionseminfo.html">seminfo</a> s;</div>
 <div class="line"> </div>
 <div class="line">                        memcpy(&amp;s, rseminfo(node), <span class="keyword">sizeof</span>(<span class="keyword">union</span> <a class="code hl_union" href="unionseminfo.html">seminfo</a>));</div>

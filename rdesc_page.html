@@ -222,7 +222,7 @@ Grameri librdesc Makrolarına Dökmek</h1>
 </div><!-- fragment --><div class="dotgraph">
 <iframe scrolling="no" frameborder="0" src="dot_rdesc-match-flip.svg" width="790" height="639"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 <p><code>rdesc_flip_left()</code> sonrası elimizde Left-Associative, matematiksel olarak doğru bir CST var. Sıradaki adım bu ağacı traverse etmek ve değerleri hesaplamak. Artık parsing ile evaluation'ı birbirinden tam olarak ayırmış olacağız.</p>
-<p>Ayrıca, <code>rdesc_dump_cst()</code> fonksiyonuna verdiğimiz <code><a class="el" href="rdesc-parser_8h.html#af1198cab2f3cb32ed8414011fdacb28b" title="[Gramer declaration]">node_printer()</a></code>'ın tanımını tek bir node'ı traverse etme örneği olarak verebiliriz, bir sonraki aşama olan <a class="el" href="treewalk_interpreter_page.html">Tree-Walk Interpreter</a>'da bunu yapacağız:</p>
+<p>Ayrıca, <code>rdesc_dump_cst()</code> fonksiyonuna verdiğimiz <code><a class="el" href="rdesc-parser_8h.html#af1198cab2f3cb32ed8414011fdacb28b" title="[Gramer declaration]">node_printer()</a></code>'ın tanımını tek bir node'ı traverse etme örneği olarak verebiliriz, bir sonraki aşama olan <a class="el" href="treewalk_interpreter_page.html">Tree-Walk Interpreter</a>'da bu tarz şeyler yapacağız:</p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;rdesc/cst_macros.h&gt;</span></div>
 <div class="line"> </div>
 <div class="line"> </div>
@@ -253,7 +253,8 @@ Grameri librdesc Makrolarına Dökmek</h1>
 <div class="line">                fprintf(out, <span class="stringliteral">&quot;[label=\&quot;%s\&quot;]&quot;</span>, nt_names[rid(node)]);</div>
 <div class="line">        }</div>
 <div class="line">}</div>
-</div><!-- fragment --> </div></div><!-- contents -->
+</div><!-- fragment --><p>Biraz librdesc'in derinliklerine inelim: <a class="el" href="rdesc_detaylari_page.html">librdesc Detayları</a>. </p>
+</div></div><!-- contents -->
 </div><!-- PageDoc -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

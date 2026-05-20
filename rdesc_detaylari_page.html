@@ -1,0 +1,222 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="tr">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.9.8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Derleyici Tasarımı: librdesc Detayları</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">Derleyici Tasarımı
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Oluşturan Doxygen 1.9.8 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','Ara');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Yüklüyor...</div>
+<div class="SRStatus" id="Searching">Arıyor...</div>
+<div class="SRStatus" id="NoMatches">Eşleşme Yok</div>
+</div>
+</div>
+</div>
+</div>
+
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><a class="el" href="derleyici_front_end_page.html">Derleyici Front End&#39;i</a></li><li class="navelem"><a class="el" href="parser_page.html">Parser</a></li>  </ul>
+</div>
+</div><!-- top -->
+<div><div class="header">
+  <div class="headertitle"><div class="title">librdesc Detayları</div></div>
+</div><!--header-->
+<div class="contents">
+<div class="textblock"><p>librdesc dokümantasyon linkini referans için tekrardan veriyorum: <a href="https://metwse.github.io/rdesc/">https://metwse.github.io/rdesc/</a></p>
+<p>En basit anlamıyla <code>rdesc</code> ve <code>rdesc_grammar</code> initialize etmek için</p>
+<div class="fragment"><div class="line"><span class="keyword">struct </span>rdesc_grammar grammar;</div>
+<div class="line"><span class="keyword">struct </span>rdesc <a class="code hl_struct" href="structparser.html">parser</a>;</div>
+<div class="line"> </div>
+<div class="line">assert(rdesc_grammar_init_checked(&amp;grammar,</div>
+<div class="line">        <a class="code hl_define" href="rdesc-parser_8h.html#ac9b28ede377316f9fb2d4266526a09d1">NT_COUNT</a>, <a class="code hl_define" href="rdesc-parser_8h.html#adf030161c13251406f3c38b0c167c43c">MAX_ALT_COUNT</a>, <a class="code hl_define" href="rdesc-parser_8h.html#a7f24a70f2904a003e5329eeaf3ee8ba3">MAX_ALT_SIZE</a>, <a class="code hl_variable" href="rdesc-parser_8h.html#a3d604c863b6ac3e353d823700814cf53">production_rules</a>) == 0);</div>
+<div class="line"> </div>
+<div class="line">assert(rdesc_init(&amp;<a class="code hl_struct" href="structparser.html">parser</a>, &amp;grammar, <span class="keyword">sizeof</span>(<span class="keyword">union</span> <a class="code hl_union" href="unionseminfo.html">seminfo</a>), NULL) == 0);</div>
+<div class="ttc" id="ardesc-parser_8h_html_a3d604c863b6ac3e353d823700814cf53"><div class="ttname"><a href="rdesc-parser_8h.html#a3d604c863b6ac3e353d823700814cf53">production_rules</a></div><div class="ttdeci">struct rdesc_grammar_symbol production_rules[NT_COUNT][MAX_ALT_COUNT+1][MAX_ALT_SIZE+1]</div></div>
+<div class="ttc" id="ardesc-parser_8h_html_a7f24a70f2904a003e5329eeaf3ee8ba3"><div class="ttname"><a href="rdesc-parser_8h.html#a7f24a70f2904a003e5329eeaf3ee8ba3">MAX_ALT_SIZE</a></div><div class="ttdeci">#define MAX_ALT_SIZE</div><div class="ttdef"><b>Definition</b> <a href="rdesc-parser_8h_source.html#l00023">rdesc-parser.h:23</a></div></div>
+<div class="ttc" id="ardesc-parser_8h_html_ac9b28ede377316f9fb2d4266526a09d1"><div class="ttname"><a href="rdesc-parser_8h.html#ac9b28ede377316f9fb2d4266526a09d1">NT_COUNT</a></div><div class="ttdeci">#define NT_COUNT</div><div class="ttdoc">[Gramer declaration]</div><div class="ttdef"><b>Definition</b> <a href="rdesc-parser_8h_source.html#l00017">rdesc-parser.h:17</a></div></div>
+<div class="ttc" id="ardesc-parser_8h_html_adf030161c13251406f3c38b0c167c43c"><div class="ttname"><a href="rdesc-parser_8h.html#adf030161c13251406f3c38b0c167c43c">MAX_ALT_COUNT</a></div><div class="ttdeci">#define MAX_ALT_COUNT</div><div class="ttdef"><b>Definition</b> <a href="rdesc-parser_8h_source.html#l00020">rdesc-parser.h:20</a></div></div>
+<div class="ttc" id="astructparser_html"><div class="ttname"><a href="structparser.html">parser</a></div><div class="ttdoc">Parser.</div><div class="ttdef"><b>Definition</b> <a href="recursive-parser_8h_source.html#l00019">recursive-parser.h:19</a></div></div>
+<div class="ttc" id="aunionseminfo_html"><div class="ttname"><a href="unionseminfo.html">seminfo</a></div><div class="ttdoc">[Tokenizer tanımı]</div><div class="ttdef"><b>Definition</b> <a href="tokenizer_8h_source.html#l00051">tokenizer.h:51</a></div></div>
+</div><!-- fragment --><p>ve temizlemek için</p>
+<div class="fragment"><div class="line">rdesc_destroy(&amp;<a class="code hl_struct" href="structparser.html">parser</a>);</div>
+<div class="line">rdesc_grammar_destroy(&amp;grammar);</div>
+</div><!-- fragment --><p>kullanıyoruz.</p>
+<h1><a class="anchor" id="rdesc_detaylari_gramer_sec"></a>
+Gramer Makroları (rule_macros.h)</h1>
+<p>Hatırlarsanız, librdesc'te gramer kurallarımızı, top-down parser'ı yazarkenkinden farklı olarak</p>
+<div class="fragment"><div class="line"><span class="comment">// çıkarma için</span></div>
+<div class="line">⟨Expr⟩ → ⟨Term⟩ - ⟨Expr⟩ | ⟨Term⟩</div>
+</div><!-- fragment --><p>ekstra nonterminaller tanımlayarak</p>
+<div class="fragment"><div class="line"><span class="comment">// yine sadece çıkarma için</span></div>
+<div class="line">⟨Expr⟩ → ⟨Term⟩ ⟨ExprRest⟩</div>
+<div class="line"> </div>
+<div class="line">⟨ExprRest⟩ → - ⟨Term⟩ ⟨ExprRest⟩ | ε</div>
+</div><!-- fragment --><p>yapmıştık. Detayları önemli değil, ancak ikinci yöntemin daha optimize olduğunu (ya da daha kolay optimize edilebildiğini) bilseniz iyi olur. İkinci yöntemin kullanımını standardize etmek için librdesc, <a href="https://metwse.github.io/rdesc/rule__macros_8h.html#a03e4574711eea9045941b122bf664d55">rrr</a> makrosunu sunar:</p>
+<p>(librdesc dokümantasyonundan) </p>
+<h2><a class="anchor" id="rdesc_detaylari_rrr_subsec"></a>
+rrr(head, (base...), (suffix...))</h2>
+<p>Right-Recursive liste kuralı tanımlar. İki nonterminal oluşturur: liste head'i (base'i içerir) ve onun devamı (tekrarlı suffix). <code>rrr(A, (β), (α))</code> şuna eşittir:</p>
+<div class="fragment"><div class="line">A  → β A<span class="stringliteral">&#39;</span></div>
+<div class="line"><span class="stringliteral">A&#39;</span> → α A<span class="stringliteral">&#39; / ε</span></div>
+</div><!-- fragment --><p><code>rdesc_flip_left()</code>, bu iki production rule ile oluşturulmuş bir subtree'yi, aşağıdaki kurala çevirir:</p>
+<div class="fragment"><div class="line">A  → A α / β</div>
+</div><!-- fragment --><p><code>rrr()</code> makrosunu hem toplama hem de çıkarma işlemi için kullanırken <code>rrr(EXPR, (NT(TERM)), (NT(EXPR_OP), NT(TERM)))</code> kullanacağız. Sonuç olarak elde edeceğimiz kurallar:</p>
+<div class="fragment"><div class="line">⟨Expr⟩ → ⟨Term⟩ ⟨ExprRest⟩</div>
+<div class="line"> </div>
+<div class="line">⟨ExprRest⟩ → ⟨ExprOp⟩ ⟨Term⟩ ⟨ExprRest⟩ | ε</div>
+<div class="line"> </div>
+<div class="line">...</div>
+<div class="line"> </div>
+<div class="line">⟨ExprOp⟩ → + | -</div>
+</div><!-- fragment --><p>Eş işlem önceliğine sahip operatörleri tek bir nonterminal içerisinde gruplayarak <code>rrr()</code> ile kullanabiliriz. Fark ettiyseniz <code>rrr()</code>'de tekrarlı suffix'ler arasına birden fazla çeşit tokeni direkt koymanın yöntemi yok, yardımcı bir nonterminal tanımlamak gerekti.</p>
+<h2><a class="anchor" id="rdesc_detaylari_ropt_subsec"></a>
+ropt(...)</h2>
+<p>Opsiyonel production rule tanımlamak için. Nonterminal içinde iki alternatif oluşturur. <code>ropt(α)</code> şuna eşittir:</p>
+<div class="fragment"><div class="line">A → α / ε</div>
+</div><!-- fragment --><p>Bu nispeten çok daha basit bir makro. Aşağıdaki production rules'ı tekrar tekrar yazmak yerine <code>ropt()</code> kullanacağız.</p>
+<div class="fragment"><div class="line">r(</div>
+<div class="line">        NT(EXPR_OP),</div>
+<div class="line">alt     EPSILON</div>
+<div class="line">)</div>
+</div><!-- fragment --><p>yazmak yerine ropt(NT(EXPR_OP)) yazacağız.</p>
+<div class="fragment"><div class="line">⟨OptExprOp⟩ → ⟨ExprOp⟩ | ε</div>
+<div class="line"> </div>
+<div class="line">...</div>
+<div class="line"> </div>
+<div class="line">⟨ExprOp⟩ → + | -</div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// sonrasında işaretli sayılar için,</span></div>
+<div class="line">⟨Factor⟩ → ⟨OptExprOp⟩ ⟨Atom⟩</div>
+</div><!-- fragment --><h1><a class="anchor" id="rdesc_detaylari_cst_sec"></a>
+CST Makroları (cst_macros.h)</h1>
+<p>Node'ların tuttuğu veriye erişmeyi aşağıdaki tablo net bir şekilde özetliyor:</p>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone">Dönüt Tipi   </th><th class="markdownTableHeadNone">Macro   </th><th class="markdownTableHeadNone">Açıklama    </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">node   </td><td class="markdownTableBodyNone">rparent(n)   </td><td class="markdownTableBodyNone">Ağaçtaki bir üst node'u döner. Root için kullanmayın.    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><code>RDESC_TOKEN</code>/<code>RDESC_NONTERMINAL</code>   </td><td class="markdownTableBodyNone">rtype(n)   </td><td class="markdownTableBodyNone">Nonterminal-token düzeyinde node tipi.    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">int   </td><td class="markdownTableBodyNone">rid(n)   </td><td class="markdownTableBodyNone">Match edilmiş token ya da nonterminal'in ID'si. Örneğin TK_INT ya da NT_EXPR.    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">int   </td><td class="markdownTableBodyNone">ralt_idx(n)   </td><td class="markdownTableBodyNone">Nonterminal'in kaçıncı alternatifinin match edildiğini verir.    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code>void *</code>   </td><td class="markdownTableBodyNone">rseminfo(n)   </td><td class="markdownTableBodyNone">Token node'un seminfo'suna işaret eden pointer döner.    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">int   </td><td class="markdownTableBodyNone">rchild_count(n)   </td><td class="markdownTableBodyNone">Nonterminal node'un kaç child'ı oluğunu döner.    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">node   </td><td class="markdownTableBodyNone">rchild(n, i)   </td><td class="markdownTableBodyNone">Nonterminal node'un i. çocuğunu döner.   </td></tr>
+</table>
+<p>Şimdi <code><a class="el" href="rdesc-parser_8h.html#af1198cab2f3cb32ed8414011fdacb28b" title="[Gramer declaration]">node_printer()</a></code> daha anlamlı gelmiştir.</p>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;rdesc/cst_macros.h&gt;</span></div>
+<div class="line"> </div>
+<div class="line"> </div>
+<div class="line"><span class="keyword">const</span> <span class="keywordtype">char</span> *tk_names[] = {</div>
+<div class="line">        <span class="stringliteral">&quot;-&quot;</span>, <span class="stringliteral">&quot;*&quot;</span>, <span class="stringliteral">&quot;;&quot;</span>, <span class="stringliteral">&quot;(&quot;</span>, <span class="stringliteral">&quot;)&quot;</span></div>
+<div class="line">};</div>
+<div class="line"> </div>
+<div class="line"><span class="keyword">const</span> <span class="keywordtype">char</span> *nt_names[] = {</div>
+<div class="line">        <span class="stringliteral">&quot;stmt&quot;</span>,</div>
+<div class="line">        <span class="stringliteral">&quot;expr&quot;</span>, <span class="stringliteral">&quot;expr_rest&quot;</span>,</div>
+<div class="line">        <span class="stringliteral">&quot;term&quot;</span>, <span class="stringliteral">&quot;term_rest&quot;</span>,</div>
+<div class="line">        <span class="stringliteral">&quot;atom&quot;</span>,</div>
+<div class="line">};</div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">void</span> <a class="code hl_function" href="rdesc-parser_8h.html#af1198cab2f3cb32ed8414011fdacb28b">node_printer</a>(FILE *out, <span class="keyword">struct</span> rdesc_node node)</div>
+<div class="line">{</div>
+<div class="line">        <span class="keywordflow">if</span> (rtype(node) == RDESC_TOKEN) {</div>
+<div class="line">                <span class="keywordflow">if</span> (rid(node) == <a class="code hl_variable" href="tokenizer_8h.html#a8616b93391ec951a4d353a10315cad54">TK_INT</a>) {</div>
+<div class="line">                        <span class="keyword">union </span><a class="code hl_union" href="unionseminfo.html">seminfo</a> s;</div>
+<div class="line"> </div>
+<div class="line">                        memcpy(&amp;s, rseminfo(node), <span class="keyword">sizeof</span>(<span class="keyword">union</span> <a class="code hl_union" href="unionseminfo.html">seminfo</a>));</div>
+<div class="line"> </div>
+<div class="line">                        fprintf(out, <span class="stringliteral">&quot;[shape=box,label=&lt;%lld&gt;]&quot;</span>, (<span class="keywordtype">long</span> <span class="keywordtype">long</span> <span class="keywordtype">int</span>) s.num_int);</div>
+<div class="line">                } <span class="keywordflow">else</span> {</div>
+<div class="line">                        fprintf(out, <span class="stringliteral">&quot;[shape=box,label=&lt;%s&gt;]&quot;</span>, tk_names[rid(node)]);</div>
+<div class="line">                }</div>
+<div class="line">        } <span class="keywordflow">else</span> {</div>
+<div class="line">                fprintf(out, <span class="stringliteral">&quot;[label=\&quot;%s\&quot;]&quot;</span>, nt_names[rid(node)]);</div>
+<div class="line">        }</div>
+<div class="line">}</div>
+<div class="ttc" id="ardesc-parser_8h_html_af1198cab2f3cb32ed8414011fdacb28b"><div class="ttname"><a href="rdesc-parser_8h.html#af1198cab2f3cb32ed8414011fdacb28b">node_printer</a></div><div class="ttdeci">void node_printer(FILE *out, struct rdesc_node node)</div><div class="ttdoc">[Gramer declaration]</div></div>
+<div class="ttc" id="atokenizer_8h_html_a8616b93391ec951a4d353a10315cad54"><div class="ttname"><a href="tokenizer_8h.html#a8616b93391ec951a4d353a10315cad54">TK_INT</a></div><div class="ttdeci">static const size_t TK_INT</div><div class="ttdoc">Tam sayı token ID'si.</div><div class="ttdef"><b>Definition</b> <a href="tokenizer_8h_source.html#l00022">tokenizer.h:22</a></div></div>
+</div><!-- fragment --><h1><a class="anchor" id="rdesc_detaylari_ordered_choice_sec"></a>
+Ordered-Choice (Sıralı Seçim)</h1>
+<p>Şimdiye kadar gramerlerde alternatifleri <code>|</code> operatörüyle gösterdik. librdesc, alternatifleri sırayla denenir ve ilk eşleşen seçilir. Buna ordered-choice denir ve <code>/</code> operatörüyle gösterilir.</p>
+<p>Bu fark kritik, ancak burada detaylarına girmeyeceğiz. Kısaca, başta konuştuğumuz CFG'de <code>|</code> belirsizliğe (ambiguity) yol açabilir. Detaylarını merak edenler, <a href="https://en.wikipedia.org/wiki/Dangling_else">Dangling Else Problem</a>'a göze atabilir.</p>
+<p>Buradan itibaren gramerlerimizi librdesc'in notasyonuyla yazacağız: </p><table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone">Eski (CFG)   </th><th class="markdownTableHeadNone">Yeni (librdesc)    </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code>⟨Expr⟩ → ...</code>   </td><td class="markdownTableBodyNone"><code>&lt;expr&gt; ::= ...</code>    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><code>\|</code> (alternatif)   </td><td class="markdownTableBodyNone"><code>/</code> (ordered-choice)    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code>⟨Term⟩</code>   </td><td class="markdownTableBodyNone"><code>&lt;term&gt;</code>    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><code>+</code>, <code>-</code>, int   </td><td class="markdownTableBodyNone"><code>"+"</code>, <code>"-"</code>, int   </td></tr>
+</table>
+<p>Artık <a class="el" href="treewalk_interpreter_page.html">Tree-Walk Interpreter</a> yazmaya başlayabiliriz! </p>
+</div></div><!-- contents -->
+</div><!-- PageDoc -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+Oluşturan&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+</small></address>
+</body>
+</html>

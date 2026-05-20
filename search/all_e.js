@@ -1,26 +1,10 @@
 var searchData=
 [
-  ['tasarımı_0',['tasarımı',['../index.html',1,'Derleyici Tasarımı'],['../tokenizer_page.html#tokenizer_map_subsec',1,'Tokenizer Tasarımı']]],
-  ['taslak_20kullanımı_1',['Taslak Kullanımı',['../taslak.html',1,'']]],
-  ['tk_5ffloat_2',['TK_FLOAT',['../tokenizer_8h.html#a6e3d5f8635d47064e61bd89a16aa9219',1,'tokenizer.h']]],
-  ['tk_5fid_3',['tk_id',['../rdesc-parser_8h.html#a89eb09a8df613d18bf79d07502137fd7',1,'rdesc-parser.h']]],
-  ['tk_5fident_4',['TK_IDENT',['../tokenizer_8h.html#a7ffbf59a256be2852e91e6ccecafb7ad',1,'tokenizer.h']]],
-  ['tk_5fint_5',['TK_INT',['../tokenizer_8h.html#a8616b93391ec951a4d353a10315cad54',1,'tokenizer.h']]],
-  ['tk_5fnotoken_6',['TK_NOTOKEN',['../tokenizer_8h.html#a6fa87d7080a9a48e43877b84d6341be3',1,'tokenizer.h']]],
-  ['token_7',['token',['../structparser.html#a8cc4a0c1cdb444ec9c4adaa86939679a',1,'parser::token'],['../structtoken.html',1,'token']]],
-  ['token_5fid_8',['token_id',['../recursive-parser_8h.html#a69ee603d02bdfaaa309e65e33fa9b37e',1,'recursive-parser.h']]],
-  ['tokenizer_9',['tokenizer',['../tokenizer_page.html',1,'Tokenizer'],['../structparser.html#a96f7bf8944ff197eca5dd90184d9fb9c',1,'parser::tokenizer'],['../structtokenizer.html',1,'tokenizer']]],
-  ['tokenizer_20tasarımı_10',['Tokenizer Tasarımı',['../tokenizer_page.html#tokenizer_map_subsec',1,'']]],
-  ['tokenizer_2eh_11',['tokenizer.h',['../tokenizer_8h.html',1,'']]],
-  ['tokenizer_5fadd_5fkeyword_12',['tokenizer_add_keyword',['../tokenizer_8h.html#a1493eba53b25f319f9c3d18c73fc18a3',1,'tokenizer.h']]],
-  ['tokenizer_5fadd_5fpunctuation_13',['tokenizer_add_punctuation',['../tokenizer_8h.html#a28727c04edc110906ea054372c8a9adb',1,'tokenizer.h']]],
-  ['tokenizer_5fdestroy_14',['tokenizer_destroy',['../tokenizer_8h.html#a01c5dc98d1a56c559e4bbe87ad3be1fd',1,'tokenizer.h']]],
-  ['tokenizer_5ffeed_15',['tokenizer_feed',['../tokenizer_8h.html#a91b6fe31be04c8262446395e5b61c7b4',1,'tokenizer.h']]],
-  ['tokenizer_5fident_5fid_16',['tokenizer_ident_id',['../tokenizer_8h.html#a72df096973fdcfa29c260fe976c3ad66',1,'tokenizer.h']]],
-  ['tokenizer_5fident_5fid2_17',['tokenizer_ident_id2',['../tokenizer_8h.html#a214f3e013176bd41dff1de7da7d6c886',1,'tokenizer.h']]],
-  ['tokenizer_5finit_18',['tokenizer_init',['../tokenizer_8h.html#a73d455e90e9f0e517198663d56d6b5a3',1,'tokenizer.h']]],
-  ['tokenizer_5fnext_19',['tokenizer_next',['../tokenizer_8h.html#ae76c8323e13da9eaddd2a3cdbfbd6fdf',1,'tokenizer.h']]],
-  ['tokenizing_20',['Tokenizing',['../tokenizer_page.html#tokenizer_tokenizing_sec',1,'']]],
-  ['top_20down_20parsing_21',['Top-Down Parsing',['../td_parser_page.html',1,'parser_page']]],
-  ['tree_20walk_20interpreter_22',['Tree-Walk Interpreter',['../treewalk_interpreter_page.html',1,'']]]
+  ['parser_0',['parser',['../structparser.html',1,'parser'],['../parser_page.html',1,'Parser'],['../td_parser_page.html#rd_parser_sec',1,'Recursive Descent Parser']]],
+  ['parser_5fdestroy_1',['parser_destroy',['../recursive-parser_8h.html#a15065272fef3f4913a93198614a503fd',1,'recursive-parser.h']]],
+  ['parser_5feval_2',['parser_eval',['../recursive-parser_8h.html#a3a3324cd588cbd87bcf9d3e2f6221f99',1,'recursive-parser.h']]],
+  ['parser_5finit_3',['parser_init',['../recursive-parser_8h.html#af223e18a3c6dd41e49414ffc6821711f',1,'recursive-parser.h']]],
+  ['parsing_4',['Top-Down Parsing',['../td_parser_page.html',1,'parser_page']]],
+  ['production_5frules_5',['production_rules',['../rdesc-parser_8h.html#a3d604c863b6ac3e353d823700814cf53',1,'rdesc-parser.h']]],
+  ['punctuations_6',['punctuations',['../structtokenizer.html#a924d670164bc6f65b26af096dab0f7d2',1,'tokenizer']]]
 ];

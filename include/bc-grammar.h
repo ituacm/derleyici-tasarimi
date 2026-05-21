@@ -28,7 +28,7 @@ enum bc_tk_id {
 	TK_LT, TK_GT, TK_EQEQ, TK_EXCLEQ, TK_LTEQ, TK_GTEQ,
 	TK_LPAREN, TK_RPAREN, TK_LCURLY, TK_RCURLY, TK_SEMI, TK_COMMA,
 	TK_DEFINE, TK_BREAK, TK_QUIT, TK_PRINT,
-	TK_RETURN, TK_FOR, TK_IF, TK_WHILE,
+	TK_RETURN, TK_FOR, TK_IF, TK_WHILE, TK_CST,
 	/* TK_IDENT, TK_INT ve TK_FLOAT tokenizer tarafından tanımlanır */
 };
 
@@ -60,7 +60,7 @@ const char *bc_tk_names[] = {
 	"<", ">", "==", "!=", "<=", ">=",
 	"(", ")", "{", "}", ";", ",",
 	"define", "break", "quit", "print",
-	"return", "for", "if", "while",
+	"return", "for", "if", "while", "cst",
 
 	/* librdesc'in dump_bnf fonksiyonuyla gramer yapımızı birazdan print
 	 * edeceğiz. */

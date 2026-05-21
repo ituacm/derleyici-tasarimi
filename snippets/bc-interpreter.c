@@ -49,8 +49,12 @@ void bc_cli()
 		struct token tk;
 
 		do {
+			/* Recursive parser yaparken kullandığımız yöntemin
+			 * aynısıyla token çekiyoruz: */
 			tk = tokenizer_next(&t);
 
+			/* Tokenizer içindeki lexemeyi tüketmişse sıradaki
+			 * lexemeden token çeksin. */
 			while (tk.id == TK_NOTOKEN) {
 				struct lexeme next_lexeme = lexer_next(&l);
 
@@ -72,11 +76,11 @@ void bc_cli()
 				switch (rdesc_pump(&p, tk.id, &tk.seminfo)) {
 				case RDESC_READY:
 					ret = bc_tw_eval_stmt(&v,
-							rdesc_get_root(&p));
+						rdesc_get_root(&p));
 
 					quit = ret == QUIT;
 
-					assert(ret != BREAK && "Yakalanmamış break.");
+					assert(ret != BREAK);
 
 					assert(rdesc_start(&p, NT_STMT) == 0);
 
@@ -118,21 +122,16 @@ enum stmt_meta bc_tw_eval_stmt(struct map *v, struct rdesc_node n)
 	switch (rid(n)) {
 	case NT_STMT:
 		switch (ralt_idx(n)) {
-		case 0:  /* <expr> ; */
-			bc_tw_eval_expr(v, rchild(n, 0));
-
-			return VOID;
-
-		case 1:  /* break ; */
+		case 0:  /* break ; */
 			return BREAK;
 
-		case 2:  /* quit ; */
+		case 1:  /* quit ; */
 			return QUIT;
 
-		case 3:  /* return <opt-expr> ; */
+		case 2:  /* return <opt-expr> ; */
 			assert(0 && "Fonksiyonlar implement edilmedi.");
 
-		case 4:  /* for ( <opt-expr> ; <opt-expr> ; <opt-expr> ) <stmt> */
+		case 3:  /* for ( <opt-expr> ; <opt-expr> ; <opt-expr> ) <stmt> */
 			for (bc_tw_eval_expr(v, rchild(n, 2));
 			     bc_tw_eval_expr(v, rchild(n, 4)) != 0;
 			     bc_tw_eval_expr(v, rchild(n, 6))) {
@@ -147,13 +146,13 @@ enum stmt_meta bc_tw_eval_stmt(struct map *v, struct rdesc_node n)
 
 			return VOID;
 
-		case 5:  /* if ( <rel-expr> ) <stmt> */
+		case 4:  /* if ( <rel-expr> ) <stmt> */
 			if (bc_tw_eval_expr(v, rchild(n, 2)) != 0)
 				return bc_tw_eval_stmt(v, rchild(n, 4));
 
 			return VOID;
 
-		case 6: {  /* while ( <rel-expr> ) <stmt> */
+		case 5: {  /* while ( <rel-expr> ) <stmt> */
 			while (bc_tw_eval_expr(v, rchild(n, 2)) != 0) {
 				ret = bc_tw_eval_stmt(v, rchild(n, 4));
 
@@ -167,15 +166,25 @@ enum stmt_meta bc_tw_eval_stmt(struct map *v, struct rdesc_node n)
 			return VOID;
 		}
 
-		case 7:  /* print <expr> ; */
+		case 6:  /* print <expr> ; */
 			printf(">> %g\n", bc_tw_eval_expr(v, rchild(n, 1)));
 
 			return VOID;
 
-		case 8:  /* { <stmts> } */
+		case 7:  /* { <stmts> } */
 			return bc_tw_eval_stmt(v, rchild(n, 1));
 
-		case 9: /* ; */
+		case 8:  /* cst <stmt> */
+			rdesc_dump_cst(stdout, rchild(n, 1), bc_node_printer);
+
+			return VOID;
+
+		case 9:  /* <expr> ; */
+			bc_tw_eval_expr(v, rchild(n, 0));
+
+			return VOID;
+
+		case 10: /* ; */
 			return VOID;
 		}
 
@@ -198,7 +207,7 @@ enum stmt_meta bc_tw_eval_stmt(struct map *v, struct rdesc_node n)
 		break;
 	}
 
-	assert(0 && "Yakalanmamış statement."); // GCOVR_EXCL_LINE: unreachable
+	assert(0); // GCOVR_EXCL_LINE: unreachable
 }
 //! [bc_tw_eval_stmt]
 
@@ -232,42 +241,39 @@ double bc_tw_eval_expr(struct map *v, struct rdesc_node n)
 
 			double rhs = bc_tw_eval_expr(v, rchild(asgn, 2));
 
-			double *cur = map_get2(v, &s.ident_id, sizeof(size_t)), result;
+			double *cur = map_get2(v, &s.ident_id, sizeof(size_t)),
+					       result;
+
+			result = (cur ? *cur : 0);
 
 			switch (ralt_idx(rchild(asgn, 1))) {
 			case 0:  /* += */
-				result = (cur ? *cur : 0) + rhs;
+				result += rhs;
 				break;
-
 			case 1:  /* -= */
-				result = (cur ? *cur : 0) - rhs;
+				result -= rhs;
 				break;
-
 			case 2:  /* *= */
-				result = (cur ? *cur : 0) * rhs;
+				result *= rhs;
 				break;
-
 			case 3:  /* /= */
-				result = (cur ? *cur : 0) / rhs;
+				result /= rhs;
 				break;
-
 			case 4:  /* %= */
-				result = fmod(cur ? *cur : 0, rhs);
+				result = fmod(result, rhs);
 				break;
-
 			case 5:  /* ^= */
-				result = pow(cur ? *cur : 0, rhs);
+				result = pow(result, rhs);
 				break;
-
 			default: /* =  */
 				result = rhs;
-
 			}
 
 			if (cur)
 				*cur = result;
 			else
-				map_insert2(v, &s.ident_id, sizeof(size_t), &result);
+				map_insert2(v, &s.ident_id, sizeof(size_t),
+					    &result);
 
 			return result;
 		}
@@ -344,11 +350,9 @@ double bc_tw_eval_expr(struct map *v, struct rdesc_node n)
 			case 0:
 				lhs *= rhs;
 				break;
-
 			case 1:
 				lhs /= rhs;
 				break;
-
 			case 2:
 				lhs = fmod(lhs, rhs);
 				break;
@@ -447,7 +451,29 @@ double bc_tw_eval_expr(struct map *v, struct rdesc_node n)
 		}
 	}
 
-	assert(0 && "Yakalanmamış expression."); // GCOVR_EXCL_LINE: unreachable
-	return 0;
+	assert(0); // GCOVR_EXCL_LINE: unreachable
 }
 //! [bc_tw_eval_expr]
+
+
+void bc_node_printer(FILE *out, struct rdesc_node node)
+{
+	if (rtype(node) == RDESC_TOKEN) {
+		union seminfo s;
+
+		memcpy(&s, rseminfo(node), sizeof(union seminfo));
+
+		if (rid(node) == TK_INT)
+			fprintf(out, "[shape=box,label=<%lld>]", (long long int) s.num_int);
+		else if (rid(node) == TK_FLOAT)
+			fprintf(out, "[shape=box,label=<%g>]", s.num_float);
+		else if (rid(node) == TK_IDENT)
+			fprintf(out, "[shape=box,label=<%zu>]", s.ident_id);
+		else if (TK_LT <= rid(node) && rid(node) <= TK_GTEQ)
+			fprintf(out, "[shape=box,label=\"%s\"]", bc_tk_names[rid(node)]);
+		else
+			fprintf(out, "[shape=box,label=<%s>]", bc_tk_names[rid(node)]);
+	} else {
+		fprintf(out, "[label=\"%s\"]", bc_nt_names[rid(node)]);
+	}
+}

@@ -12,6 +12,7 @@
 #include <rdesc/rdesc.h>
 
 #include <stdbool.h>
+#include <stdio.h>
 
 
 /** @brief Statement'lerden dönülen ekstra bilgi. */
@@ -30,6 +31,9 @@ enum stmt_meta bc_tw_eval_stmt(struct map *v, struct rdesc_node n);
 
 /** @brief Bir bc expression'unu interpret eder. */
 double bc_tw_eval_expr(struct map *v, struct rdesc_node n);
+
+/** @brief Bir bc node'unu print eder. */
+void bc_node_printer(FILE *out, struct rdesc_node node);
 
 
 #endif

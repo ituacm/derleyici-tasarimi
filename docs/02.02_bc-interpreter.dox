@@ -12,7 +12,22 @@ kısaca `tw` diyoruz:
 
 Statement'ler kullanıcıya dönüt değeri yansıtılmayan kod parçalarıdır.
 Expression ise doğrudan doğruya dili kullananın değeriyle ilgilendiği kodlardır,
-önceden yaptığımız recursive descent parser'da benzer bir yapı kurgulamıştık.
+önceden yaptığımız recursive descent parser'da da benzer bir yapı
+kurgulamıştık.
+
+Yazılım dilinin tasarımını biraz daha inceleyelim:
+- Bir değişken bulunamamışsa, değerini direkt 0'a eşitle.
+- Doğruluk değeri, değişken 0 iken false, diğer durumlarda true'dur.
+
+Ayrıca, yazılım dilinin bir statement'inin oluşturdugu CST'yi Graphviz
+formatında yazdırmak için `cst` keyword'ünü ekledim:
+```
+cst {
+    a = 0;
+    for (i = 1; i < 10; i++)
+        a += i;
+}
+```
 
 @snippet snippets/bc-interpreter.c bc_tw_eval_expr
 */

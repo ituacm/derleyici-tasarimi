@@ -8,8 +8,7 @@
 struct rdesc_grammar_symbol bc_production_rules
 	[BC_NT_COUNT][BC_MAX_ALT_COUNT + 1][BC_MAX_ALT_SIZE + 1] = {
 /* <stmt> ::= */ r(
-	NT(EXPR), TK(SEMI)
-alt	TK(BREAK), TK(SEMI)
+	TK(BREAK), TK(SEMI)
 alt	TK(QUIT), TK(SEMI)
 alt	TK(RETURN), NT(OPT_EXPR), TK(SEMI)
 alt	TK(FOR), TK(LPAREN), NT(OPT_EXPR), TK(SEMI),
@@ -20,6 +19,8 @@ alt	TK(IF), TK(LPAREN), NT(REL_EXPR), TK(RPAREN), NT(STMT)
 alt	TK(WHILE), TK(LPAREN), NT(REL_EXPR), TK(RPAREN), NT(STMT)
 alt	TK(PRINT), NT(EXPR), TK(SEMI)
 alt	TK(LCURLY), NT(STMTS), TK(RCURLY)
+alt	TK(CST), NT(STMT)
+alt	NT(EXPR), TK(SEMI)
 alt	TK(SEMI)
 ),
 
@@ -119,7 +120,7 @@ void bc_tokenizer_init(struct tokenizer *t)
 	for (int i = TK_PLUS; i <= TK_COMMA; i++)
 		tokenizer_add_punctuation(t, bc_tk_names[i], i);
 
-	for (int i = TK_DEFINE; i <= TK_WHILE; i++)
+	for (int i = TK_DEFINE; i <= TK_CST; i++)
 		tokenizer_add_keyword(t, bc_tk_names[i], i);
 }
 //! [Tokenizer init]

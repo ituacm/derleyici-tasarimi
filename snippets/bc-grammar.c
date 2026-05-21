@@ -11,16 +11,16 @@ struct rdesc_grammar_symbol bc_production_rules
 	NT(EXPR), TK(SEMI)
 alt	TK(BREAK), TK(SEMI)
 alt	TK(QUIT), TK(SEMI)
-alt	TK(RETURN), TK(LPAREN), NT(RETURN_EXPR), TK(RPAREN), TK(SEMI)
-alt	TK(RETURN), TK(SEMI)
-alt	TK(FOR), TK(LPAREN), NT(EXPR), TK(SEMI),
-			     NT(REL_EXPR), TK(SEMI),
-			     NT(EXPR),
+alt	TK(RETURN), NT(OPT_EXPR), TK(SEMI)
+alt	TK(FOR), TK(LPAREN), NT(OPT_EXPR), TK(SEMI),
+			     NT(OPT_EXPR), TK(SEMI),
+			     NT(OPT_EXPR),
 		TK(RPAREN), NT(STMT)
 alt	TK(IF), TK(LPAREN), NT(REL_EXPR), TK(RPAREN), NT(STMT)
 alt	TK(WHILE), TK(LPAREN), NT(REL_EXPR), TK(RPAREN), NT(STMT)
 alt	TK(PRINT), NT(EXPR), TK(SEMI)
 alt	TK(LCURLY), NT(STMTS), TK(RCURLY)
+alt	TK(SEMI)
 ),
 
 /* <stmts> ::= */ r(
@@ -101,7 +101,7 @@ alt	TK(FLOAT)
 /* <rel-expr-opt-rel> ::= */
 	ropt(NT(REL_OP), NT(ADD_EXPR)),
 
-/* <return-expr> ::= */
+/* <opt-expr> ::= */
 	ropt(NT(EXPR)),
 
 /* <expr> */ r(

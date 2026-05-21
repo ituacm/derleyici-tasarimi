@@ -4,5 +4,15 @@
 Şimdiye kadar yaptıklarımızı birleştirme zamanı geldi:
 
 @snippet snippets/bc-interpreter.c bc_cli
-@snippet snippets/bc-interpreter.c bc_interpret
+
+Şimdilik sadece tree traverse ederek interpret yapacağız. Tree-walk yerine
+kısaca `tw` diyoruz:
+
+@snippet snippets/bc-interpreter.c bc_tw_eval_stmt
+
+Statement'ler kullanıcıya dönüt değeri yansıtılmayan kod parçalarıdır.
+Expression ise doğrudan doğruya dili kullananın değeriyle ilgilendiği kodlardır,
+önceden yaptığımız recursive descent parser'da benzer bir yapı kurgulamıştık.
+
+@snippet snippets/bc-interpreter.c bc_tw_eval_expr
 */

@@ -45,7 +45,7 @@ enum bc_nt_id {
 	NT_EXP_EXPR, NT_EXP_EXPR_REST,
 	NT_FACTOR, NT_ATOM,
 	NT_ASGN_EXPR, NT_REL_EXPR, NT_REL_EXPR_OPT_REL,
-	NT_RETURN_EXPR,
+	NT_OPT_EXPR,
 
 	NT_EXPR,
 };
@@ -82,7 +82,7 @@ const char *bc_nt_names[] = {
 	"exp_expr", "exp_expr_rest",
 	"factor", "atom",
 	"asgn_expr", "rel_expr", "rel_expr_opt_rel",
-	"return_expr",
+	"opt_expr",
 
 	"expr",
 };

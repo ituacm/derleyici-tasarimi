@@ -1,4 +1,5 @@
 CFLAGS = -I. -Wall -Wextra -std=c11 --coverage -MMD -MD -O0 -g3
+LDFLAGS = -lm
 
 SRC_DIR = src
 TEST_DIR = tests
@@ -56,13 +57,13 @@ $(OBJ_DIR)/%.snippet.test.o: $(SNIPPETS_DIR)/%.test.c | $(OBJ_DIR) rdesc
 	$(CC) $(CFLAGS) -c $< -o $@
 
 $(TARGET): $(OBJS) $(RDESC) | $(BIN_DIR) rdesc
-	$(CC) $(CFLAGS) $^ -o $@
+	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
 
 $(BIN_DIR)/%.test: $(OBJ_DIR)/%.test.o $(NONMAIN_OBJS) $(RDESC) | $(BIN_DIR) rdesc
-	$(CC) $(CFLAGS) $^ -o $@
+	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
 
 $(BIN_DIR)/%.snippet.test: $(OBJ_DIR)/%.snippet.test.o $(RDESC) | $(BIN_DIR) rdesc
-	$(CC) $(CFLAGS) $^ -o $@
+	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
 
 $(OBJ_DIR) $(BIN_DIR):
 	mkdir -p $@

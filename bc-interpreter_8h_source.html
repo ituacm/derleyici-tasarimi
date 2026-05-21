@@ -91,26 +91,30 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="preprocessor">#include &lt;rdesc/rdesc.h&gt;</span></div>
 <div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span> </div>
 <div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="preprocessor">#include &lt;stdbool.h&gt;</span></div>
-<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span> </div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="preprocessor">#include &lt;stdio.h&gt;</span></div>
 <div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span> </div>
-<div class="foldopen" id="foldopen00018" data-start="{" data-end="};">
-<div class="line"><a id="l00018" name="l00018"></a><span class="lineno"><a class="line" href="bc-interpreter_8h.html#a434288ff0ba970a550ecf3382dbc3f4b">   18</a></span><span class="keyword">enum</span> <a class="code hl_enumeration" href="bc-interpreter_8h.html#a434288ff0ba970a550ecf3382dbc3f4b">stmt_meta</a> {</div>
-<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>        VOID,</div>
-<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>        BREAK,</div>
-<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>        QUIT,</div>
-<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>};</div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span> </div>
+<div class="foldopen" id="foldopen00019" data-start="{" data-end="};">
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno"><a class="line" href="bc-interpreter_8h.html#a434288ff0ba970a550ecf3382dbc3f4b">   19</a></span><span class="keyword">enum</span> <a class="code hl_enumeration" href="bc-interpreter_8h.html#a434288ff0ba970a550ecf3382dbc3f4b">stmt_meta</a> {</div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>        VOID,</div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>        BREAK,</div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>        QUIT,</div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>};</div>
 </div>
-<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span> </div>
 <div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span> </div>
-<div class="line"><a id="l00026" name="l00026"></a><span class="lineno"><a class="line" href="bc-interpreter_8h.html#adfc1f8c2572be7580f9550bd1b6fa209">   26</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="bc-interpreter_8h.html#adfc1f8c2572be7580f9550bd1b6fa209">bc_cli</a>();</div>
-<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span> </div>
-<div class="line"><a id="l00029" name="l00029"></a><span class="lineno"><a class="line" href="bc-interpreter_8h.html#aebaef7d5563c1fa336ab17bdb3ae133e">   29</a></span><span class="keyword">enum</span> <a class="code hl_enumeration" href="bc-interpreter_8h.html#a434288ff0ba970a550ecf3382dbc3f4b">stmt_meta</a> <a class="code hl_function" href="bc-interpreter_8h.html#aebaef7d5563c1fa336ab17bdb3ae133e">bc_tw_eval_stmt</a>(<span class="keyword">struct</span> <a class="code hl_struct" href="structmap.html">map</a> *v, <span class="keyword">struct</span> rdesc_node n);</div>
-<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span> </div>
-<div class="line"><a id="l00032" name="l00032"></a><span class="lineno"><a class="line" href="bc-interpreter_8h.html#a8ce5857c81671e98b6ec0f62376b9286">   32</a></span><span class="keywordtype">double</span> <a class="code hl_function" href="bc-interpreter_8h.html#a8ce5857c81671e98b6ec0f62376b9286">bc_tw_eval_expr</a>(<span class="keyword">struct</span> <a class="code hl_struct" href="structmap.html">map</a> *v, <span class="keyword">struct</span> rdesc_node n);</div>
-<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span> </div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span> </div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno"><a class="line" href="bc-interpreter_8h.html#adfc1f8c2572be7580f9550bd1b6fa209">   27</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="bc-interpreter_8h.html#adfc1f8c2572be7580f9550bd1b6fa209">bc_cli</a>();</div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span> </div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno"><a class="line" href="bc-interpreter_8h.html#aebaef7d5563c1fa336ab17bdb3ae133e">   30</a></span><span class="keyword">enum</span> <a class="code hl_enumeration" href="bc-interpreter_8h.html#a434288ff0ba970a550ecf3382dbc3f4b">stmt_meta</a> <a class="code hl_function" href="bc-interpreter_8h.html#aebaef7d5563c1fa336ab17bdb3ae133e">bc_tw_eval_stmt</a>(<span class="keyword">struct</span> <a class="code hl_struct" href="structmap.html">map</a> *v, <span class="keyword">struct</span> rdesc_node n);</div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span> </div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno"><a class="line" href="bc-interpreter_8h.html#a8ce5857c81671e98b6ec0f62376b9286">   33</a></span><span class="keywordtype">double</span> <a class="code hl_function" href="bc-interpreter_8h.html#a8ce5857c81671e98b6ec0f62376b9286">bc_tw_eval_expr</a>(<span class="keyword">struct</span> <a class="code hl_struct" href="structmap.html">map</a> *v, <span class="keyword">struct</span> rdesc_node n);</div>
 <div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span> </div>
-<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span><span class="preprocessor">#endif</span></div>
-<div class="ttc" id="abc-interpreter_8h_html_a434288ff0ba970a550ecf3382dbc3f4b"><div class="ttname"><a href="bc-interpreter_8h.html#a434288ff0ba970a550ecf3382dbc3f4b">stmt_meta</a></div><div class="ttdeci">stmt_meta</div><div class="ttdoc">Statement'lerden dönülen ekstra bilgi.</div><div class="ttdef"><b>Definition</b> <a href="bc-interpreter_8h_source.html#l00018">bc-interpreter.h:18</a></div></div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno"><a class="line" href="bc-interpreter_8h.html#a7ca801912483512080e33b55754a6c23">   36</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="bc-interpreter_8h.html#a7ca801912483512080e33b55754a6c23">bc_node_printer</a>(FILE *out, <span class="keyword">struct</span> rdesc_node node);</div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span> </div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span> </div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span><span class="preprocessor">#endif</span></div>
+<div class="ttc" id="abc-interpreter_8h_html_a434288ff0ba970a550ecf3382dbc3f4b"><div class="ttname"><a href="bc-interpreter_8h.html#a434288ff0ba970a550ecf3382dbc3f4b">stmt_meta</a></div><div class="ttdeci">stmt_meta</div><div class="ttdoc">Statement'lerden dönülen ekstra bilgi.</div><div class="ttdef"><b>Definition</b> <a href="bc-interpreter_8h_source.html#l00019">bc-interpreter.h:19</a></div></div>
+<div class="ttc" id="abc-interpreter_8h_html_a7ca801912483512080e33b55754a6c23"><div class="ttname"><a href="bc-interpreter_8h.html#a7ca801912483512080e33b55754a6c23">bc_node_printer</a></div><div class="ttdeci">void bc_node_printer(FILE *out, struct rdesc_node node)</div><div class="ttdoc">Bir bc node'unu print eder.</div></div>
 <div class="ttc" id="abc-interpreter_8h_html_a8ce5857c81671e98b6ec0f62376b9286"><div class="ttname"><a href="bc-interpreter_8h.html#a8ce5857c81671e98b6ec0f62376b9286">bc_tw_eval_expr</a></div><div class="ttdeci">double bc_tw_eval_expr(struct map *v, struct rdesc_node n)</div><div class="ttdoc">Bir bc expression'unu interpret eder.</div></div>
 <div class="ttc" id="abc-interpreter_8h_html_adfc1f8c2572be7580f9550bd1b6fa209"><div class="ttname"><a href="bc-interpreter_8h.html#adfc1f8c2572be7580f9550bd1b6fa209">bc_cli</a></div><div class="ttdeci">void bc_cli()</div><div class="ttdoc">Interpreter.</div></div>
 <div class="ttc" id="abc-interpreter_8h_html_aebaef7d5563c1fa336ab17bdb3ae133e"><div class="ttname"><a href="bc-interpreter_8h.html#aebaef7d5563c1fa336ab17bdb3ae133e">bc_tw_eval_stmt</a></div><div class="ttdeci">enum stmt_meta bc_tw_eval_stmt(struct map *v, struct rdesc_node n)</div><div class="ttdoc">Bir bc statement'ini interpret eder.</div></div>

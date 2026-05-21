@@ -216,7 +216,7 @@ $(function() {
 <div class="line"> </div>
 <div class="line"><span class="comment">/* Bu string karşılıkları tokenizer&#39;a punctuation ve keyword eklemek için</span></div>
 <div class="line"><span class="comment"> * kullanacağız. */</span></div>
-<div class="line"><span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">char</span> *<a class="code hl_variable" href="bc-grammar_8h.html#a5e455b6da20a4337ef9fa4bc07a057c1">bc_tk_names</a>[] = {</div>
+<div class="line"><span class="keyword">const</span> <span class="keywordtype">char</span> *<a class="code hl_variable" href="bc-grammar_8h.html#a5e455b6da20a4337ef9fa4bc07a057c1">bc_tk_names</a>[] = {</div>
 <div class="line">        <span class="stringliteral">&quot;+&quot;</span>, <span class="stringliteral">&quot;-&quot;</span>, <span class="stringliteral">&quot;*&quot;</span>, <span class="stringliteral">&quot;/&quot;</span>, <span class="stringliteral">&quot;%&quot;</span>, <span class="stringliteral">&quot;^&quot;</span>,</div>
 <div class="line">        <span class="stringliteral">&quot;+=&quot;</span>, <span class="stringliteral">&quot;-=&quot;</span>, <span class="stringliteral">&quot;*=&quot;</span>, <span class="stringliteral">&quot;/=&quot;</span>, <span class="stringliteral">&quot;%=&quot;</span>, <span class="stringliteral">&quot;^=&quot;</span>, <span class="stringliteral">&quot;=&quot;</span>,</div>
 <div class="line">        <span class="stringliteral">&quot;++&quot;</span>, <span class="stringliteral">&quot;--&quot;</span>,</div>
@@ -232,7 +232,7 @@ $(function() {
 <div class="line"> </div>
 <div class="line"><span class="comment">/* Nonterminal isimleri ve yukarıdaki [] içindeki token isimleri, dump_bnf</span></div>
 <div class="line"><span class="comment"> * özelligi için. */</span></div>
-<div class="line"><span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">char</span> *<a class="code hl_variable" href="bc-grammar_8h.html#a9e534f73d9867e47fc34ad7bcfaf6013">bc_nt_names</a>[] = {</div>
+<div class="line"><span class="keyword">const</span> <span class="keywordtype">char</span> *<a class="code hl_variable" href="bc-grammar_8h.html#a9e534f73d9867e47fc34ad7bcfaf6013">bc_nt_names</a>[] = {</div>
 <div class="line">        <span class="stringliteral">&quot;stmt&quot;</span>, <span class="stringliteral">&quot;stmts&quot;</span>,</div>
 <div class="line"> </div>
 <div class="line">        <span class="stringliteral">&quot;add_op&quot;</span>, <span class="stringliteral">&quot;mul_op&quot;</span>,</div>
@@ -248,10 +248,10 @@ $(function() {
 <div class="line"> </div>
 <div class="line">        <span class="stringliteral">&quot;expr&quot;</span>,</div>
 <div class="line">};</div>
-<div class="ttc" id="abc-grammar_8h_html_a5e455b6da20a4337ef9fa4bc07a057c1"><div class="ttname"><a href="bc-grammar_8h.html#a5e455b6da20a4337ef9fa4bc07a057c1">bc_tk_names</a></div><div class="ttdeci">static const char * bc_tk_names[]</div><div class="ttdef"><b>Definition</b> <a href="bc-grammar_8h_source.html#l00056">bc-grammar.h:56</a></div></div>
+<div class="ttc" id="abc-grammar_8h_html_a5e455b6da20a4337ef9fa4bc07a057c1"><div class="ttname"><a href="bc-grammar_8h.html#a5e455b6da20a4337ef9fa4bc07a057c1">bc_tk_names</a></div><div class="ttdeci">const char * bc_tk_names[]</div><div class="ttdef"><b>Definition</b> <a href="bc-grammar_8h_source.html#l00056">bc-grammar.h:56</a></div></div>
 <div class="ttc" id="abc-grammar_8h_html_a7639289c8c579b102a87c0bef24876d0"><div class="ttname"><a href="bc-grammar_8h.html#a7639289c8c579b102a87c0bef24876d0">bc_nt_id</a></div><div class="ttdeci">bc_nt_id</div><div class="ttdoc">Nonterminal ID.</div><div class="ttdef"><b>Definition</b> <a href="bc-grammar_8h_source.html#l00036">bc-grammar.h:36</a></div></div>
 <div class="ttc" id="abc-grammar_8h_html_a91117917806968e2d2448487171f9e49"><div class="ttname"><a href="bc-grammar_8h.html#a91117917806968e2d2448487171f9e49">bc_tk_id</a></div><div class="ttdeci">bc_tk_id</div><div class="ttdoc">Token ID.</div><div class="ttdef"><b>Definition</b> <a href="bc-grammar_8h_source.html#l00024">bc-grammar.h:24</a></div></div>
-<div class="ttc" id="abc-grammar_8h_html_a9e534f73d9867e47fc34ad7bcfaf6013"><div class="ttname"><a href="bc-grammar_8h.html#a9e534f73d9867e47fc34ad7bcfaf6013">bc_nt_names</a></div><div class="ttdeci">static const char * bc_nt_names[]</div><div class="ttdef"><b>Definition</b> <a href="bc-grammar_8h_source.html#l00073">bc-grammar.h:73</a></div></div>
+<div class="ttc" id="abc-grammar_8h_html_a9e534f73d9867e47fc34ad7bcfaf6013"><div class="ttname"><a href="bc-grammar_8h.html#a9e534f73d9867e47fc34ad7bcfaf6013">bc_nt_names</a></div><div class="ttdeci">const char * bc_nt_names[]</div><div class="ttdef"><b>Definition</b> <a href="bc-grammar_8h_source.html#l00073">bc-grammar.h:73</a></div></div>
 <div class="ttc" id="atokenizer_8h_html_a17418dc08469feed2d96b62f2e84b2a0"><div class="ttname"><a href="tokenizer_8h.html#a17418dc08469feed2d96b62f2e84b2a0">TK_IDENT</a></div><div class="ttdeci">#define TK_IDENT</div><div class="ttdoc">Identifier token ID'si.</div><div class="ttdef"><b>Definition</b> <a href="tokenizer_8h_source.html#l00028">tokenizer.h:28</a></div></div>
 <div class="ttc" id="atokenizer_8h_html_a691e10d8d7c7c95260428b7d0afae343"><div class="ttname"><a href="tokenizer_8h.html#a691e10d8d7c7c95260428b7d0afae343">TK_INT</a></div><div class="ttdeci">#define TK_INT</div><div class="ttdoc">Tam sayı token ID'si.</div><div class="ttdef"><b>Definition</b> <a href="tokenizer_8h_source.html#l00022">tokenizer.h:22</a></div></div>
 <div class="ttc" id="atokenizer_8h_html_a76166a57ba5861e71c0b332b2d94a75d"><div class="ttname"><a href="tokenizer_8h.html#a76166a57ba5861e71c0b332b2d94a75d">TK_FLOAT</a></div><div class="ttdeci">#define TK_FLOAT</div><div class="ttdoc">Ondalık sayı token ID'si.</div><div class="ttdef"><b>Definition</b> <a href="tokenizer_8h_source.html#l00025">tokenizer.h:25</a></div></div>
@@ -273,7 +273,8 @@ $(function() {
 <div class="ttc" id="atokenizer_8h_html_a73d455e90e9f0e517198663d56d6b5a3"><div class="ttname"><a href="tokenizer_8h.html#a73d455e90e9f0e517198663d56d6b5a3">tokenizer_init</a></div><div class="ttdeci">void tokenizer_init(struct tokenizer *tokenizer)</div><div class="ttdoc">[Token tanımı]</div></div>
 </div><!-- fragment --><p>Aşağıdaki fonksiyon, grameri daha kolay okunur bir formatta ekrana yazdırır:</p>
 <div class="fragment"><div class="line">rdesc_dump_bnf(stdout, &amp;grammar, <a class="code hl_variable" href="bc-grammar_8h.html#a5e455b6da20a4337ef9fa4bc07a057c1">bc_tk_names</a>, <a class="code hl_variable" href="bc-grammar_8h.html#a9e534f73d9867e47fc34ad7bcfaf6013">bc_nt_names</a>);</div>
-</div><!-- fragment --> </div></div><!-- contents -->
+</div><!-- fragment --><p>Devasa grameri oluşturduğu ağacı traverse ederken daha net anlayacağız: <a class="el" href="bc_interpreter_page.html">bc Interpreter</a>. </p>
+</div></div><!-- contents -->
 </div><!-- PageDoc -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

@@ -1,10 +1,12 @@
 <map id="include/map.h" name="include/map.h">
-<area shape="rect" id="Node000001" title="Basit hashmap." alt="" coords="98,5,213,31"/>
-<area shape="rect" id="Node000002" href="$recursive-parser_8h.html" title="Top&#45;Down Parsing" alt="" coords="5,152,196,177"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="145,44,128,80,106,152,101,151,124,78,140,42"/>
-<area shape="rect" id="Node000003" href="$tokenizer_8h.html" title="Tokenizer" alt="" coords="138,79,282,104"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="175,40,203,77,199,80,171,43"/>
-<area shape="poly" id="edge4_Node000003_Node000002" title=" " alt="" coords="182,114,120,154,117,150,180,109"/>
-<area shape="rect" id="Node000004" href="$bc-grammar_8h.html" title="bc Grameri" alt="" coords="220,152,384,177"/>
-<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="237,110,289,150,285,154,234,114"/>
+<area shape="rect" id="Node000001" title="Basit hashmap." alt="" coords="159,5,273,31"/>
+<area shape="rect" id="Node000002" href="$bc-interpreter_8h.html" title="bc Interpreter" alt="" coords="5,79,179,104"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="186,40,114,81,111,76,183,35"/>
+<area shape="rect" id="Node000003" href="$recursive-parser_8h.html" title="Top&#45;Down Parsing" alt="" coords="121,152,311,177"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="219,45,219,152,213,152,213,45"/>
+<area shape="rect" id="Node000004" href="$tokenizer_8h.html" title="Tokenizer" alt="" coords="253,79,397,104"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="246,36,309,76,306,81,244,40"/>
+<area shape="poly" id="edge5_Node000004_Node000003" title=" " alt="" coords="298,114,235,154,232,150,295,109"/>
+<area shape="rect" id="Node000005" href="$bc-grammar_8h.html" title="bc Grameri" alt="" coords="335,152,499,177"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="352,110,404,150,401,154,349,114"/>
 </map>

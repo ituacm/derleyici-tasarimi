@@ -74,6 +74,7 @@ $(function() {
 </div><!-- top -->
 <div class="header">
   <div class="summary">
+<a href="#enum-members">Enümerasyonlar</a> &#124;
 <a href="#func-members">Fonksiyonlar</a>  </div>
   <div class="headertitle"><div class="title">bc-interpreter.h Dosya Referansı</div></div>
 </div><!--header-->
@@ -83,30 +84,63 @@ $(function() {
 <a href="#details">Ayrıntılar...</a></p>
 <div class="textblock"><code>#include &quot;<a class="el" href="map_8h_source.html">map.h</a>&quot;</code><br />
 <code>#include &lt;rdesc/rdesc.h&gt;</code><br />
+<code>#include &lt;stdbool.h&gt;</code><br />
 </div><div class="textblock"><div class="dynheader">
 bc-interpreter.h için içerme bağımlılık grafiği:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="bc-interpreter_8h__incl.svg" width="212" height="183"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<div class="center"><iframe scrolling="no" frameborder="0" src="bc-interpreter_8h__incl.svg" width="319" height="183"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 </div>
 <p><a href="bc-interpreter_8h_source.html">Bu dosyanın kaynak koduna git.</a></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="enum-members" name="enum-members"></a>
+Enümerasyonlar</h2></td></tr>
+<tr class="memitem:a434288ff0ba970a550ecf3382dbc3f4b" id="r_a434288ff0ba970a550ecf3382dbc3f4b"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="bc-interpreter_8h.html#a434288ff0ba970a550ecf3382dbc3f4b">stmt_meta</a> { <b>VOID</b>
+, <b>BREAK</b>
+, <b>QUIT</b>
+ }</td></tr>
+<tr class="memdesc:a434288ff0ba970a550ecf3382dbc3f4b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Statement'lerden dönülen ekstra bilgi.  <a href="bc-interpreter_8h.html#a434288ff0ba970a550ecf3382dbc3f4b">Ayrıntılar...</a><br /></td></tr>
+<tr class="separator:a434288ff0ba970a550ecf3382dbc3f4b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Fonksiyonlar</h2></td></tr>
 <tr class="memitem:adfc1f8c2572be7580f9550bd1b6fa209" id="r_adfc1f8c2572be7580f9550bd1b6fa209"><td class="memItemLeft" align="right" valign="top"><a id="adfc1f8c2572be7580f9550bd1b6fa209" name="adfc1f8c2572be7580f9550bd1b6fa209"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>bc_cli</b> ()</td></tr>
 <tr class="memdesc:adfc1f8c2572be7580f9550bd1b6fa209"><td class="mdescLeft">&#160;</td><td class="mdescRight">Interpreter. <br /></td></tr>
 <tr class="separator:adfc1f8c2572be7580f9550bd1b6fa209"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1550a7bc1d6e2e55e6d2fbe82821bf78" id="r_a1550a7bc1d6e2e55e6d2fbe82821bf78"><td class="memItemLeft" align="right" valign="top"><a id="a1550a7bc1d6e2e55e6d2fbe82821bf78" name="a1550a7bc1d6e2e55e6d2fbe82821bf78"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>bc_interpret</b> (struct <a class="el" href="structmap.html">map</a> *v, struct rdesc_node n)</td></tr>
-<tr class="memdesc:a1550a7bc1d6e2e55e6d2fbe82821bf78"><td class="mdescLeft">&#160;</td><td class="mdescRight">bc statement interpret eder. <br /></td></tr>
-<tr class="separator:a1550a7bc1d6e2e55e6d2fbe82821bf78"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aebaef7d5563c1fa336ab17bdb3ae133e" id="r_aebaef7d5563c1fa336ab17bdb3ae133e"><td class="memItemLeft" align="right" valign="top"><a id="aebaef7d5563c1fa336ab17bdb3ae133e" name="aebaef7d5563c1fa336ab17bdb3ae133e"></a>
+enum <a class="el" href="bc-interpreter_8h.html#a434288ff0ba970a550ecf3382dbc3f4b">stmt_meta</a>&#160;</td><td class="memItemRight" valign="bottom"><b>bc_tw_eval_stmt</b> (struct <a class="el" href="structmap.html">map</a> *v, struct rdesc_node n)</td></tr>
+<tr class="memdesc:aebaef7d5563c1fa336ab17bdb3ae133e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Bir bc statement'ini interpret eder. <br /></td></tr>
+<tr class="separator:aebaef7d5563c1fa336ab17bdb3ae133e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8ce5857c81671e98b6ec0f62376b9286" id="r_a8ce5857c81671e98b6ec0f62376b9286"><td class="memItemLeft" align="right" valign="top"><a id="a8ce5857c81671e98b6ec0f62376b9286" name="a8ce5857c81671e98b6ec0f62376b9286"></a>
+double&#160;</td><td class="memItemRight" valign="bottom"><b>bc_tw_eval_expr</b> (struct <a class="el" href="structmap.html">map</a> *v, struct rdesc_node n)</td></tr>
+<tr class="memdesc:a8ce5857c81671e98b6ec0f62376b9286"><td class="mdescLeft">&#160;</td><td class="mdescRight">Bir bc expression'unu interpret eder. <br /></td></tr>
+<tr class="separator:a8ce5857c81671e98b6ec0f62376b9286"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Ayrıntılı tanımlama</h2>
 <div class="textblock"><p><a class="el" href="bc_interpreter_page.html">bc Interpreter</a> </p>
 
 <p class="definition"><a class="el" href="bc-interpreter_8h_source.html">bc-interpreter.h</a> dosyasında tanımlanmıştır.</p>
-</div></div><!-- contents -->
+</div><h2 class="groupheader">Enümerasyon Tipi Dokümantasyonu</h2>
+<a id="a434288ff0ba970a550ecf3382dbc3f4b" name="a434288ff0ba970a550ecf3382dbc3f4b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a434288ff0ba970a550ecf3382dbc3f4b">&#9670;&#160;</a></span>stmt_meta</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="bc-interpreter_8h.html#a434288ff0ba970a550ecf3382dbc3f4b">stmt_meta</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Statement'lerden dönülen ekstra bilgi. </p>
+
+<p class="definition"><a class="el" href="bc-interpreter_8h_source.html">bc-interpreter.h</a> dosyasının <a class="el" href="bc-interpreter_8h_source.html#l00018">18</a> numaralı satırında tanımlanmıştır.</p>
+
+</div>
+</div>
+</div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Oluşturan&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8

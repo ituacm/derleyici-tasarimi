@@ -83,16 +83,16 @@ $(function() {
 <div class="line">        NT(EXPR), TK(SEMI)</div>
 <div class="line">alt     TK(BREAK), TK(SEMI)</div>
 <div class="line">alt     TK(QUIT), TK(SEMI)</div>
-<div class="line">alt     TK(RETURN), TK(LPAREN), NT(RETURN_EXPR), TK(RPAREN), TK(SEMI)</div>
-<div class="line">alt     TK(RETURN), TK(SEMI)</div>
-<div class="line">alt     TK(FOR), TK(LPAREN), NT(EXPR), TK(SEMI),</div>
-<div class="line">                             NT(REL_EXPR), TK(SEMI),</div>
-<div class="line">                             NT(EXPR),</div>
+<div class="line">alt     TK(RETURN), NT(OPT_EXPR), TK(SEMI)</div>
+<div class="line">alt     TK(FOR), TK(LPAREN), NT(OPT_EXPR), TK(SEMI),</div>
+<div class="line">                             NT(OPT_EXPR), TK(SEMI),</div>
+<div class="line">                             NT(OPT_EXPR),</div>
 <div class="line">                TK(RPAREN), NT(STMT)</div>
 <div class="line">alt     TK(IF), TK(LPAREN), NT(REL_EXPR), TK(RPAREN), NT(STMT)</div>
 <div class="line">alt     TK(WHILE), TK(LPAREN), NT(REL_EXPR), TK(RPAREN), NT(STMT)</div>
 <div class="line">alt     TK(PRINT), NT(EXPR), TK(SEMI)</div>
 <div class="line">alt     TK(LCURLY), NT(STMTS), TK(RCURLY)</div>
+<div class="line">alt     TK(SEMI)</div>
 <div class="line">),</div>
 <div class="line"> </div>
 <div class="line"><span class="comment">/* &lt;stmts&gt; ::= */</span> r(</div>
@@ -173,7 +173,7 @@ $(function() {
 <div class="line"><span class="comment">/* &lt;rel-expr-opt-rel&gt; ::= */</span></div>
 <div class="line">        ropt(NT(REL_OP), NT(ADD_EXPR)),</div>
 <div class="line"> </div>
-<div class="line"><span class="comment">/* &lt;return-expr&gt; ::= */</span></div>
+<div class="line"><span class="comment">/* &lt;opt-expr&gt; ::= */</span></div>
 <div class="line">        ropt(NT(EXPR)),</div>
 <div class="line"> </div>
 <div class="line"><span class="comment">/* &lt;expr&gt; */</span> r(</div>
@@ -209,7 +209,7 @@ $(function() {
 <div class="line">        NT_EXP_EXPR, NT_EXP_EXPR_REST,</div>
 <div class="line">        NT_FACTOR, NT_ATOM,</div>
 <div class="line">        NT_ASGN_EXPR, NT_REL_EXPR, NT_REL_EXPR_OPT_REL,</div>
-<div class="line">        NT_RETURN_EXPR,</div>
+<div class="line">        NT_OPT_EXPR,</div>
 <div class="line"> </div>
 <div class="line">        NT_EXPR,</div>
 <div class="line">};</div>
@@ -244,7 +244,7 @@ $(function() {
 <div class="line">        <span class="stringliteral">&quot;exp_expr&quot;</span>, <span class="stringliteral">&quot;exp_expr_rest&quot;</span>,</div>
 <div class="line">        <span class="stringliteral">&quot;factor&quot;</span>, <span class="stringliteral">&quot;atom&quot;</span>,</div>
 <div class="line">        <span class="stringliteral">&quot;asgn_expr&quot;</span>, <span class="stringliteral">&quot;rel_expr&quot;</span>, <span class="stringliteral">&quot;rel_expr_opt_rel&quot;</span>,</div>
-<div class="line">        <span class="stringliteral">&quot;return_expr&quot;</span>,</div>
+<div class="line">        <span class="stringliteral">&quot;opt_expr&quot;</span>,</div>
 <div class="line"> </div>
 <div class="line">        <span class="stringliteral">&quot;expr&quot;</span>,</div>
 <div class="line">};</div>

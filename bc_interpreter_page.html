@@ -103,13 +103,15 @@ $(function() {
 <div class="line">        <span class="keyword">struct </span><a class="code hl_struct" href="structlexer.html">lexer</a> l;</div>
 <div class="line">        <span class="keywordtype">char</span> buf[4096];</div>
 <div class="line"> </div>
-<div class="line">        <span class="keywordflow">while</span> ((fgets(buf, 4096, stdin)) != NULL) {</div>
+<div class="line">        <span class="keyword">enum</span> <a class="code hl_enumeration" href="bc-interpreter_8h.html#a434288ff0ba970a550ecf3382dbc3f4b">stmt_meta</a> ret;</div>
+<div class="line">        <span class="keywordtype">bool</span> quit = <span class="keyword">false</span>;</div>
+<div class="line"> </div>
+<div class="line">        <span class="keywordflow">while</span> ((fgets(buf, 4096, stdin)) != NULL &amp;&amp; !quit) {</div>
 <div class="line">                <a class="code hl_function" href="lexer_8h.html#a702027edae6526a7b51687def11fad46">lexer_init</a>(&amp;l, buf);</div>
 <div class="line"> </div>
 <div class="line">                <span class="keyword">struct </span><a class="code hl_struct" href="structtoken.html">token</a> tk;</div>
 <div class="line"> </div>
 <div class="line">                <span class="keywordflow">do</span> {</div>
-<div class="line">                        <span class="comment">/* Sıradaki token&#39;i tk içine çeker. */</span></div>
 <div class="line">                        tk = <a class="code hl_function" href="tokenizer_8h.html#ae76c8323e13da9eaddd2a3cdbfbd6fdf">tokenizer_next</a>(&amp;t);</div>
 <div class="line"> </div>
 <div class="line">                        <span class="keywordflow">while</span> (tk.id == <a class="code hl_define" href="tokenizer_8h.html#ad1d2c2f9070f28bde67fa499877a0bf6">TK_NOTOKEN</a>) {</div>
@@ -126,10 +128,18 @@ $(function() {
 <div class="line">                                }</div>
 <div class="line">                        }</div>
 <div class="line"> </div>
+<div class="line">                        <span class="comment">/* Bir sonraki tokeni çekebildiğimiz durumda, onu</span></div>
+<div class="line"><span class="comment">                         * rdesc&#39;e göderiyoruz. */</span></div>
+<div class="line"> </div>
 <div class="line">                        <span class="keywordflow">if</span> (tk.id != <a class="code hl_define" href="tokenizer_8h.html#ad1d2c2f9070f28bde67fa499877a0bf6">TK_NOTOKEN</a>) {</div>
 <div class="line">                                <span class="keywordflow">switch</span> (rdesc_pump(&amp;p, tk.id, &amp;tk.seminfo)) {</div>
 <div class="line">                                <span class="keywordflow">case</span> RDESC_READY:</div>
-<div class="line">                                        <a class="code hl_function" href="bc-interpreter_8h.html#a1550a7bc1d6e2e55e6d2fbe82821bf78">bc_interpret</a>(&amp;v, rdesc_get_root(&amp;p));</div>
+<div class="line">                                        ret = <a class="code hl_function" href="bc-interpreter_8h.html#aebaef7d5563c1fa336ab17bdb3ae133e">bc_tw_eval_stmt</a>(&amp;v,</div>
+<div class="line">                                                        rdesc_get_root(&amp;p));</div>
+<div class="line"> </div>
+<div class="line">                                        quit = ret == QUIT;</div>
+<div class="line"> </div>
+<div class="line">                                        assert(ret != BREAK &amp;&amp; <span class="stringliteral">&quot;Yakalanmamış break.&quot;</span>);</div>
 <div class="line"> </div>
 <div class="line">                                        assert(rdesc_start(&amp;p, NT_STMT) == 0);</div>
 <div class="line"> </div>
@@ -150,7 +160,7 @@ $(function() {
 <div class="line">                                        assert(0 &amp;&amp; <span class="stringliteral">&quot;nomem&quot;</span>);</div>
 <div class="line">                                }</div>
 <div class="line">                        }</div>
-<div class="line">                } <span class="keywordflow">while</span> (tk.id != <a class="code hl_define" href="tokenizer_8h.html#ad1d2c2f9070f28bde67fa499877a0bf6">TK_NOTOKEN</a>);</div>
+<div class="line">                } <span class="keywordflow">while</span> (tk.id != <a class="code hl_define" href="tokenizer_8h.html#ad1d2c2f9070f28bde67fa499877a0bf6">TK_NOTOKEN</a> &amp;&amp; !quit);</div>
 <div class="line">        }</div>
 <div class="line"> </div>
 <div class="line">        <a class="code hl_function" href="tokenizer_8h.html#a01c5dc98d1a56c559e4bbe87ad3be1fd">tokenizer_destroy</a>(&amp;t);</div>
@@ -163,8 +173,9 @@ $(function() {
 <div class="ttc" id="abc-grammar_8h_html_a7597396ef41e32b1e34ec82285502529"><div class="ttname"><a href="bc-grammar_8h.html#a7597396ef41e32b1e34ec82285502529">BC_NT_COUNT</a></div><div class="ttdeci">#define BC_NT_COUNT</div><div class="ttdoc">[Gramer declaration]</div><div class="ttdef"><b>Definition</b> <a href="bc-grammar_8h_source.html#l00016">bc-grammar.h:16</a></div></div>
 <div class="ttc" id="abc-grammar_8h_html_ac83ab59a655b017c40293c5a6dfb07d2"><div class="ttname"><a href="bc-grammar_8h.html#ac83ab59a655b017c40293c5a6dfb07d2">bc_tokenizer_init</a></div><div class="ttdeci">void bc_tokenizer_init(struct tokenizer *tokenizer)</div><div class="ttdoc">[Gramer declaration]</div></div>
 <div class="ttc" id="abc-grammar_8h_html_ad925e2c5d0f7dce744200d937c0c1451"><div class="ttname"><a href="bc-grammar_8h.html#ad925e2c5d0f7dce744200d937c0c1451">BC_MAX_ALT_SIZE</a></div><div class="ttdeci">#define BC_MAX_ALT_SIZE</div><div class="ttdef"><b>Definition</b> <a href="bc-grammar_8h_source.html#l00020">bc-grammar.h:20</a></div></div>
-<div class="ttc" id="abc-interpreter_8h_html_a1550a7bc1d6e2e55e6d2fbe82821bf78"><div class="ttname"><a href="bc-interpreter_8h.html#a1550a7bc1d6e2e55e6d2fbe82821bf78">bc_interpret</a></div><div class="ttdeci">void bc_interpret(struct map *v, struct rdesc_node n)</div><div class="ttdoc">bc statement interpret eder.</div></div>
+<div class="ttc" id="abc-interpreter_8h_html_a434288ff0ba970a550ecf3382dbc3f4b"><div class="ttname"><a href="bc-interpreter_8h.html#a434288ff0ba970a550ecf3382dbc3f4b">stmt_meta</a></div><div class="ttdeci">stmt_meta</div><div class="ttdoc">Statement'lerden dönülen ekstra bilgi.</div><div class="ttdef"><b>Definition</b> <a href="bc-interpreter_8h_source.html#l00018">bc-interpreter.h:18</a></div></div>
 <div class="ttc" id="abc-interpreter_8h_html_adfc1f8c2572be7580f9550bd1b6fa209"><div class="ttname"><a href="bc-interpreter_8h.html#adfc1f8c2572be7580f9550bd1b6fa209">bc_cli</a></div><div class="ttdeci">void bc_cli()</div><div class="ttdoc">Interpreter.</div></div>
+<div class="ttc" id="abc-interpreter_8h_html_aebaef7d5563c1fa336ab17bdb3ae133e"><div class="ttname"><a href="bc-interpreter_8h.html#aebaef7d5563c1fa336ab17bdb3ae133e">bc_tw_eval_stmt</a></div><div class="ttdeci">enum stmt_meta bc_tw_eval_stmt(struct map *v, struct rdesc_node n)</div><div class="ttdoc">Bir bc statement'ini interpret eder.</div></div>
 <div class="ttc" id="alexer_8h_html_a5691ba3e7cd10458aa508728a742a2db"><div class="ttname"><a href="lexer_8h.html#a5691ba3e7cd10458aa508728a742a2db">lexer_next</a></div><div class="ttdeci">struct lexeme lexer_next(struct lexer *lexer)</div><div class="ttdoc">Sıradaki lexeme.</div></div>
 <div class="ttc" id="alexer_8h_html_a702027edae6526a7b51687def11fad46"><div class="ttname"><a href="lexer_8h.html#a702027edae6526a7b51687def11fad46">lexer_init</a></div><div class="ttdeci">void lexer_init(struct lexer *lexer, const char *text)</div><div class="ttdoc">[Lexeme]</div></div>
 <div class="ttc" id="amap_8h_html_a0b7d4ab29383d6183dd7ce1c95b38865"><div class="ttname"><a href="map_8h.html#a0b7d4ab29383d6183dd7ce1c95b38865">map_destroy</a></div><div class="ttdeci">void map_destroy(struct map *map)</div><div class="ttdoc">map tarafından ayrılmış belleği temizler.</div></div>
@@ -181,10 +192,349 @@ $(function() {
 <div class="ttc" id="atokenizer_8h_html_ad1d2c2f9070f28bde67fa499877a0bf6"><div class="ttname"><a href="tokenizer_8h.html#ad1d2c2f9070f28bde67fa499877a0bf6">TK_NOTOKEN</a></div><div class="ttdeci">#define TK_NOTOKEN</div><div class="ttdoc">tokenizer_feed() ile verilen lexemenin bittiğini belirtir.</div><div class="ttdef"><b>Definition</b> <a href="tokenizer_8h_source.html#l00019">tokenizer.h:19</a></div></div>
 <div class="ttc" id="atokenizer_8h_html_ae76c8323e13da9eaddd2a3cdbfbd6fdf"><div class="ttname"><a href="tokenizer_8h.html#ae76c8323e13da9eaddd2a3cdbfbd6fdf">tokenizer_next</a></div><div class="ttdeci">struct token tokenizer_next(struct tokenizer *tokenzier)</div><div class="ttdoc">Sıradaki tokeni çek.</div></div>
 <div class="ttc" id="aunionseminfo_html"><div class="ttname"><a href="unionseminfo.html">seminfo</a></div><div class="ttdoc">[Tokenizer tanımı]</div><div class="ttdef"><b>Definition</b> <a href="tokenizer_8h_source.html#l00051">tokenizer.h:51</a></div></div>
-</div><!-- fragment --> <div class="fragment"><div class="line"><span class="keywordtype">void</span> <a class="code hl_function" href="bc-interpreter_8h.html#a1550a7bc1d6e2e55e6d2fbe82821bf78">bc_interpret</a>(<span class="keyword">struct</span> <a class="code hl_struct" href="structmap.html">map</a> *v, <span class="keyword">struct</span> rdesc_node n)</div>
+</div><!-- fragment --><p>Şimdilik sadece tree traverse ederek interpret yapacağız. Tree-walk yerine kısaca <code>tw</code> diyoruz:</p>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;rdesc/cst_macros.h&gt;</span></div>
+<div class="line"> </div>
+<div class="line"> </div>
+<div class="line"><span class="keyword">enum</span> <a class="code hl_enumeration" href="bc-interpreter_8h.html#a434288ff0ba970a550ecf3382dbc3f4b">stmt_meta</a> <a class="code hl_function" href="bc-interpreter_8h.html#aebaef7d5563c1fa336ab17bdb3ae133e">bc_tw_eval_stmt</a>(<span class="keyword">struct</span> <a class="code hl_struct" href="structmap.html">map</a> *v, <span class="keyword">struct</span> rdesc_node n)</div>
 <div class="line">{</div>
-<div class="line">        (void) v; (void) n;</div>
+<div class="line">        <span class="keyword">enum</span> <a class="code hl_enumeration" href="bc-interpreter_8h.html#a434288ff0ba970a550ecf3382dbc3f4b">stmt_meta</a> ret;</div>
+<div class="line"> </div>
+<div class="line">        <span class="keywordflow">switch</span> (rid(n)) {</div>
+<div class="line">        <span class="keywordflow">case</span> NT_STMT:</div>
+<div class="line">                <span class="keywordflow">switch</span> (ralt_idx(n)) {</div>
+<div class="line">                <span class="keywordflow">case</span> 0:  <span class="comment">/* &lt;expr&gt; ; */</span></div>
+<div class="line">                        <a class="code hl_function" href="bc-interpreter_8h.html#a8ce5857c81671e98b6ec0f62376b9286">bc_tw_eval_expr</a>(v, rchild(n, 0));</div>
+<div class="line"> </div>
+<div class="line">                        <span class="keywordflow">return</span> VOID;</div>
+<div class="line"> </div>
+<div class="line">                <span class="keywordflow">case</span> 1:  <span class="comment">/* break ; */</span></div>
+<div class="line">                        <span class="keywordflow">return</span> BREAK;</div>
+<div class="line"> </div>
+<div class="line">                <span class="keywordflow">case</span> 2:  <span class="comment">/* quit ; */</span></div>
+<div class="line">                        <span class="keywordflow">return</span> QUIT;</div>
+<div class="line"> </div>
+<div class="line">                <span class="keywordflow">case</span> 3:  <span class="comment">/* return &lt;opt-expr&gt; ; */</span></div>
+<div class="line">                        assert(0 &amp;&amp; <span class="stringliteral">&quot;Fonksiyonlar implement edilmedi.&quot;</span>);</div>
+<div class="line"> </div>
+<div class="line">                <span class="keywordflow">case</span> 4:  <span class="comment">/* for ( &lt;opt-expr&gt; ; &lt;opt-expr&gt; ; &lt;opt-expr&gt; ) &lt;stmt&gt; */</span></div>
+<div class="line">                        <span class="keywordflow">for</span> (<a class="code hl_function" href="bc-interpreter_8h.html#a8ce5857c81671e98b6ec0f62376b9286">bc_tw_eval_expr</a>(v, rchild(n, 2));</div>
+<div class="line">                             <a class="code hl_function" href="bc-interpreter_8h.html#a8ce5857c81671e98b6ec0f62376b9286">bc_tw_eval_expr</a>(v, rchild(n, 4)) != 0;</div>
+<div class="line">                             <a class="code hl_function" href="bc-interpreter_8h.html#a8ce5857c81671e98b6ec0f62376b9286">bc_tw_eval_expr</a>(v, rchild(n, 6))) {</div>
+<div class="line">                                ret = <a class="code hl_function" href="bc-interpreter_8h.html#aebaef7d5563c1fa336ab17bdb3ae133e">bc_tw_eval_stmt</a>(v, rchild(n, 8));</div>
+<div class="line"> </div>
+<div class="line">                                <span class="keywordflow">if</span> (ret == BREAK)</div>
+<div class="line">                                        <span class="keywordflow">break</span>;</div>
+<div class="line"> </div>
+<div class="line">                                <span class="keywordflow">if</span> (ret == QUIT)</div>
+<div class="line">                                        <span class="keywordflow">return</span> ret;</div>
+<div class="line">                        }</div>
+<div class="line"> </div>
+<div class="line">                        <span class="keywordflow">return</span> VOID;</div>
+<div class="line"> </div>
+<div class="line">                <span class="keywordflow">case</span> 5:  <span class="comment">/* if ( &lt;rel-expr&gt; ) &lt;stmt&gt; */</span></div>
+<div class="line">                        <span class="keywordflow">if</span> (<a class="code hl_function" href="bc-interpreter_8h.html#a8ce5857c81671e98b6ec0f62376b9286">bc_tw_eval_expr</a>(v, rchild(n, 2)) != 0)</div>
+<div class="line">                                <span class="keywordflow">return</span> <a class="code hl_function" href="bc-interpreter_8h.html#aebaef7d5563c1fa336ab17bdb3ae133e">bc_tw_eval_stmt</a>(v, rchild(n, 4));</div>
+<div class="line"> </div>
+<div class="line">                        <span class="keywordflow">return</span> VOID;</div>
+<div class="line"> </div>
+<div class="line">                <span class="keywordflow">case</span> 6: {  <span class="comment">/* while ( &lt;rel-expr&gt; ) &lt;stmt&gt; */</span></div>
+<div class="line">                        <span class="keywordflow">while</span> (<a class="code hl_function" href="bc-interpreter_8h.html#a8ce5857c81671e98b6ec0f62376b9286">bc_tw_eval_expr</a>(v, rchild(n, 2)) != 0) {</div>
+<div class="line">                                ret = <a class="code hl_function" href="bc-interpreter_8h.html#aebaef7d5563c1fa336ab17bdb3ae133e">bc_tw_eval_stmt</a>(v, rchild(n, 4));</div>
+<div class="line"> </div>
+<div class="line">                                <span class="keywordflow">if</span> (ret == BREAK)</div>
+<div class="line">                                        <span class="keywordflow">break</span>;</div>
+<div class="line"> </div>
+<div class="line">                                <span class="keywordflow">if</span> (ret == QUIT)</div>
+<div class="line">                                        <span class="keywordflow">return</span> ret;</div>
+<div class="line">                        }</div>
+<div class="line"> </div>
+<div class="line">                        <span class="keywordflow">return</span> VOID;</div>
+<div class="line">                }</div>
+<div class="line"> </div>
+<div class="line">                <span class="keywordflow">case</span> 7:  <span class="comment">/* print &lt;expr&gt; ; */</span></div>
+<div class="line">                        printf(<span class="stringliteral">&quot;&gt;&gt; %g\n&quot;</span>, <a class="code hl_function" href="bc-interpreter_8h.html#a8ce5857c81671e98b6ec0f62376b9286">bc_tw_eval_expr</a>(v, rchild(n, 1)));</div>
+<div class="line"> </div>
+<div class="line">                        <span class="keywordflow">return</span> VOID;</div>
+<div class="line"> </div>
+<div class="line">                <span class="keywordflow">case</span> 8:  <span class="comment">/* { &lt;stmts&gt; } */</span></div>
+<div class="line">                        <span class="keywordflow">return</span> <a class="code hl_function" href="bc-interpreter_8h.html#aebaef7d5563c1fa336ab17bdb3ae133e">bc_tw_eval_stmt</a>(v, rchild(n, 1));</div>
+<div class="line"> </div>
+<div class="line">                <span class="keywordflow">case</span> 9: <span class="comment">/* ; */</span></div>
+<div class="line">                        <span class="keywordflow">return</span> VOID;</div>
+<div class="line">                }</div>
+<div class="line"> </div>
+<div class="line">                <span class="keywordflow">break</span>;</div>
+<div class="line"> </div>
+<div class="line">        <span class="keywordflow">case</span> NT_STMTS:</div>
+<div class="line">                <span class="keywordflow">switch</span> (ralt_idx(n)) {</div>
+<div class="line">                <span class="keywordflow">case</span> 0:  <span class="comment">/* &lt;stmt&gt; &lt;stmts&gt; */</span></div>
+<div class="line">                        ret = <a class="code hl_function" href="bc-interpreter_8h.html#aebaef7d5563c1fa336ab17bdb3ae133e">bc_tw_eval_stmt</a>(v, rchild(n, 0));</div>
+<div class="line"> </div>
+<div class="line">                        <span class="keywordflow">if</span> (ret != VOID)</div>
+<div class="line">                                <span class="keywordflow">return</span> ret;</div>
+<div class="line"> </div>
+<div class="line">                        <span class="keywordflow">return</span> <a class="code hl_function" href="bc-interpreter_8h.html#aebaef7d5563c1fa336ab17bdb3ae133e">bc_tw_eval_stmt</a>(v, rchild(n, 1));</div>
+<div class="line"> </div>
+<div class="line">                <span class="keywordflow">default</span>:  <span class="comment">/* ε */</span></div>
+<div class="line">                        <span class="keywordflow">return</span> VOID;</div>
+<div class="line">                }</div>
+<div class="line"> </div>
+<div class="line">                <span class="keywordflow">break</span>;</div>
+<div class="line">        }</div>
+<div class="line"> </div>
+<div class="line">        assert(0 &amp;&amp; <span class="stringliteral">&quot;Yakalanmamış statement.&quot;</span>); <span class="comment">// GCOVR_EXCL_LINE: unreachable</span></div>
 <div class="line">}</div>
+<div class="ttc" id="abc-interpreter_8h_html_a8ce5857c81671e98b6ec0f62376b9286"><div class="ttname"><a href="bc-interpreter_8h.html#a8ce5857c81671e98b6ec0f62376b9286">bc_tw_eval_expr</a></div><div class="ttdeci">double bc_tw_eval_expr(struct map *v, struct rdesc_node n)</div><div class="ttdoc">Bir bc expression'unu interpret eder.</div></div>
+</div><!-- fragment --><p>Statement'ler kullanıcıya dönüt değeri yansıtılmayan kod parçalarıdır. Expression ise doğrudan doğruya dili kullananın değeriyle ilgilendiği kodlardır, önceden yaptığımız recursive descent parser'da benzer bir yapı kurgulamıştık.</p>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;math.h&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="preprocessor">#define flip_if_not_flipped(parent, child_idx) \</span></div>
+<div class="line"><span class="preprocessor">        if (rchild_count(rchild(parent, child_idx)) == 2) \</span></div>
+<div class="line"><span class="preprocessor">                rdesc_flip_left(parent, child_idx);</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">double</span> <a class="code hl_function" href="bc-interpreter_8h.html#a8ce5857c81671e98b6ec0f62376b9286">bc_tw_eval_expr</a>(<span class="keyword">struct</span> <a class="code hl_struct" href="structmap.html">map</a> *v, <span class="keyword">struct</span> rdesc_node n)</div>
+<div class="line">{</div>
+<div class="line">        <span class="keyword">union </span><a class="code hl_union" href="unionseminfo.html">seminfo</a> s;</div>
+<div class="line"> </div>
+<div class="line">        <span class="keywordflow">switch</span> (rid(n)) {</div>
+<div class="line">        <span class="keywordflow">case</span> NT_OPT_EXPR:</div>
+<div class="line">                <span class="keywordflow">if</span> (ralt_idx(n) == 0) <span class="comment">/* &lt;expr&gt; */</span></div>
+<div class="line">                        <span class="keywordflow">return</span> <a class="code hl_function" href="bc-interpreter_8h.html#a8ce5857c81671e98b6ec0f62376b9286">bc_tw_eval_expr</a>(v, rchild(n, 0));</div>
+<div class="line"> </div>
+<div class="line">                <span class="keywordflow">return</span> 1;  <span class="comment">/* ε */</span></div>
+<div class="line"> </div>
+<div class="line">        <span class="keywordflow">case</span> NT_EXPR:</div>
+<div class="line">                <span class="keywordflow">switch</span> (ralt_idx(n)) {</div>
+<div class="line">                <span class="keywordflow">case</span> 0: {  <span class="comment">/* ident &lt;asgn_op&gt; &lt;add_expr&gt; */</span></div>
+<div class="line">                        <span class="keyword">struct </span>rdesc_node asgn = rchild(n, 0);</div>
+<div class="line">                        memcpy(&amp;s, rseminfo(rchild(asgn, 0)), <span class="keyword">sizeof</span>(s));</div>
+<div class="line"> </div>
+<div class="line">                        <span class="comment">/* &lt;add_expr&gt;&#39;i left-associative yap */</span></div>
+<div class="line">                        flip_if_not_flipped(asgn, 2);</div>
+<div class="line"> </div>
+<div class="line">                        <span class="keywordtype">double</span> rhs = <a class="code hl_function" href="bc-interpreter_8h.html#a8ce5857c81671e98b6ec0f62376b9286">bc_tw_eval_expr</a>(v, rchild(asgn, 2));</div>
+<div class="line"> </div>
+<div class="line">                        <span class="keywordtype">double</span> *cur = <a class="code hl_function" href="map_8h.html#ab61c37aaaf3a19a6bf24da8f1d35379b">map_get2</a>(v, &amp;s.ident_id, <span class="keyword">sizeof</span>(<span class="keywordtype">size_t</span>)), result;</div>
+<div class="line"> </div>
+<div class="line">                        <span class="keywordflow">switch</span> (ralt_idx(rchild(asgn, 1))) {</div>
+<div class="line">                        <span class="keywordflow">case</span> 0:  <span class="comment">/* += */</span></div>
+<div class="line">                                result = (cur ? *cur : 0) + rhs;</div>
+<div class="line">                                <span class="keywordflow">break</span>;</div>
+<div class="line"> </div>
+<div class="line">                        <span class="keywordflow">case</span> 1:  <span class="comment">/* -= */</span></div>
+<div class="line">                                result = (cur ? *cur : 0) - rhs;</div>
+<div class="line">                                <span class="keywordflow">break</span>;</div>
+<div class="line"> </div>
+<div class="line">                        <span class="keywordflow">case</span> 2:  <span class="comment">/* *= */</span></div>
+<div class="line">                                result = (cur ? *cur : 0) * rhs;</div>
+<div class="line">                                <span class="keywordflow">break</span>;</div>
+<div class="line"> </div>
+<div class="line">                        <span class="keywordflow">case</span> 3:  <span class="comment">/* /= */</span></div>
+<div class="line">                                result = (cur ? *cur : 0) / rhs;</div>
+<div class="line">                                <span class="keywordflow">break</span>;</div>
+<div class="line"> </div>
+<div class="line">                        <span class="keywordflow">case</span> 4:  <span class="comment">/* %= */</span></div>
+<div class="line">                                result = fmod(cur ? *cur : 0, rhs);</div>
+<div class="line">                                <span class="keywordflow">break</span>;</div>
+<div class="line"> </div>
+<div class="line">                        <span class="keywordflow">case</span> 5:  <span class="comment">/* ^= */</span></div>
+<div class="line">                                result = pow(cur ? *cur : 0, rhs);</div>
+<div class="line">                                <span class="keywordflow">break</span>;</div>
+<div class="line"> </div>
+<div class="line">                        <span class="keywordflow">default</span>: <span class="comment">/* =  */</span></div>
+<div class="line">                                result = rhs;</div>
+<div class="line"> </div>
+<div class="line">                        }</div>
+<div class="line"> </div>
+<div class="line">                        <span class="keywordflow">if</span> (cur)</div>
+<div class="line">                                *cur = result;</div>
+<div class="line">                        <span class="keywordflow">else</span></div>
+<div class="line">                                <a class="code hl_function" href="map_8h.html#a297eb0f9400291169c15f0be21107c70">map_insert2</a>(v, &amp;s.ident_id, <span class="keyword">sizeof</span>(<span class="keywordtype">size_t</span>), &amp;result);</div>
+<div class="line"> </div>
+<div class="line">                        <span class="keywordflow">return</span> result;</div>
+<div class="line">                }</div>
+<div class="line"> </div>
+<div class="line">                <span class="keywordflow">default</span>:  <span class="comment">/* &lt;rel_expr&gt; */</span></div>
+<div class="line">                        <span class="keywordflow">return</span> <a class="code hl_function" href="bc-interpreter_8h.html#a8ce5857c81671e98b6ec0f62376b9286">bc_tw_eval_expr</a>(v, rchild(n, 0));</div>
+<div class="line">                }</div>
+<div class="line"> </div>
+<div class="line">        <span class="keywordflow">case</span> NT_REL_EXPR: {  <span class="comment">/* &lt;add_expr&gt; &lt;rel_expr_opt_rel&gt; */</span></div>
+<div class="line">                <span class="comment">/* &lt;add_expr&gt;&#39;i left-associative yap */</span></div>
+<div class="line">                flip_if_not_flipped(n, 0);</div>
+<div class="line">                <span class="keywordtype">double</span> lhs = <a class="code hl_function" href="bc-interpreter_8h.html#a8ce5857c81671e98b6ec0f62376b9286">bc_tw_eval_expr</a>(v, rchild(n, 0));</div>
+<div class="line"> </div>
+<div class="line">                <span class="keyword">struct </span>rdesc_node opt = rchild(n, 1);</div>
+<div class="line"> </div>
+<div class="line">                <span class="keywordflow">if</span> (ralt_idx(opt) == 1)</div>
+<div class="line">                        <span class="keywordflow">return</span> lhs;  <span class="comment">/* ε */</span></div>
+<div class="line"> </div>
+<div class="line">                <span class="comment">/* &lt;add_expr&gt;&#39;i left-associative yap */</span></div>
+<div class="line">                flip_if_not_flipped(opt, 1);</div>
+<div class="line">                <span class="keywordtype">double</span> rhs = <a class="code hl_function" href="bc-interpreter_8h.html#a8ce5857c81671e98b6ec0f62376b9286">bc_tw_eval_expr</a>(v, rchild(opt, 1));</div>
+<div class="line"> </div>
+<div class="line">                <span class="keywordflow">switch</span> (ralt_idx(rchild(opt, 0))) {</div>
+<div class="line">                <span class="keywordflow">case</span> 0:</div>
+<div class="line">                        <span class="keywordflow">return</span> lhs &lt; rhs;</div>
+<div class="line">                <span class="keywordflow">case</span> 1:</div>
+<div class="line">                        <span class="keywordflow">return</span> lhs &gt; rhs;</div>
+<div class="line">                <span class="keywordflow">case</span> 2:</div>
+<div class="line">                        <span class="keywordflow">return</span> lhs == rhs;</div>
+<div class="line">                <span class="keywordflow">case</span> 3:</div>
+<div class="line">                        <span class="keywordflow">return</span> lhs != rhs;</div>
+<div class="line">                <span class="keywordflow">case</span> 4:</div>
+<div class="line">                        <span class="keywordflow">return</span> lhs &lt;= rhs;</div>
+<div class="line">                <span class="keywordflow">case</span> 5:</div>
+<div class="line">                        <span class="keywordflow">return</span> lhs &gt;= rhs;</div>
+<div class="line">                <span class="keywordflow">default</span>:</div>
+<div class="line">                        assert(0);  <span class="comment">// GCOVR_EXCL_LINE: unreachable</span></div>
+<div class="line">                }</div>
+<div class="line">        }</div>
+<div class="line"> </div>
+<div class="line">        <span class="keywordflow">case</span> NT_ADD_EXPR: {</div>
+<div class="line">                <span class="keywordtype">double</span> lhs;</div>
+<div class="line"> </div>
+<div class="line">                <span class="keywordflow">switch</span> (ralt_idx(n)) {</div>
+<div class="line">                <span class="keywordflow">case</span> 0: <span class="comment">/* &lt;add_expr&gt; &lt;add_op&gt; &lt;mul_expr&gt; */</span></div>
+<div class="line">                        lhs = <a class="code hl_function" href="bc-interpreter_8h.html#a8ce5857c81671e98b6ec0f62376b9286">bc_tw_eval_expr</a>(v, rchild(n, 0));</div>
+<div class="line"> </div>
+<div class="line">                        <span class="comment">/* &lt;mul_expr&gt;&#39;i left-associative yap */</span></div>
+<div class="line">                        flip_if_not_flipped(n, 2);</div>
+<div class="line">                        lhs += <a class="code hl_function" href="bc-interpreter_8h.html#a8ce5857c81671e98b6ec0f62376b9286">bc_tw_eval_expr</a>(v, rchild(n, 2)) *</div>
+<div class="line">                                (ralt_idx(rchild(n, 1)) == 0 ? 1 : -1);</div>
+<div class="line">                        <span class="keywordflow">break</span>;</div>
+<div class="line"> </div>
+<div class="line">                <span class="keywordflow">case</span> 1:  <span class="comment">/* &lt;mul_expr&gt; */</span></div>
+<div class="line">                        <span class="comment">/* &lt;mul_expr&gt;&#39;i left-associative yap */</span></div>
+<div class="line">                        flip_if_not_flipped(n, 0);</div>
+<div class="line"> </div>
+<div class="line">                        lhs = <a class="code hl_function" href="bc-interpreter_8h.html#a8ce5857c81671e98b6ec0f62376b9286">bc_tw_eval_expr</a>(v, rchild(n, 0));</div>
+<div class="line">                        <span class="keywordflow">break</span>;</div>
+<div class="line">                }</div>
+<div class="line"> </div>
+<div class="line">                <span class="keywordflow">return</span> lhs;</div>
+<div class="line">        }</div>
+<div class="line"> </div>
+<div class="line">        <span class="keywordflow">case</span> NT_MUL_EXPR: {</div>
+<div class="line">                <span class="keywordtype">double</span> lhs = <a class="code hl_function" href="bc-interpreter_8h.html#a8ce5857c81671e98b6ec0f62376b9286">bc_tw_eval_expr</a>(v, rchild(n, 0));</div>
+<div class="line">                <span class="keywordtype">double</span> rhs;</div>
+<div class="line"> </div>
+<div class="line">                <span class="keywordflow">switch</span> (ralt_idx(n)) {</div>
+<div class="line">                <span class="keywordflow">case</span> 0: <span class="comment">/* &lt;mul_expr&gt; &lt;mul_op&gt; &lt;exp_expr&gt; */</span></div>
+<div class="line">                        rhs = <a class="code hl_function" href="bc-interpreter_8h.html#a8ce5857c81671e98b6ec0f62376b9286">bc_tw_eval_expr</a>(v, rchild(n, 2));</div>
+<div class="line"> </div>
+<div class="line">                        <span class="keywordflow">switch</span> (ralt_idx(rchild(n, 1))) {</div>
+<div class="line">                        <span class="keywordflow">case</span> 0:</div>
+<div class="line">                                lhs *= rhs;</div>
+<div class="line">                                <span class="keywordflow">break</span>;</div>
+<div class="line"> </div>
+<div class="line">                        <span class="keywordflow">case</span> 1:</div>
+<div class="line">                                lhs /= rhs;</div>
+<div class="line">                                <span class="keywordflow">break</span>;</div>
+<div class="line"> </div>
+<div class="line">                        <span class="keywordflow">case</span> 2:</div>
+<div class="line">                                lhs = fmod(lhs, rhs);</div>
+<div class="line">                                <span class="keywordflow">break</span>;</div>
+<div class="line">                        }</div>
+<div class="line"> </div>
+<div class="line">                        <span class="keywordflow">break</span>;</div>
+<div class="line"> </div>
+<div class="line">                <span class="keywordflow">case</span> 1:  <span class="comment">/* &lt;exp_expr&gt; */</span></div>
+<div class="line">                        <span class="keywordflow">break</span>;</div>
+<div class="line">                }</div>
+<div class="line"> </div>
+<div class="line">                <span class="keywordflow">return</span> lhs;</div>
+<div class="line">        }</div>
+<div class="line"> </div>
+<div class="line">        <span class="keywordflow">case</span> NT_EXP_EXPR: {</div>
+<div class="line">                <span class="comment">/* Üs alma right-associative&#39;dir */</span></div>
+<div class="line">                <span class="keywordtype">double</span> lhs = <a class="code hl_function" href="bc-interpreter_8h.html#a8ce5857c81671e98b6ec0f62376b9286">bc_tw_eval_expr</a>(v, rchild(n, 0));</div>
+<div class="line">                <span class="keywordtype">double</span> rhs = <a class="code hl_function" href="bc-interpreter_8h.html#a8ce5857c81671e98b6ec0f62376b9286">bc_tw_eval_expr</a>(v, rchild(n, 1));</div>
+<div class="line"> </div>
+<div class="line">                <span class="keywordflow">return</span> pow(lhs, rhs);</div>
+<div class="line">        }</div>
+<div class="line"> </div>
+<div class="line">        <span class="keywordflow">case</span> NT_EXP_EXPR_REST: {</div>
+<div class="line">                <span class="keywordtype">double</span> lhs, rhs;</div>
+<div class="line"> </div>
+<div class="line">                <span class="keywordflow">if</span> (ralt_idx(n) == 0) {</div>
+<div class="line">                        lhs = <a class="code hl_function" href="bc-interpreter_8h.html#a8ce5857c81671e98b6ec0f62376b9286">bc_tw_eval_expr</a>(v, rchild(n, 1));</div>
+<div class="line">                        rhs = <a class="code hl_function" href="bc-interpreter_8h.html#a8ce5857c81671e98b6ec0f62376b9286">bc_tw_eval_expr</a>(v, rchild(n, 2));</div>
+<div class="line"> </div>
+<div class="line">                        <span class="keywordflow">return</span> pow(lhs, rhs);</div>
+<div class="line">                }</div>
+<div class="line"> </div>
+<div class="line">                <span class="keywordflow">return</span> 1;</div>
+<div class="line">        }</div>
+<div class="line"> </div>
+<div class="line">        <span class="keywordflow">case</span> NT_FACTOR: {  <span class="comment">/* &lt;unary_op&gt; &lt;atom&gt; */</span></div>
+<div class="line">                <span class="keywordtype">double</span> val = <a class="code hl_function" href="bc-interpreter_8h.html#a8ce5857c81671e98b6ec0f62376b9286">bc_tw_eval_expr</a>(v, rchild(n, 1));</div>
+<div class="line"> </div>
+<div class="line">                <span class="keywordflow">return</span> (ralt_idx(rchild(n, 0)) == 1) ? -val : val;</div>
+<div class="line">        }</div>
+<div class="line"> </div>
+<div class="line">        <span class="keywordflow">case</span> NT_ATOM:</div>
+<div class="line">                <span class="keywordflow">switch</span> (ralt_idx(n)) {</div>
+<div class="line">                <span class="keywordflow">case</span> 0: {  <span class="comment">/* &lt;incr_decr_op&gt; ident  (prefix) */</span></div>
+<div class="line">                        memcpy(&amp;s, rseminfo(rchild(n, 1)), <span class="keyword">sizeof</span>(s));</div>
+<div class="line">                        <span class="keywordtype">double</span> *cur = <a class="code hl_function" href="map_8h.html#ab61c37aaaf3a19a6bf24da8f1d35379b">map_get2</a>(v, &amp;s.ident_id, <span class="keyword">sizeof</span>(<span class="keywordtype">size_t</span>));</div>
+<div class="line"> </div>
+<div class="line">                        <span class="keywordtype">double</span> val = (cur ? *cur : 0) +</div>
+<div class="line">                                (ralt_idx(rchild(n, 0)) == 0 ? 1 : -1);</div>
+<div class="line"> </div>
+<div class="line">                        <span class="keywordflow">if</span> (cur)</div>
+<div class="line">                                *cur = val;</div>
+<div class="line">                        <span class="keywordflow">else</span></div>
+<div class="line">                                <a class="code hl_function" href="map_8h.html#a297eb0f9400291169c15f0be21107c70">map_insert2</a>(v, &amp;s.ident_id, <span class="keyword">sizeof</span>(<span class="keywordtype">size_t</span>), &amp;val);</div>
+<div class="line"> </div>
+<div class="line">                        <span class="keywordflow">return</span> val;</div>
+<div class="line">                }</div>
+<div class="line">                <span class="keywordflow">case</span> 1: {  <span class="comment">/* ident &lt;opt_incr_decr_op&gt;  (postfix veya plain) */</span></div>
+<div class="line">                        memcpy(&amp;s, rseminfo(rchild(n, 0)), <span class="keyword">sizeof</span>(s));</div>
+<div class="line">                        <span class="keywordtype">double</span> *cur = <a class="code hl_function" href="map_8h.html#ab61c37aaaf3a19a6bf24da8f1d35379b">map_get2</a>(v, &amp;s.ident_id, <span class="keyword">sizeof</span>(<span class="keywordtype">size_t</span>));</div>
+<div class="line"> </div>
+<div class="line">                        <span class="keywordtype">double</span> val = (cur ? *cur : 0);</div>
+<div class="line">                        <span class="keywordtype">double</span> old_val = val;</div>
+<div class="line"> </div>
+<div class="line">                        <span class="keywordflow">switch</span> (ralt_idx(rchild(n, 1))) {</div>
+<div class="line">                        <span class="keywordflow">case</span> 0:</div>
+<div class="line">                                val++;</div>
+<div class="line">                                <span class="keywordflow">break</span>;</div>
+<div class="line">                        <span class="keywordflow">case</span> 1:</div>
+<div class="line">                                val--;</div>
+<div class="line">                                <span class="keywordflow">break</span>;</div>
+<div class="line">                        <span class="keywordflow">default</span>:</div>
+<div class="line">                                <span class="keywordflow">break</span>;</div>
+<div class="line">                        }</div>
+<div class="line"> </div>
+<div class="line">                        <span class="keywordflow">if</span> (cur)</div>
+<div class="line">                                *cur = val;</div>
+<div class="line">                        <span class="keywordflow">else</span></div>
+<div class="line">                                <a class="code hl_function" href="map_8h.html#a297eb0f9400291169c15f0be21107c70">map_insert2</a>(v, &amp;s.ident_id, <span class="keyword">sizeof</span>(<span class="keywordtype">size_t</span>), &amp;val);</div>
+<div class="line"> </div>
+<div class="line">                        <span class="keywordflow">return</span> old_val;</div>
+<div class="line">                }</div>
+<div class="line"> </div>
+<div class="line">                <span class="keywordflow">case</span> 2:  <span class="comment">/* ( &lt;expr&gt; ) */</span></div>
+<div class="line">                        <span class="keywordflow">return</span> <a class="code hl_function" href="bc-interpreter_8h.html#a8ce5857c81671e98b6ec0f62376b9286">bc_tw_eval_expr</a>(v, rchild(n, 1));</div>
+<div class="line"> </div>
+<div class="line">                <span class="keywordflow">case</span> 3:  <span class="comment">/* int */</span></div>
+<div class="line">                        memcpy(&amp;s, rseminfo(rchild(n, 0)), <span class="keyword">sizeof</span>(s));</div>
+<div class="line"> </div>
+<div class="line">                        <span class="keywordflow">return</span> (<span class="keywordtype">double</span>) s.num_int;</div>
+<div class="line"> </div>
+<div class="line">                <span class="keywordflow">case</span> 4:  <span class="comment">/* float */</span></div>
+<div class="line">                        memcpy(&amp;s, rseminfo(rchild(n, 0)), <span class="keyword">sizeof</span>(s));</div>
+<div class="line"> </div>
+<div class="line">                        <span class="keywordflow">return</span> s.num_float;</div>
+<div class="line">                }</div>
+<div class="line">        }</div>
+<div class="line"> </div>
+<div class="line">        assert(0 &amp;&amp; <span class="stringliteral">&quot;Yakalanmamış expression.&quot;</span>); <span class="comment">// GCOVR_EXCL_LINE: unreachable</span></div>
+<div class="line">        <span class="keywordflow">return</span> 0;</div>
+<div class="line">}</div>
+<div class="ttc" id="amap_8h_html_a297eb0f9400291169c15f0be21107c70"><div class="ttname"><a href="map_8h.html#a297eb0f9400291169c15f0be21107c70">map_insert2</a></div><div class="ttdeci">void map_insert2(struct map *map, const void *key, size_t keylen, const void *value)</div><div class="ttdoc">map'e key-value ikilisini ekler.</div></div>
+<div class="ttc" id="amap_8h_html_ab61c37aaaf3a19a6bf24da8f1d35379b"><div class="ttname"><a href="map_8h.html#ab61c37aaaf3a19a6bf24da8f1d35379b">map_get2</a></div><div class="ttdeci">void * map_get2(struct map *map, const void *key, size_t keylen)</div><div class="ttdoc">Key ile eşleşen valueyı döner, key bulunamazsa NULL döner.</div></div>
 </div><!-- fragment --> </div></div><!-- contents -->
 </div><!-- PageDoc -->
 <!-- start footer part -->

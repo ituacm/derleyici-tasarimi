@@ -14,6 +14,7 @@ var searchData=
   ['stack_5fpush_11',['stack_push',['../stack_8h.html#aeeb51fe685bd0742571390df2251b6bb',1,'stack.h']]],
   ['stack_5ftop_12',['stack_top',['../stack_8h.html#a9193bfd37b7c928b6a440c5f10d1fcfd',1,'stack.h']]],
   ['start_13',['start',['../structlexer.html#a061c6a3ca100b22d7e61dc1caabac4ba',1,'lexer']]],
-  ['suffix_14',['rrr(head, (base...), (suffix...))',['../rdesc_detaylari_page.html#rdesc_detaylari_rrr_subsec',1,'']]],
-  ['syntax_20analysis_15',['Syntax Analysis',['../parser_page.html#parser_syntax_analysis_sec',1,'']]]
+  ['stmt_5fmeta_14',['stmt_meta',['../bc-interpreter_8h.html#a434288ff0ba970a550ecf3382dbc3f4b',1,'bc-interpreter.h']]],
+  ['suffix_15',['rrr(head, (base...), (suffix...))',['../rdesc_detaylari_page.html#rdesc_detaylari_rrr_subsec',1,'']]],
+  ['syntax_20analysis_16',['Syntax Analysis',['../parser_page.html#parser_syntax_analysis_sec',1,'']]]
 ];

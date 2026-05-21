@@ -53,7 +53,7 @@ enum bc_nt_id {
 /**_*/
 /* Bu string karşılıkları tokenizer'a punctuation ve keyword eklemek için
  * kullanacağız. */
-static const char *bc_tk_names[] = {
+const char *bc_tk_names[] = {
 	"+", "-", "*", "/", "%", "^",
 	"+=", "-=", "*=", "/=", "%=", "^=", "=",
 	"++", "--",
@@ -70,7 +70,7 @@ static const char *bc_tk_names[] = {
 /**_*/
 /* Nonterminal isimleri ve yukarıdaki [] içindeki token isimleri, dump_bnf
  * özelligi için. */
-static const char *bc_nt_names[] = {
+const char *bc_nt_names[] = {
 	"stmt", "stmts",
 
 	"add_op", "mul_op",

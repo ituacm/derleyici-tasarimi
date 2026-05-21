@@ -1,0 +1,8 @@
+/**
+@page bc_interpreter_page bc Interpreter
+
+Şimdiye kadar yaptıklarımızı birleştirme zamanı geldi:
+
+@snippet snippets/bc-interpreter.c bc_cli
+@snippet snippets/bc-interpreter.c bc_interpret
+*/

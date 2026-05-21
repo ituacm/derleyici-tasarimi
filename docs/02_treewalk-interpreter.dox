@@ -42,4 +42,5 @@ kodlayacağız. @ref bc_grammar_page'ni tanımlayarak başlayalım.
 
 Alt sayfalar
 - @subpage bc_grammar_page
+- @subpage bc_interpreter_page
 */

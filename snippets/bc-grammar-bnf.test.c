@@ -6,6 +6,9 @@
 #include <rdesc/util.h>
 
 #include "bc-grammar.c"
+#include "tokenizer.c"
+
+#include "../src/map.c"
 
 
 int main()

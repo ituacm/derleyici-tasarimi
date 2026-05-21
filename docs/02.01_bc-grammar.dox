@@ -16,4 +16,7 @@ ID ve string'ler üzerinden tokenizer üretmek için:
 Aşağıdaki fonksiyon, grameri daha kolay okunur bir formatta ekrana yazdırır:
 
 @snippet snippets/bc-grammar-bnf.test.c Dump grammar
+
+Devasa grameri oluşturduğu ağacı traverse ederken daha net anlayacağız:
+@ref bc_interpreter_page.
 */
